@@ -30,9 +30,9 @@ public class CommentController {
 
 // 답글 등록
     @PostMapping
-    public ResponseEntity createComment (@Valid @RequestBody CommentDto postCommentDto) {
+    public ResponseEntity createComment (@Valid @RequestBody CommentDto.Post post) {
 
-        Comment comment = commentService.createComment (mapper.commentPostToComment(postCommentDto));
+        Comment comment = commentService.createComment (mapper.commentPostToComment(post));
         CommentDto response = mapper.commentToCommentDto(comment);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -45,7 +45,7 @@ public class CommentController {
         try {
             Comment comment =commentService.readComment(commentId);
             CommentDto response = mapper.commentToCommentDto(comment);
-            return new ResponseEntity<>(response.HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (BusinessException e) {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
@@ -63,9 +63,9 @@ public class CommentController {
 //    댓글 수정
     @PatchMapping
     public ResponseEntity patchComment (@PathVariable("comment-id") long commentId,
-                                        @Valid @RequestBody CommentDto patchCommentDto) throws BusinessException {
+                                        @Valid @RequestBody CommentDto.Patch patch) throws BusinessException {
         try {
-            Comment comment = commentService.updateComment(commentId, mapper.commentPatchToComment(patchCommentDto));
+            Comment comment = commentService.updateComment(commentId, mapper.commentPatchToComment(patch));
             CommentDto response = mapper.commentToCommentDto(comment);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (BusinessException e){
