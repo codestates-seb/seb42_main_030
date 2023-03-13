@@ -1,5 +1,6 @@
 package com.seb42.main30.seb42_main_030.domain.user.controller;
 
+import org.springframework.web.bind.annotation.RestController;
 import com.seb42.main30.seb42_main_030.domain.user.dto.UserDto;
 import com.seb42.main30.seb42_main_030.domain.user.entity.User;
 import com.seb42.main30.seb42_main_030.domain.user.service.UserService;

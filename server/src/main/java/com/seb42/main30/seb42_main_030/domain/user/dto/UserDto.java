@@ -1,5 +1,6 @@
 package com.seb42.main30.seb42_main_030.domain.user.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,6 +43,7 @@ public class UserDto {
         private String nickname;
         private String imageUrl;
     }
+
 
 
 }
