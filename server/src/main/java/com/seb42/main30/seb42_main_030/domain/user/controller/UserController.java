@@ -25,7 +25,7 @@ public class UserController {
         this.mapper = mapper;
     }
 
-    // todo (1) user 등록(소셜 회원 가입-OAuth2)
+    // todo (1) user 등록(자체 회원 가입)
 
 
     // (2) user 정보 조회
