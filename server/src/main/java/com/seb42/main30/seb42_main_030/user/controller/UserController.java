@@ -26,8 +26,16 @@ public class UserController {
         this.mapper = mapper;
     }
 
-    // todo (1) user 등록(소셜 회원 가입-OAuth2)
+    // (1) user 등록(자체 회원 가입)
+    @PostMapping("/{user-id}")
+    public ResponseEntity postUser(@Valid @RequestBody UserDto.Post post) {
 
+        User user = mapper.userPostToUser(post);
+        User createUser = userService.createUser(user);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.userToUserResponse(createUser)), HttpStatus.CREATED);
+    }
 
     // (2) user 정보 조회
     @GetMapping("/{user-id}")
@@ -42,11 +50,11 @@ public class UserController {
     // (3) user 정보 수정
     @PatchMapping("/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
-                                    @Valid @RequestBody UserDto.Patch requestBody) {
+                                    @Valid @RequestBody UserDto.Patch patch) {
 
-        requestBody.setUserId(userId);
+        patch.setUserId(userId);
 
-        User updateUser = userService.updateUser(mapper.userPatchToUser(requestBody));
+        User updateUser = userService.updateUser(mapper.userPatchToUser(patch));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.userToUserResponse(updateUser)), HttpStatus.OK);
