@@ -1,4 +1,4 @@
-package com.seb42.main30.seb42_main_030.domain.user.dto;
+package com.seb42.main30.seb42_main_030.user.dto;
 
 
 import lombok.AllArgsConstructor;

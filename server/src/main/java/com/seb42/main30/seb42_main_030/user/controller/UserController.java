@@ -1,9 +1,9 @@
-package com.seb42.main30.seb42_main_030.domain.user.controller;
+package com.seb42.main30.seb42_main_030.user.controller;
 
+import com.seb42.main30.seb42_main_030.user.dto.UserDto;
+import com.seb42.main30.seb42_main_030.user.entity.User;
 import org.springframework.web.bind.annotation.RestController;
-import com.seb42.main30.seb42_main_030.domain.user.dto.UserDto;
-import com.seb42.main30.seb42_main_030.domain.user.entity.User;
-import com.seb42.main30.seb42_main_030.domain.user.service.UserService;
+import com.seb42.main30.seb42_main_030.user.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,8 +26,16 @@ public class UserController {
         this.mapper = mapper;
     }
 
-    // todo (1) user 등록(자체 회원 가입)
+    // (1) user 등록(자체 회원 가입)
+    @PostMapping("/{user-id}")
+    public ResponseEntity postUser(@Valid @RequestBody UserDto.Post post) {
 
+        User user = userService.createUser(mapper.userPostToUser(post));
+        userDto response = mappper.userToUserDto(user);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.userToUserResponseDto(createUser)), HttpStatus.CREATED);
+    }
 
     // (2) user 정보 조회
     @GetMapping("/{user-id}")
@@ -42,11 +50,11 @@ public class UserController {
     // (3) user 정보 수정
     @PatchMapping("/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
-                                    @Valid @RequestBody UserDto.Patch requestBody) {
+                                    @Valid @RequestBody UserDto.Patch patch) {
 
-        requestBody.setUserId(userId);
+        patch.setUserId(userId);
 
-        User updateUser = userService.updateUser(mapper.userPatchToUser(requestBody));
+        User updateUser = userService.updateUser(mapper.userPatchToUser(patch));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.userToUserResponse(updateUser)), HttpStatus.OK);
