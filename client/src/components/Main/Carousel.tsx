@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 const CarouselContainer = styled.div`
-  background-color: skyblue;
+  background-color: pink;
   height: 270px;
-  margin: 0 -144px 0 -144px;
+  margin-bottom: 50px;
 `;
 
 function Carousel() {
