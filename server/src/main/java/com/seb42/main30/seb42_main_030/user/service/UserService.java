@@ -47,7 +47,7 @@ public class UserService {
         // 회원정보 업데이트
         Optional.ofNullable(user.getNickname())
                 .ifPresent(name -> findUser.setNickname(name));
-        Optional.ofNullable(user.password())
+        Optional.ofNullable(user.getPassword())
                 .ifPresent(password -> findUser.setPassword(password));
         Optional.ofNullable(user.getImageUrl())
                 .ifPresent(url -> findUser.setImageUrl(url));
