@@ -1,7 +1,7 @@
-package com.seb42.main30.seb42_main_030.domain.user.service;
+package com.seb42.main30.seb42_main_030.user.service;
 
-import com.seb42.main30.seb42_main_030.domain.user.entity.User;
-import com.seb42.main30.seb42_main_030.domain.user.repository.UserRepository;
+import com.seb42.main30.seb42_main_030.user.entity.User;
+import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
