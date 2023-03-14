@@ -1,5 +1,13 @@
+import DiaryList from "./DiaryList";
+import Pagination from "./Pagination";
+
 function DiaryMain() {
-  return <div>이곳은 다이어리 메인 컴포넌트입니다.</div>;
+  return (
+    <div>
+      <DiaryList />
+      <Pagination />
+    </div>
+  );
 }
 
 export default DiaryMain;
