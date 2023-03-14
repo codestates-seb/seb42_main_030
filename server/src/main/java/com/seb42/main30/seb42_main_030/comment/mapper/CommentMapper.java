@@ -14,8 +14,8 @@ public interface CommentMapper {
     Comment commentPostToComment (CommentDto.Post post);
     Comment commentPatchToComment (CommentDto.Patch patch);
 
-    @Mapping(source = "diary.diaryId", target = "diaryId")
-    @Mapping(source = "user.nickname", target = "userNickname")
+//    @Mapping(source = "diary.diaryId", target = "diaryId")
+//    @Mapping(source = "user.nickname", target = "userNickname")
 
     CommentDto commentToCommentDto(Comment comment);
 

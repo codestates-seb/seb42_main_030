@@ -2,6 +2,8 @@ package com.seb42.main30.seb42_main_030.user.controller;
 
 import com.seb42.main30.seb42_main_030.user.dto.UserDto;
 import com.seb42.main30.seb42_main_030.user.entity.User;
+import com.seb42.main30.seb42_main_030.user.mapper.UserMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import com.seb42.main30.seb42_main_030.user.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -15,22 +17,23 @@ import javax.validation.constraints.Positive;
 @RestController
 @RequestMapping("/users")
 @Validated
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
     private final UserMapper mapper;
 
     // UserMapper DI
-    public UserController(UserService userService, Usermapper usermapper) {
-        this.userService = userService;
-        this.mapper = mapper;
-    }
+//    public UserController(UserService userService, Usermapper usermapper) {
+//        this.userService = userService;
+//        this.mapper = mapper;
+//    }
 
     // (1) user 등록(자체 회원 가입)
-    @PostMapping("/{user-id}")
-    public ResponseEntity postUser(@Valid @RequestBody UserDto.Post post) {
+    @PostMapping("/sign-up")
+    public ResponseEntity postUser(@Valid @RequestBody UserDto.Post requestBody) {
 
-        User user = mapper.userPostToUser(post);
+        User user = mapper.userPostToUser(requestBody);
         User createUser = userService.createUser(user);
 
         return new ResponseEntity<>(
@@ -50,11 +53,11 @@ public class UserController {
     // (3) user 정보 수정
     @PatchMapping("/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
-                                    @Valid @RequestBody UserDto.Patch patch) {
+                                    @Valid @RequestBody UserDto.Patch requestBody) {
 
-        patch.setUserId(userId);
+        requestBody.setUserId(userId);
 
-        User updateUser = userService.updateUser(mapper.userPatchToUser(patch));
+        User updateUser = userService.updateUser(mapper.userPatchToUser(requestBody));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.userToUserResponse(updateUser)), HttpStatus.OK);
@@ -63,6 +66,7 @@ public class UserController {
     // (4) user 탈퇴
     @DeleteMapping("/{user-id}")
     public ResponseEntity deleteUser(@PathVariable("user-id") @Positive long userId) {
+
         userService.deleteUser(userId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

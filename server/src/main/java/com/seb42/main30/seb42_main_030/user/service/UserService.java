@@ -4,14 +4,21 @@ import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+@Slf4j
+@Transactional
 @Service
+@AllArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
@@ -81,6 +88,7 @@ public class UserService {
     // (6) 이미 등록된 이메일인지 검증
     private void verifyExistsEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
+
         if(user.isPresent())
             throw new BusinessException(ExceptionCode.USER_EXISTS);
     }
