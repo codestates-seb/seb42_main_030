@@ -1,9 +1,9 @@
-package com.seb42.main30.seb42_main_030.domain.user.controller;
+package com.seb42.main30.seb42_main_030.user.controller;
 
+import com.seb42.main30.seb42_main_030.user.entity.User;
+import com.seb42.main30.seb42_main_030.user.service.UserService;
 import org.springframework.web.bind.annotation.RestController;
-import com.seb42.main30.seb42_main_030.domain.user.dto.UserDto;
-import com.seb42.main30.seb42_main_030.domain.user.entity.User;
-import com.seb42.main30.seb42_main_030.domain.user.service.UserService;
+import com.seb42.main30.seb42_main_030.user.dto.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
