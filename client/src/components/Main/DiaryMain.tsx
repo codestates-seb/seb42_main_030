@@ -4,12 +4,13 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Test = styled.div`
+const DiaryMainContainer = styled.div`
   display: flex;
   justify-content: center;
+  /* flex-direction: column; */
 `;
 
-const DiaryMainContainer = styled.ul`
+const DiaryMainWrapper = styled.ul`
   width: 100vw;
   max-width: 1440px;
   min-width: 300px;
@@ -39,14 +40,16 @@ function DiaryMain() {
   }, []);
 
   return (
-    <Test>
+    <>
       <DiaryMainContainer>
-        {diaryData.map((value) => {
-          return <DiaryList list={value} key={value.id} />;
-        })}
+        <DiaryMainWrapper>
+          {diaryData.map((value) => {
+            return <DiaryList list={value} key={value.id} />;
+          })}
+        </DiaryMainWrapper>
       </DiaryMainContainer>
       <Pagination />
-    </Test>
+    </>
   );
 }
 

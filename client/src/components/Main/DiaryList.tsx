@@ -4,9 +4,15 @@ import { IDiaryData } from "./DiaryMain";
 const DiaryListContainer = styled.li`
   background-color: skyblue;
   margin-bottom: 40px;
-  width: 310px;
-  height: 310px;
+  width: 306px;
+  height: 312px;
   list-style: none;
+`;
+
+const Thumbnail = styled.div`
+  width: 306px;
+  height: 180px;
+  background-color: lightgray;
 `;
 
 interface IDiaryProps {
@@ -16,9 +22,10 @@ interface IDiaryProps {
 function DiaryList({ list }: IDiaryProps) {
   return (
     <DiaryListContainer>
+      <Thumbnail>앨범 썸네일 이미지</Thumbnail>
       <div>{list.title}</div>
-      <div>{list.body}</div>
-      <div>{list.like}</div>
+      <div>donggu</div>
+      <div>2023.03.14</div>
     </DiaryListContainer>
   );
 }
