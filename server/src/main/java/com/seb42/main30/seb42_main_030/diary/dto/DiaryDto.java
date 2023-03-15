@@ -63,4 +63,11 @@ public class DiaryDto {
 
     }
 
+
+    @Getter
+    @Setter
+    public static class ResponseCheck{
+        private long Id;
+    }
+
 }

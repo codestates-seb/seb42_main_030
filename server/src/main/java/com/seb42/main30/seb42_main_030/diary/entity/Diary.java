@@ -1,6 +1,6 @@
 package com.seb42.main30.seb42_main_030.diary.entity;
 
-import com.seb42.main30.seb42_main_030.basetime.BaseTimeEntity;
+import com.seb42.main30.seb42_main_030.audit.basetime.BaseTimeEntity;
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import lombok.Getter;

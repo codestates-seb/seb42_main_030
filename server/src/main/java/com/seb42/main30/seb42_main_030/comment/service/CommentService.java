@@ -37,7 +37,7 @@ public class CommentService {
         comment.setUser(user);
         return commentRepository.save(comment);
     }
-//    read
+    //    read
     private User getUserFromId(long userId) {return userRepository.findById(userId).get(); }
 
     @Transactional(readOnly = true)
@@ -45,7 +45,7 @@ public class CommentService {
 
     public List<Comment> readComments() { return commentRepository.findAll(); }
 
-//    update
+    //    update
     @Transactional(propagation = Propagation.REQUIRED)
     public Comment updateComment (long commentId, Comment comment) {
         Comment verifyComment = verifyWriter(commentId);
@@ -54,7 +54,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-//    delete
+    //    delete
     public void deleteComment (long commentId) {
 
         Comment verifyComment = verifyWriter(commentId);
@@ -63,7 +63,7 @@ public class CommentService {
     }
 
 
-//    ID 값의 댓글이 없으면 오류
+    //    ID 값의 댓글이 없으면 오류
     @Transactional(readOnly = true)
     private Comment verifyComment (long commentId){
 
