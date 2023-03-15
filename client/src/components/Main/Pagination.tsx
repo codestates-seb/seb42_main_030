@@ -8,13 +8,12 @@ import {
 } from "react-icons/bi";
 
 const PageNum = styled.div`
-  margin-top: 20px;
+  margin: 50px 0 40px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
   user-select: none;
-  margin-bottom: 50px;
 
   > .pageTab,
   .leftHandle,
@@ -26,7 +25,9 @@ const PageNum = styled.div`
     color: ${(props) => props.theme.text};
     font-size: 15px;
     margin: 0 5px 0 5px;
-    font-weight: 600;
+    &:hover {
+      background-color: gray;
+    }
   }
 
   > .pageFocused {
@@ -37,6 +38,7 @@ const PageNum = styled.div`
     border: none;
     border-radius: 50px;
     color: black;
+    font-weight: 600;
   }
 
   /* > button:hover {

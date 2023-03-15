@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const CarouselContainer = styled.div`
   background-color: #ffe575;
-  height: 270px;
+  height: 300px;
   margin-bottom: 50px;
 `;
 

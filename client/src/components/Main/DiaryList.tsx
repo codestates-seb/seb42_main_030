@@ -3,57 +3,104 @@ import { IDiaryData } from "./DiaryMain";
 
 const DiaryListContainer = styled.li`
   border: 1px solid #d1d1d1;
-  margin-bottom: 40px;
-  width: 306px;
-  height: 312px;
+  width: 310px;
+  height: 339px;
   list-style: none;
 `;
 
 const Thumbnail = styled.div`
-  width: 306px;
-  height: 180px;
+  width: 310px;
+  height: 184px;
   background-color: lightgray;
 `;
 
 const InfoArea = styled.div`
-  padding: 16px 10px 16px 10px;
+  padding: 15px 10px 15px 10px;
 
   > .infoTitle {
     font-weight: 500;
-    color: #514e4d;
     margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  > .infoName {
-    margin-bottom: 5px;
-  }
-
-  > .infoName,
-  .infoDate {
+  > .infoDate {
     font-size: 12px;
     font-weight: 500;
     color: #848180;
+    margin-bottom: 15px;
+  }
+`;
+
+const Tag = styled.ul`
+  display: flex;
+  font-size: 13px;
+  font-weight: 500;
+  color: #757170;
+  list-style: none;
+
+  > li {
+    margin-right: 5px;
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #d1d1d1;
+    border-radius: 50px;
   }
 `;
 
 const UserArea = styled.div`
+  display: flex;
+  padding: 7px 10px 0 10px;
   border-top: 1px solid #d1d1d1;
 `;
 
-interface IDiaryProps {
+const Profile = styled.div`
+  width: 25px;
+  height: 25px;
+  margin-right: 8px;
+  background-color: #ffe575;
+  border-radius: 50%;
+  position: relative;
+`;
+
+const ByUsername = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: #21252b;
+
+  > .by {
+    font-size: 12px;
+    color: gray;
+    margin-right: 5px;
+  }
+`;
+
+interface IDiaryDataProps {
   list: IDiaryData;
 }
 
-function DiaryList({ list }: IDiaryProps) {
+function DiaryList({ list }: IDiaryDataProps) {
   return (
     <DiaryListContainer>
-      <Thumbnail>{list.title}</Thumbnail>
+      <Thumbnail>썸네일 이미지</Thumbnail>
       <InfoArea>
-        <div className='infoTitle'>보라빛 석양으로 물드는 회색 도시 속으로</div>
-        <div className='infoName'>donggu</div>
-        <div className='infoDate'>2023.03.14</div>
+        <div className='infoTitle'>{list.title}</div>
+        <div className='infoDate'>{list.createdAt}</div>
+        <Tag>
+          {list.tag.map((value, index) => {
+            return <li key={index}>#{value}</li>;
+          })}
+        </Tag>
       </InfoArea>
-      <UserArea>fd</UserArea>
+      <UserArea>
+        <Profile />
+        <ByUsername>
+          <div className='by'>by</div>
+          {list.nickname}
+        </ByUsername>
+      </UserArea>
     </DiaryListContainer>
   );
 }
