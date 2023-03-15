@@ -6,7 +6,8 @@ public enum ExceptionCode {
 
     COMMENT_NOT_FOUND(1, "댓글을 찾지 못하였습니다"),
     COMMENT_EXIST(2,"댓글이 존재합니다"),
-    NOT_AUTHORITY(3, "권한이 없습니다.");
+    NOT_AUTHORITY(3, "권한이 없습니다."),
+    DIARY_NOT_FOUND(4, "해당 글을 찾지 못했습니다.");
 
 
     @Getter
