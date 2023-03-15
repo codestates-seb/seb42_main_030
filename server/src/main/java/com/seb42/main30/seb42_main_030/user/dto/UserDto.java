@@ -1,4 +1,4 @@
-package com.seb42.main30.seb42_main_030.domain.user.dto;
+package com.seb42.main30.seb42_main_030.user.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -15,7 +15,8 @@ public class UserDto {
 
         @NotNull
         private String nickname;
-
+        private String email;
+        private String password;
         private String imageUrl;
 
     }
@@ -29,7 +30,7 @@ public class UserDto {
 
         @NotNull
         private String nickname;
-
+        private String password;
         private String imageUrl;
 
     }
@@ -41,6 +42,7 @@ public class UserDto {
         private long userId;
 
         private String nickname;
+        private String password;
         private String imageUrl;
     }
 
