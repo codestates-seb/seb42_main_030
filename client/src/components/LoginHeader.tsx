@@ -80,7 +80,7 @@ const Profile = styled.div`
   width: 40px;
   height: 40px;
   margin: 0 10px 0 20px;
-  background-color: lightgray;
+  background-color: #ffe575;
   border-radius: 50%;
   position: relative;
 `;

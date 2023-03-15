@@ -7,7 +7,6 @@ import axios from "axios";
 const DiaryMainContainer = styled.div`
   display: flex;
   justify-content: center;
-  /* flex-direction: column; */
 `;
 
 const DiaryMainWrapper = styled.ul`
@@ -28,7 +27,10 @@ export interface IDiaryData {
 }
 
 function DiaryMain() {
-  const [diaryData, setDiaryData] = useState<IDiaryData[]>([]);
+  const [diaryData, setDiaryData] = useState<IDiaryData[]>([]); // 전체 diary 데이터
+  const [page, setPage] = useState<number>(1); // 현재 페이지 번호 (기본값: 1페이지부터 노출)
+  const limit: number = 20;
+  const offset: number = (page - 1) * limit; // 각 페이지에서 첫 데이터의 위치(index) 계산
 
   // Get
   const getDiaryData = async () => {
@@ -43,12 +45,17 @@ function DiaryMain() {
     <>
       <DiaryMainContainer>
         <DiaryMainWrapper>
-          {diaryData.map((value) => {
+          {diaryData.slice(offset, offset + limit).map((value) => {
             return <DiaryList list={value} key={value.id} />;
           })}
         </DiaryMainWrapper>
       </DiaryMainContainer>
-      <Pagination />
+      <Pagination
+        allPageLength={diaryData.length}
+        limit={limit}
+        page={page}
+        setPage={setPage}
+      />
     </>
   );
 }
