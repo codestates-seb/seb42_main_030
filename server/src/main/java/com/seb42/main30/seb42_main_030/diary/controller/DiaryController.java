@@ -58,12 +58,12 @@ public class DiaryController {
     }
 
     // 게시물 수정
-    @PatchMapping
+    @PatchMapping("/{diary-id}")
     public ResponseEntity patchDiary (@PathVariable("diary-id") long diaryId,
                                       @Valid @RequestBody DiaryDto.Patch patch) throws BusinessException {
         try {
-            Diary diary = diaryService.updateDiary(diaryId, mapper.diaryPatchToDiary(patch));
-            DiaryDto response = mapper.diaryToDiaryDto(diary);
+            Diary diary = diaryService.updateDiary(diaryId, diaryMapper.diaryPatchToDiary(patch));
+            DiaryDto.Response response = diaryMapper.diaryToResponse(diary);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (BusinessException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

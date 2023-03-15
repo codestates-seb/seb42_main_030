@@ -49,7 +49,7 @@ public class CommentService {
     @Transactional(propagation = Propagation.REQUIRED)
     public Comment updateComment (long commentId, Comment comment) {
         Comment verifyComment = verifyWriter(commentId);
-        verifyComment.setDiary(comment.getDiary());
+        verifyComment.setBody(comment.getBody());
 
         return commentRepository.save(comment);
     }
