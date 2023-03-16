@@ -15,7 +15,7 @@ const ListTab = styled.ul`
   flex-wrap: wrap;
   list-style: none;
   margin-bottom: 50px;
-  column-gap: 10px;
+  gap: 10px;
 
   .tab {
     font-size: 14px;
@@ -26,6 +26,10 @@ const ListTab = styled.ul`
     border-radius: 50px;
     text-align: center;
     padding: 7px 7px;
+    &:hover {
+      transform: scale(1.05);
+      transition: 0.2s;
+    }
 
     > .el {
       margin-top: 3px;

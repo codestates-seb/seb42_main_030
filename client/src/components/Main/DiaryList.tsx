@@ -1,21 +1,30 @@
 import styled from "styled-components";
 import { IDiaryData } from "./DiaryMain";
+// import { Link } from "react-router-dom";
+// import { AiFillHeart } from "react-icons/ai";
 
 const DiaryListContainer = styled.li`
-  border: 1px solid #d1d1d1;
+  box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
   width: 310px;
   height: 339px;
   list-style: none;
+  border-radius: 4px;
+  &:hover {
+    transform: scale(1.02);
+    transition: 0.2s;
+  }
 `;
 
 const Thumbnail = styled.div`
   width: 310px;
   height: 184px;
   background-color: lightgray;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
 `;
 
 const InfoArea = styled.div`
-  padding: 15px 10px 15px 10px;
+  padding: 15px;
 
   > .infoTitle {
     font-weight: 500;
@@ -50,8 +59,9 @@ const Tag = styled.ul`
 
 const UserArea = styled.div`
   display: flex;
-  padding: 7px 10px 0 10px;
-  border-top: 1px solid #d1d1d1;
+  align-items: center;
+  padding: 7px 15px 0 15px;
+  border-top: 1px solid #f1f3f5;
 `;
 
 const Profile = styled.div`
@@ -65,7 +75,6 @@ const Profile = styled.div`
 
 const ByUsername = styled.div`
   display: flex;
-  align-items: center;
   font-size: 13px;
   font-weight: 500;
   color: #21252b;
@@ -100,6 +109,8 @@ function DiaryList({ list }: IDiaryDataProps) {
           <div className='by'>by</div>
           {list.nickname}
         </ByUsername>
+        {/* <AiFillHeart />
+        {list.like} */}
       </UserArea>
     </DiaryListContainer>
   );
