@@ -58,7 +58,7 @@ const Profile = styled.div`
   width: 25px;
   height: 25px;
   margin-right: 8px;
-  background-color: #ffe575;
+  background-color: lightgray;
   border-radius: 50%;
   position: relative;
 `;
@@ -90,7 +90,7 @@ function DiaryList({ list }: IDiaryDataProps) {
         <div className='infoDate'>{list.createdAt}</div>
         <Tag>
           {list.tag.map((value, index) => {
-            return <li key={index}>#{value}</li>;
+            return <li key={index}>{value}</li>;
           })}
         </Tag>
       </InfoArea>
