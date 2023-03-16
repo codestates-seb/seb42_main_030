@@ -1,6 +1,6 @@
-package com.seb42.main30.seb42_main_030.domain.playlist.entity;
+package com.seb42.main30.seb42_main_030.playlist.entity;
 
-import com.seb42.main30.seb42_main_030.domain.diary.entity.Diary;
+import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.seb42.main30.seb42_main_030.diary.entity;
 
-import com.seb42.main30.seb42_main_030.domain.audit.Auditable;
+import com.seb42.main30.seb42_main_030.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,8 +21,6 @@ public class Diary extends Auditable {
     private String title;
     @Column
     private String body;
-    @Column
-    private String playlistId;
     @Column
     private String tag;
     @Column

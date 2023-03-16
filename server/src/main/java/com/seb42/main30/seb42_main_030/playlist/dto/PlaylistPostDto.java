@@ -1,4 +1,4 @@
-package com.seb42.main30.seb42_main_030.domain.playlist.dto;
+package com.seb42.main30.seb42_main_030.playlist.dto;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
