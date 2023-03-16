@@ -1,5 +1,52 @@
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+const HeaderContainer = styled.header`
+  display: flex;
+  align-items: center;
+  height: 70px;
+  margin: 0 15px 0 15px;
+  justify-content: space-between;
+`;
+
+const Logo = styled.div`
+  font-weight: 700;
+  font-size: 20px;
+`;
+
+const SubmitButton = styled.button`
+  width: 150px;
+  border: none;
+  background-color: transparent;
+  font-weight: 700;
+  font-size: 15px;
+`;
+
+const LoginButton = styled.button`
+  width: 80px;
+  height: 35px;
+  font-weight: 700;
+  font-size: 15px;
+  background-color: transparent;
+  border-radius: 50px;
+  border: 2px solid black;
+  margin-left: 20px;
+`;
+
 function LogoutHeader() {
-  return <div>이곳은 로그아웃 상태의 헤더 컴포넌트입니다.</div>;
+  return (
+    <HeaderContainer>
+      <Logo>나만의 작은 음악 다이어리</Logo>
+      <div className='buttonArea'>
+        <Link to='/Login'>
+          <SubmitButton>새 플레이리스트 등록</SubmitButton>
+        </Link>
+        <Link to='/Login'>
+          <LoginButton>로그인</LoginButton>
+        </Link>
+      </div>
+    </HeaderContainer>
+  );
 }
 
 export default LogoutHeader;
