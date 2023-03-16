@@ -1,4 +1,4 @@
-package com.seb42.main30.seb42_main_030.domain.diary.dto;
+package com.seb42.main30.seb42_main_030.diary.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiaryResponseDto {
+public class DiaryPostDto {
 
 }
