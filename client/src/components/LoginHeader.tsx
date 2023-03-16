@@ -57,6 +57,10 @@ const HeaderWrapper = styled.div`
 const Logo = styled.div`
   font-weight: 700;
   font-size: 20px;
+
+  &a {
+    text-decoration: none;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -95,7 +99,9 @@ function LoginHeader() {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Logo>나만의 작은 음악 다이어리</Logo>
+        <Link to='/'>
+          <Logo>나만의 작은 음악 다이어리</Logo>
+        </Link>
         <div className='buttonArea'>
           <Link to='/NewDiary'>
             <SubmitButton>새 플레이리스트 등록</SubmitButton>
