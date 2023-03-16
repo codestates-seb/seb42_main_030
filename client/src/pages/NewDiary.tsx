@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect,useRef } from "react";
 import QuillEditor from "../components/NewDiary/QuillEditor";
-
+import SpotifyWebApi from "spotify-web-api-js";
 
 const NewDiaryContainer = styled.form`
   padding: 15px;
@@ -64,9 +64,18 @@ const NewDiaryContainer = styled.form`
  margin-top: 10px;
 }
 `;
-//유튜브 API 잘 쓰게 되면 프로젝트 목적에 맞게 아래 주소 수정해야됨. (add play list 에 들어가도록)
-function openPopup() {
-  window.open('https://www.youtube.com/results?search_query=음악', '유튜브 음악 검색', 'width=800, height=600');
+const spotifyApi = new SpotifyWebApi();
+spotifyApi.setAccessToken('YOUR_ACCESS_TOKEN');
+
+//스포티파이 음악 검색 함수 만들어야됨
+async function searchMusic(query : string) {
+  try {
+    const response = await spotifyApi.search(query, ['track'], { limit: 10 });
+    console.log(response);
+    // 음악 정보를 처리하려면 여기에 코드를 추가하세요.
+  } catch (error) {
+    console.error('Spotify 검색 중 오류 발생:', error);
+  }
 }
 export default function NewDiary(): JSX.Element {
   // const handleSubmit = async (e) => {
@@ -108,7 +117,7 @@ export default function NewDiary(): JSX.Element {
       />
       <div className='apl'>
         {/* addplaylist button */}
-        <button className='aplbtn' onClick={()=> openPopup()}> 
+        <button className='aplbtn' onClick={()=> searchMusic("검색어")}> 
           플레이 리스트에 추가
         </button>
       </div>
