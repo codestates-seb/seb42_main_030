@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { useState, useEffect,useRef } from "react";
 import QuillEditor from "../components/NewDiary/QuillEditor";
 import SpotifyWebApi from "spotify-web-api-js";
+import LoginHeader from "../components/LoginHeader";
 
 const NewDiaryContainer = styled.form`
   padding: 15px;
+  border: 1px solid;
   .dti {
     width: 100%;
     height: 40px;
@@ -64,8 +66,12 @@ const NewDiaryContainer = styled.form`
  margin-top: 10px;
 }
 `;
+
+
 const spotifyApi = new SpotifyWebApi();
-spotifyApi.setAccessToken('YOUR_ACCESS_TOKEN');
+
+// 액세스 토큰 설정
+spotifyApi.setAccessToken("YOUR_ACCESS_TOKEN");
 
 //스포티파이 음악 검색 함수 만들어야됨
 async function searchMusic(query : string) {
@@ -89,8 +95,10 @@ export default function NewDiary(): JSX.Element {
     localStorage.setItem("body", htmlContent);
   }, [htmlContent]);
   return (
+   
     //onSubmit={handleSubmit} 등록버튼 누르면 정보 보내게끔 뉴 다이어리 css에 적어줘야됨
     <NewDiaryContainer >
+       <LoginHeader/>
       <div className='DiaryTitle'>
         <h3>제목</h3>
       </div>
