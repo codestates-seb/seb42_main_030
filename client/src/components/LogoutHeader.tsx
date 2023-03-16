@@ -3,9 +3,17 @@ import { Link } from "react-router-dom";
 
 const HeaderContainer = styled.header`
   display: flex;
+  justify-content: center;
+`;
+
+const HeaderWrapper = styled.div`
+  width: 100vw;
+  max-width: 1440px;
+  min-width: 300px;
+  display: flex;
   align-items: center;
   height: 70px;
-  margin: 0 15px 0 15px;
+  padding: 0 15px 0 15px;
   justify-content: space-between;
 `;
 
@@ -36,15 +44,17 @@ const LoginButton = styled.button`
 function LogoutHeader() {
   return (
     <HeaderContainer>
-      <Logo>나만의 작은 음악 다이어리</Logo>
-      <div className='buttonArea'>
-        <Link to='/Login'>
-          <SubmitButton>새 플레이리스트 등록</SubmitButton>
-        </Link>
-        <Link to='/Login'>
-          <LoginButton>로그인</LoginButton>
-        </Link>
-      </div>
+      <HeaderWrapper>
+        <Logo>나만의 작은 음악 다이어리</Logo>
+        <div className='buttonArea'>
+          <Link to='/Login'>
+            <SubmitButton>새 플레이리스트 등록</SubmitButton>
+          </Link>
+          <Link to='/Login'>
+            <LoginButton>로그인</LoginButton>
+          </Link>
+        </div>
+      </HeaderWrapper>
     </HeaderContainer>
   );
 }

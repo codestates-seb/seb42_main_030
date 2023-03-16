@@ -14,18 +14,6 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
-
-  body {
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  .App {
-    width: 100vw;
-    max-width: 1440px;
-    min-width: 300px;
-  }
 `;
 
 function App() {
@@ -39,7 +27,7 @@ function App() {
         <Route path='/Mypage' element={<Mypage />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
-        <Route path='/DetailDiary/:id' element={<DetailDiary />} />
+        <Route path='/DetailDiary/:diary_id' element={<DetailDiary />} />
       </Routes>
     </div>
   );
