@@ -78,7 +78,7 @@ function DiaryMain() {
   const [page, setPage] = useState<number>(1); // 현재 페이지 번호 (기본값: 1페이지부터 노출)
   const limit: number = 20;
   const offset: number = (page - 1) * limit; // 각 페이지에서 첫 데이터의 위치(index) 계산
-
+  // "http://localhost:3001/diary"
   // 전체 diary 데이터 get 요청
   const getDiaryData = async () => {
     try {
