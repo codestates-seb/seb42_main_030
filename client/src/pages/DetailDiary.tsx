@@ -1,21 +1,20 @@
-import DetailHeader from '../components/DetailDiary/DetailHeader';
-import LoginHeader from '../components/LoginHeader';
-import Diary from '../components/DetailDiary/Diary'
-import PlayList from '../components/DetailDiary/PlayList';
-import CommentInput from '../components/DetailDiary/CommentInput';
-import styled from 'styled-components';
-import  {useState,useEffect} from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-
+import DetailHeader from "../components/DetailDiary/DetailHeader";
+import LoginHeader from "../components/LoginHeader";
+import Diary from "../components/DetailDiary/Diary";
+import PlayList from "../components/DetailDiary/PlayList";
+import CommentInput from "../components/DetailDiary/CommentInput";
+import styled from "styled-components";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Container = styled.div`
-    width: 100vw;
-    max-width: 1440px;
-    min-width: 300px;
-    padding: 0 10rem;
-    margin:0 auto;
-`
+  width: 100vw;
+  max-width: 1440px;
+  min-width: 300px;
+  padding: 0 10rem;
+  margin: 0 auto;
+`;
 // export interface IDiaryData {
 //   diary_id: number;
 //   nickname: string;
@@ -33,15 +32,17 @@ function DetailDiary() {
   const { diary_id } = useParams();
 
   const getDetailData = async () => {
-    const res = await axios.get(`http://localhost:3001/diary?diary_id=${diary_id}`);
+    const res = await axios.get(
+      `http://localhost:3001/diary?diary_id=${diary_id}`
+    );
     setDetailData(res.data);
-    console.log(res)
+    console.log(res);
   };
-  
+
   useEffect(() => {
     getDetailData();
   }, []);
-  
+
   return (
     <Container>
       <LoginHeader />
@@ -52,6 +53,5 @@ function DetailDiary() {
     </Container>
   );
 }
-
 
 export default DetailDiary;

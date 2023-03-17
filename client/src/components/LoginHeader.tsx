@@ -14,7 +14,7 @@ const HeaderWrapper = styled.div`
   min-width: 300px;
   display: flex;
   align-items: center;
-  height: 70px;
+  height: 80px;
   padding: 0 15px 0 15px;
   justify-content: space-between;
 
@@ -29,7 +29,7 @@ const HeaderWrapper = styled.div`
     position: relative;
 
     > .dropdown {
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 400;
       width: 150px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
@@ -47,14 +47,16 @@ const HeaderWrapper = styled.div`
         color: black;
         padding: 12px 10px 10px 12px;
         &:hover {
-          background-color: #dcdcdc;
+          font-weight: 600;
+          background-color: #f1f3f5;
         }
       }
 
       > li {
         padding: 10px 10px 12px 12px;
         &:hover {
-          background-color: #dcdcdc;
+          font-weight: 600;
+          background-color: #f1f3f5;
         }
       }
     }

@@ -1,7 +1,6 @@
-import { Link,useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IDiaryData } from "./DiaryMain";
-// import { Link } from "react-router-dom";
 // import { AiFillHeart } from "react-icons/ai";
 
 const DiaryListContainer = styled.li`
@@ -45,14 +44,14 @@ const InfoArea = styled.div`
 
 const Tag = styled.ul`
   display: flex;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: #757170;
   list-style: none;
 
   > li {
     margin-right: 5px;
-    padding: 2px 5px 2px 5px;
+    padding: 3px 6px 3px 6px;
     border: 1px solid #d1d1d1;
     border-radius: 50px;
   }
@@ -61,7 +60,7 @@ const Tag = styled.ul`
 const UserArea = styled.div`
   display: flex;
   align-items: center;
-  padding: 7px 15px 0 15px;
+  padding: 8px 15px 8px 15px;
   border-top: 1px solid #f1f3f5;
 `;
 
@@ -92,11 +91,12 @@ interface IDiaryDataProps {
 }
 
 function DiaryList({ list }: IDiaryDataProps) {
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const clickHandler = () => {
-    navigate(`/DetailDiary/${list.diary_id}`)
-  }
+    navigate(`/DetailDiary/${list.diary_id}`);
+  };
+
   return (
     <DiaryListContainer onClick={clickHandler}>
       <Thumbnail>썸네일 이미지</Thumbnail>

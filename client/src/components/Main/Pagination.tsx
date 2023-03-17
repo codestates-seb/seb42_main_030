@@ -22,7 +22,6 @@ const PageNum = styled.div`
     height: 20px;
     background-color: transparent;
     border: none;
-    color: ${(props) => props.theme.text};
     font-size: 15px;
     margin: 0 5px 0 5px;
   }
@@ -31,32 +30,32 @@ const PageNum = styled.div`
     width: 30px;
     height: 30px;
     border-radius: 3px;
-    background-color: #ffe575;
+    background-color: #ffefd5;
     border: none;
     border-radius: 50px;
-    color: black;
+    color: #1c1a16;
     font-weight: 600;
   }
-
-  /* > button:hover {
-    text-decoration: none;
-  } */
 `;
 
 interface PaginationProps {
   allPageLength: number;
-  limit: number;
+  LIMIT_COUNT: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Pagination({ allPageLength, limit, page, setPage }: PaginationProps) {
+function Pagination({
+  allPageLength,
+  LIMIT_COUNT,
+  page,
+  setPage,
+}: PaginationProps) {
   const [blockNum, setBlockNum] = useState<number>(0); // 페이지 당 표시할 페이지네이션 수
-  const pageLimit: number = 10; // 페이지 당 표시할 페이지네이션 수 (기본값 : 10개의 페이지네이션 노출)
-  const blockArea: number = blockNum * pageLimit; // 각 페이지에서 첫 페이지네이션의 위치 계산
 
-  // 필요한 페이지 개수 === 총 데이터 수(allPageLength === todoData.length) / 페이지 당 표시할 데이터 수(limit === 10)
-  const numAllPages: number = Math.ceil(allPageLength / limit);
+  const PAGE_COUNT: number = 10; // 페이지 당 표시할 페이지네이션 수 (기본값 : 10개의 페이지네이션 노출)
+  const BLOCK_AREA: number = blockNum * PAGE_COUNT; // 각 페이지에서 첫 페이지네이션의 위치 계산
+  const numAllPages: number = Math.ceil(allPageLength / LIMIT_COUNT); // 필요한 페이지 개수
 
   // 새로운 배열 생성 함수
   const createArr = (n: number) => {
@@ -78,7 +77,7 @@ function Pagination({ allPageLength, limit, page, setPage }: PaginationProps) {
   // 제일 마지막 페이지로 이동하는 버튼 이벤트 핸들러
   const lastPageHandler = () => {
     setPage(numAllPages);
-    setBlockNum(Math.ceil(numAllPages / pageLimit) - 1);
+    setBlockNum(Math.ceil(numAllPages / PAGE_COUNT) - 1);
     window.scrollTo(0, parseInt(document.body.style.top || "0", 10) * -1);
   };
 
@@ -86,7 +85,7 @@ function Pagination({ allPageLength, limit, page, setPage }: PaginationProps) {
   const prevPageHandler = () => {
     if (page <= 1) {
       return;
-    } else if (page - 1 <= pageLimit * blockNum) {
+    } else if (page - 1 <= PAGE_COUNT * blockNum) {
       setBlockNum((n: number) => n - 1);
     }
     setPage((n: number) => n - 1);
@@ -97,7 +96,7 @@ function Pagination({ allPageLength, limit, page, setPage }: PaginationProps) {
   const nextPageHandler = () => {
     if (page >= numAllPages) {
       return;
-    } else if (pageLimit * (blockNum + 1) < page + 1) {
+    } else if (PAGE_COUNT * (blockNum + 1) < page + 1) {
       setBlockNum((n: number) => n + 1);
     }
     setPage((n: number) => n + 1);
@@ -120,7 +119,7 @@ function Pagination({ allPageLength, limit, page, setPage }: PaginationProps) {
       >
         <BiLeftArrowAlt size={19} />
       </button>
-      {allArr.slice(blockArea, pageLimit + blockArea).map((n) => (
+      {allArr.slice(BLOCK_AREA, PAGE_COUNT + BLOCK_AREA).map((n) => (
         <button
           className={page === n ? "pageTab pageFocused" : "pageTab"}
           key={n}
