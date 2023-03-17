@@ -229,7 +229,7 @@ export default function NewDiary(): JSX.Element {
           취소
         </button>
         <button className='registration' type="submit"> 
-          등록
+          등록.
         </button>
       </div>
     </NewDiaryContainer>
