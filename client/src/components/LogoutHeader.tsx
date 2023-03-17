@@ -15,6 +15,11 @@ const HeaderWrapper = styled.div`
   height: 70px;
   padding: 0 15px 0 15px;
   justify-content: space-between;
+
+  > a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const Logo = styled.div`
@@ -45,7 +50,9 @@ function LogoutHeader() {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Logo>나만의 작은 음악 다이어리</Logo>
+        <Link to='/'>
+          <Logo>나만의 작은 음악 다이어리</Logo>
+        </Link>
         <div className='buttonArea'>
           <Link to='/Login'>
             <SubmitButton>새 플레이리스트 등록</SubmitButton>
