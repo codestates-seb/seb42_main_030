@@ -18,20 +18,20 @@ const HeaderWrapper = styled.div`
   padding: 0 15px 0 15px;
   justify-content: space-between;
 
+  > a {
+    color: black;
+    text-decoration: none;
+  }
+
   .buttonArea {
     display: flex;
     align-items: center;
     position: relative;
 
-    > a {
-      text-decoration: none;
-    }
-
     > .dropdown {
       font-size: 15px;
       font-weight: 400;
       width: 150px;
-      padding: 3px 12px 3px 12px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
       background-color: white;
       display: flex;
@@ -40,15 +40,22 @@ const HeaderWrapper = styled.div`
       top: 55px;
       right: 1px;
       list-style: none;
+      z-index: 1;
 
       > a {
         text-decoration: none;
         color: black;
-        margin: 10px 0px;
+        padding: 12px 10px 10px 12px;
+        &:hover {
+          background-color: #dcdcdc;
+        }
       }
 
       > li {
-        margin: 10px 0px;
+        padding: 10px 10px 12px 12px;
+        &:hover {
+          background-color: #dcdcdc;
+        }
       }
     }
   }
@@ -92,13 +99,21 @@ function LoginHeader() {
     setIsOpen(!isOpen);
   };
 
+  const closeDropdown = () => {
+    setIsOpen(false);
+  };
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Logo>나만의 작은 음악 다이어리</Logo>
+        <Link to='/'>
+          <Logo onClick={closeDropdown}>나만의 작은 음악 다이어리</Logo>
+        </Link>
         <div className='buttonArea'>
           <Link to='/NewDiary'>
-            <SubmitButton>새 플레이리스트 등록</SubmitButton>
+            <SubmitButton onClick={closeDropdown}>
+              새 플레이리스트 등록
+            </SubmitButton>
           </Link>
           <ProfileButton onClick={openDropdown}>
             <Profile />
@@ -107,9 +122,9 @@ function LoginHeader() {
           {isOpen ? (
             <ul className='dropdown'>
               <Link to='/Mypage'>
-                <li>마이페이지</li>
+                <li onClick={closeDropdown}>마이페이지</li>
               </Link>
-              <li>로그아웃</li>
+              <li onClick={closeDropdown}>로그아웃</li>
             </ul>
           ) : null}
         </div>
