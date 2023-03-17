@@ -1,5 +1,14 @@
-function Login() {
-  return <div>이곳은 로그인 페이지입니다.</div>;
+import LogoutHeader from "../components/LogoutHeader";
+import Login from "../components/Login/Login";
+
+
+function LoginPage() {
+  return (
+    <>
+    <LogoutHeader/>
+    <Login/>
+    </>
+  );
 }
 
-export default Login;
+export default LoginPage;

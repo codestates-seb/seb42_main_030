@@ -1,3 +1,4 @@
+import { Link,useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import { IDiaryData } from "./DiaryMain";
 // import { Link } from "react-router-dom";
@@ -91,8 +92,13 @@ interface IDiaryDataProps {
 }
 
 function DiaryList({ list }: IDiaryDataProps) {
+  const navigate = useNavigate()
+  
+  const clickHandler = () => {
+    navigate(`/DetailDiary/${list.diary_id}`)
+  }
   return (
-    <DiaryListContainer>
+    <DiaryListContainer onClick={clickHandler}>
       <Thumbnail>썸네일 이미지</Thumbnail>
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>
