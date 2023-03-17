@@ -1,7 +1,7 @@
 package com.seb42.main30.seb42_main_030.comment.entity;
 
 
-import com.seb42.main30.seb42_main_030.basetime.BaseTimeEntity;
+import com.seb42.main30.seb42_main_030.audit.basetime.BaseTimeEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
