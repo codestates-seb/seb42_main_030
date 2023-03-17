@@ -45,6 +45,9 @@ const InfoArtist = styled.div`
 const InfoAlbum = styled.div`
   width:170px;
 `
+const InfoListen = styled.div`
+  width: 100px;
+`
 export default function PlayList() {
   return (
     <Container>
@@ -61,7 +64,7 @@ export default function PlayList() {
         <InfoSong>곡</InfoSong>
         <InfoArtist>아티스트</InfoArtist>
         <InfoAlbum>앨범</InfoAlbum>
-        <div>듣기</div>
+        <InfoListen>듣기</InfoListen>
       </ListInfo>
       <List />
     </Container>

@@ -102,8 +102,8 @@ export default function DetailHeader() {
           <AiFillHeart />
           좋아요
         </Like>
-        <Edit>수정</Edit>
-        <Delete>삭제</Delete>
+        <Edit href="http://www.naver.com">수정</Edit>
+        <Delete href="http://www.naver.com">삭제</Delete>
       </TitleWrap>
       <ImgWrap>
         <Img src='https://cdn.pixabay.com/photo/2023/02/18/16/02/bicycle-7798227_1280.jpg' />

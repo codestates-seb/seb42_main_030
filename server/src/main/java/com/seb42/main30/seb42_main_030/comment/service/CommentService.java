@@ -3,9 +3,9 @@ package com.seb42.main30.seb42_main_030.comment.service;
 
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.comment.repository.CommentRepository;
-import com.seb42.main30.seb42_main_030.domain.user.entity.User;
-import com.seb42.main30.seb42_main_030.domain.user.repository.UserRepository;
-import com.seb42.main30.seb42_main_030.domain.user.service.UserService;
+import com.seb42.main30.seb42_main_030.user.entity.User;
+import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
+import com.seb42.main30.seb42_main_030.user.service.UserService;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
 import lombok.AllArgsConstructor;

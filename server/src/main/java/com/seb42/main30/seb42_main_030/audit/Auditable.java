@@ -1,4 +1,4 @@
-package com.seb42.main30.seb42_main_030.domain.audit;
+package com.seb42.main30.seb42_main_030.audit;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

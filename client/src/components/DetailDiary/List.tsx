@@ -19,7 +19,7 @@ const ListImg = styled.img`
 `
 const ListTitle = styled.h3`
   margin-left:1rem;
-  width:600px;
+  width:470px;
 `
 const ListArtist = styled.h3`
   width:200px;

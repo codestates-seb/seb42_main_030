@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 import Comment from './Comment'
 const Container = styled.div`
   max-width:1440px;
@@ -12,7 +13,7 @@ const Title = styled.div`
   display:flex;
   justify-content:space-between;
 `
-const InputWrap = styled.form`
+const Form = styled.form`
   display:flex;
   align-items:center;
   margin-top:1rem;
@@ -42,20 +43,31 @@ export default function CommentInput() {
   const changeHandler = (e: any) => {
     setText(e.target.value)
   }
+  const submitHandler = () => {
+    axios
+  .post(`http://localhost:3001/diary`, {
+    comment: {text},
+    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
+    categories: [3],
+  })
+  .then(response => {
+    console.log(response);
+  });
+  }
   return (
     <Container>
       <Title>
         <h1>댓글달기</h1>
         <PrincipalButton>댓글 운영 원칙</PrincipalButton>
       </Title>
-      <InputWrap>
+      <Form onSubmit={submitHandler}>
         <TextArea 
           placeholder='댓글을 남겨주세요~!'
           value={text}
           onChange={changeHandler}
         />
         <Button>등록</Button>
-      </InputWrap>
+      </Form>
     </Container>
 
   )
