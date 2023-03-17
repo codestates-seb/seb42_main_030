@@ -25,9 +25,6 @@ const PageNum = styled.div`
     color: ${(props) => props.theme.text};
     font-size: 15px;
     margin: 0 5px 0 5px;
-    &:hover {
-      background-color: gray;
-    }
   }
 
   > .pageFocused {

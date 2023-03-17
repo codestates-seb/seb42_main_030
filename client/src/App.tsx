@@ -1,3 +1,5 @@
+// import LogoutHeader from "./components/LogoutHeader";
+import LoginHeader from "./components/LoginHeader";
 import Main from "./pages/Main";
 import NewDiary from "./pages/NewDiary";
 import Mypage from "./pages/Mypage";
@@ -20,6 +22,8 @@ function App() {
   return (
     <div className='App'>
       <GlobalStyle />
+      {/* <LogoutHeader /> */}
+      <LoginHeader />
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/NewDiary' element={<NewDiary />} />
