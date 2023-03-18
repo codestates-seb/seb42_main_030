@@ -30,7 +30,7 @@ public class CommentController {
 
 // 답글 등록
     @PostMapping
-    public ResponseEntity createComment (@Valid @RequestBody CommentDto.Post post) {
+    public ResponseEntity postComment (@Valid @RequestBody CommentDto.Post post) {
 
         Comment comment = commentService.createComment (mapper.commentPostToComment(post));
         CommentDto response = mapper.commentToCommentDto(comment);
@@ -75,7 +75,7 @@ public class CommentController {
 
 //    댓글 삭제
     @DeleteMapping("/{comment-id}")
-    public ResponseEntity deletComment (@PathVariable("comment-id") long commentId) throws BusinessException {
+    public ResponseEntity deleteComment (@PathVariable("comment-id") long commentId) throws BusinessException {
         try {
             commentService.deleteComment(commentId);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
