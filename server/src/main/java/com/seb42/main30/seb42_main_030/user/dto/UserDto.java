@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class UserDto {
@@ -13,10 +15,16 @@ public class UserDto {
     @AllArgsConstructor
     public static class Post {
 
-        @NotNull
+        @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
         private String nickname;
+
+        @NotBlank(message = "이메일은 공백이 아니어야 합니다.")
+        @Email
         private String email;
+
+        @NotBlank(message = "비밀번호는 공백이 아니어야 합니다.")
         private String password;
+
         private String imageUrl;
 
     }
@@ -28,9 +36,12 @@ public class UserDto {
 
         private long userId;
 
-        @NotNull
+        @NotBlank(message = "닉네임은 공백이 아니어야 합니다.")
         private String nickname;
+
+        @NotBlank(message = "비밀번호는 공백이 아니어야 합니다.")
         private String password;
+
         private String imageUrl;
 
     }
@@ -42,6 +53,7 @@ public class UserDto {
         private long userId;
 
         private String nickname;
+        private String email;
         private String password;
         private String imageUrl;
     }

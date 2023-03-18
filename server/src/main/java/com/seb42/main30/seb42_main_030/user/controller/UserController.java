@@ -1,5 +1,6 @@
 package com.seb42.main30.seb42_main_030.user.controller;
 
+import com.seb42.main30.seb42_main_030.response.SingleResponseDto;
 import com.seb42.main30.seb42_main_030.user.dto.UserDto;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.mapper.UserMapper;
@@ -40,6 +41,7 @@ public class UserController {
                 new SingleResponseDto<>(mapper.userToUserResponse(createUser)), HttpStatus.CREATED);
     }
 
+
     // (2) user 정보 조회
     @GetMapping("/{user-id}")
     public ResponseEntity getUser(@PathVariable("user-id") @Positive long userId) {
@@ -53,11 +55,11 @@ public class UserController {
     // (3) user 정보 수정
     @PatchMapping("/{user-id}")
     public ResponseEntity patchUser(@PathVariable("user-id") @Positive long userId,
-                                    @Valid @RequestBody UserDto.Patch requestBody) {
+                                    @Valid @RequestBody UserDto.Patch patch) {
 
-        requestBody.setUserId(userId);
+        patch.setUserId(userId);
 
-        User updateUser = userService.updateUser(mapper.userPatchToUser(requestBody));
+        User updateUser = userService.updateUser(mapper.userPatchToUser(patch));
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.userToUserResponse(updateUser)), HttpStatus.OK);
