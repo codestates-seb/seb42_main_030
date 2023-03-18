@@ -1,6 +1,7 @@
 package com.seb42.main30.seb42_main_030.auth.utils;
 
 import com.google.gson.Gson;
+import com.seb42.main30.seb42_main_030.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
