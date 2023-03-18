@@ -1,29 +1,5 @@
 package com.seb42.main30.seb42_main_030.diary.controller;
 
-<<<<<<< HEAD
-import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-@RestController
-@RequiredArgsConstructor
-@Validated
-@RequestMapping("")
-public class DiaryController {
-    // 게시물 등록
-
-
-    // 게시물 조회
-
-
-    // 게시물 '전체'조회
-
-
-    // 게시물 수정
-
-
-    // 게시물 삭제
-=======
 import com.seb42.main30.seb42_main_030.comment.service.CommentService;
 import com.seb42.main30.seb42_main_030.diary.dto.DiaryDto;
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
@@ -128,6 +104,5 @@ public class DiaryController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
->>>>>>> f6df19e229ceb12e4523b282283d8cbe30b282e7
 
 }

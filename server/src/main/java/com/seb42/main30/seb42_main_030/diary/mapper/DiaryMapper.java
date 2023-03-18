@@ -1,8 +1,6 @@
 package com.seb42.main30.seb42_main_030.diary.mapper;
 
-<<<<<<< HEAD
 public class DiaryMapper {
-=======
 
 import com.seb42.main30.seb42_main_030.comment.dto.CommentDto;
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
@@ -33,5 +31,4 @@ public interface DiaryMapper {
     @Mapping(source = "diary.diaryId", target = "diaryId")
     CommentDto commentToCommentDto(Comment comment);
 
->>>>>>> f6df19e229ceb12e4523b282283d8cbe30b282e7
 }
