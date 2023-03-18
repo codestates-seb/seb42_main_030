@@ -1,9 +1,5 @@
 package com.seb42.main30.seb42_main_030.diary.service;
 
-
-<<<<<<< HEAD
-public class DiaryService {
-=======
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import com.seb42.main30.seb42_main_030.diary.repository.DiaryRepository;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
@@ -93,5 +89,4 @@ public class DiaryService {
         return diary;
     }
 
->>>>>>> f6df19e229ceb12e4523b282283d8cbe30b282e7
 }

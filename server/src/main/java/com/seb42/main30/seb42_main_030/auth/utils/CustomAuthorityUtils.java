@@ -5,13 +5,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthorityUtils {
+    private final List<String> USER_ROLES_STRING = List.of("USER");
 
-    public List<GrantedAuthority> stringToGrantedAuthority(String role) {
-        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority("ROLE_"+role);
-        List<GrantedAuthority> authorities = List.of(simpleGrantedAuthority);
+    public List<String> createRoles() {
+        return USER_ROLES_STRING;
+    }
+
+    public List<GrantedAuthority> createAuthorities(List<String> roles) {
+        List<GrantedAuthority> authorities =
+                roles.stream()
+                        .map(role -> new SimpleGrantedAuthority(String.format("ROLE_%s", role)))
+                        .collect(Collectors.toList());
 
         return authorities;
     }

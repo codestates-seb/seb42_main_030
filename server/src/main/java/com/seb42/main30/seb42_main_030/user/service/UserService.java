@@ -1,14 +1,9 @@
 package com.seb42.main30.seb42_main_030.user.service;
 
-<<<<<<< HEAD
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
-
-@Service
-=======
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
 import com.seb42.main30.seb42_main_030.user.entity.User;
@@ -28,29 +23,10 @@ import java.util.Optional;
 @Transactional
 @Service
 @AllArgsConstructor
->>>>>>> f6df19e229ceb12e4523b282283d8cbe30b282e7
 public class UserService {
 
     private final UserRepository userRepository;
 
-<<<<<<< HEAD
-    // todo (1) user 등록(소셜 회원 가입)
-
-    // (2) user 정보 수정
-    public User updateUser(User user) {
-        User findUser = findVerifiedUser(user.getUserId());
-
-        Optional.ofNullable(user.getNickname())
-                .ifPresent(name -> findUser.setNickname(name));
-        Optional.ofNullable(user.getImageUrl())
-                .ifPresent(url -> findUser.setImageUrl(url));
-
-        // 회원정보 업데이트
-        return userRepository.save(findUser);
-    }
-
-    // todo (3) user 정보 조회
-=======
     // (1) user 등록(자체 회원 가입)
     public User createUser(User user) {
 
@@ -92,18 +68,11 @@ public class UserService {
     }
 
     // (3) user 정보 조회
->>>>>>> f6df19e229ceb12e4523b282283d8cbe30b282e7
     public User findUser(long userId) {
         return findVerifiedUser(userId);
     }
 
-<<<<<<< HEAD
-    // todo (4) 회원 탈퇴
-    public void deleteUser(long userId) {
 
-    }
-
-=======
     // (4) 회원 탈퇴
     public void deleteUser(long userId) {
         User findUser = findVerifiedUser(userId);
@@ -128,10 +97,6 @@ public class UserService {
         if(user.isPresent())
             throw new BusinessException(ExceptionCode.USER_EXISTS);
     }
-
-
-
->>>>>>> f6df19e229ceb12e4523b282283d8cbe30b282e7
 
 }
 

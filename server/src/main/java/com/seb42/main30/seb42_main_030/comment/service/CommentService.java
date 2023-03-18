@@ -5,10 +5,7 @@ import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.comment.repository.CommentRepository;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
-<<<<<<< HEAD
 import com.seb42.main30.seb42_main_030.user.service.UserService;
-=======
->>>>>>> f6df19e229ceb12e4523b282283d8cbe30b282e7
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
 import com.seb42.main30.seb42_main_030.user.service.UserService;

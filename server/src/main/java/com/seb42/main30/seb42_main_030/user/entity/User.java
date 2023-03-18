@@ -1,8 +1,5 @@
 package com.seb42.main30.seb42_main_030.user.entity;
 
-<<<<<<< HEAD
-public class User {
-=======
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import lombok.Getter;
@@ -52,5 +49,4 @@ public class User {
         this.nickname = nickname;
         this.imageUrl = imageUrl;
     }
->>>>>>> f6df19e229ceb12e4523b282283d8cbe30b282e7
 }
