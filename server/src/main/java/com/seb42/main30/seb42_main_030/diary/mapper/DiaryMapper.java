@@ -1,7 +1,5 @@
 package com.seb42.main30.seb42_main_030.diary.mapper;
 
-public class DiaryMapper {
-
 import com.seb42.main30.seb42_main_030.comment.dto.CommentDto;
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.diary.dto.DiaryDto;
