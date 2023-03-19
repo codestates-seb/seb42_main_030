@@ -1,7 +1,7 @@
 package com.seb42.main30.seb42_main_030.comment.mapper;
 
 
-import com.seb42.main30.seb42_main_030.comment.controller.dto.CommentDto;
+import com.seb42.main30.seb42_main_030.comment.dto.CommentDto;
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
