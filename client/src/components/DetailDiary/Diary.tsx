@@ -8,15 +8,15 @@ const Container = styled.div`
 const H1 = styled.h1`
   margin-bottom: 2rem;
 `
-export interface propsType {
+interface propsType {
   detail: IDiaryData
 }
-export default function Diary() {
+export default function Diary({detail}: propsType) {
   return (
     <Container>
       <H1>내가 작성한 다이어리 ( 본인의 플레이리스트와 함께 작성한 다이어리가 들어 갈 곳)</H1>
       <div>
-        {/* {detail.body} */}
+        {detail.body}
       </div>
     </Container>
   )

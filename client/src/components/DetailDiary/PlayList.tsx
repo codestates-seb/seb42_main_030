@@ -26,25 +26,31 @@ const ListInfo = styled.div`
   border-bottom:1px solid;
 `
 const InfoInput = styled.div`
-  width:13px;
+  width:79px;
   height:13px;
-  margin-right:1rem;
+  /* background-color:black; */
+  /* margin-right:1rem; */
 `
 const InfoImg = styled.div`
   width:50px;
   height:20px;
 `
 const InfoSong = styled.div`
-  width:460px;
+  width:400px;
   height:20px;
-  margin-left:2rem;
+  padding-left:1rem;
 `
 const InfoArtist = styled.div`
-  width:150px;
+  width:200px;
+  padding-left:1rem;
+  /* background-color:black; */
 `
+
+
 const InfoAlbum = styled.div`
-  margin-left:1rem;
-  width:170px;
+  padding-left:1rem;
+  width:250px;
+  /* background-color:black; */
 `
 const InfoListen = styled.div`
   width: 100px;
@@ -61,7 +67,7 @@ export default function PlayList() {
       </ListTitle>
       <ListInfo>
         <InfoInput></InfoInput>
-        <InfoImg></InfoImg>
+        {/* <InfoImg></InfoImg> */}
         <InfoSong>곡</InfoSong>
         <InfoArtist>아티스트</InfoArtist>
         <InfoAlbum>앨범</InfoAlbum>

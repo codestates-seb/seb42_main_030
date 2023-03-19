@@ -114,7 +114,7 @@ const postDelete= () => {
     })
 }
 
-export interface propsType {
+interface propsType {
   detail: IDiaryData
 }
 export default function DetailHeader({detail}: propsType) {
@@ -122,8 +122,8 @@ export default function DetailHeader({detail}: propsType) {
     <Container>
       <TitleWrap>
         <TitleLeft>
-          {/* <Title>{detail.title}</Title> */}
-          <Title>Lorem ipsum dolor, sit amet consectetur adm  </Title>
+          <Title>{detail.title}</Title>
+          {/* <Title>Lorem ipsum dolor, sit amet consectetur adm  </Title> */}
           <Like>
             <AiFillHeart />
             좋아요
@@ -140,16 +140,16 @@ export default function DetailHeader({detail}: propsType) {
         <Info>
           <Writer>
             <H5>뮤직 pd</H5>
-            {/* <H55>{detail.nickname}</H55> */}
+            <H55>{detail.nickname}</H55>
           </Writer>
           <Writer>
             <H5>등록일</H5>
-            {/* <H55>{detail.createdAt}</H55> */}
+            <H55>{detail.createdAt}</H55>
           </Writer>
           <Tag>
-          {/* {detail.tag.map((value, index) => {
+          {detail.tag.map((value, index) => {
             return <li key={index}>{value}</li>;
-          })} */}
+          })}
           </Tag>
         </Info>
       </ImgWrap>

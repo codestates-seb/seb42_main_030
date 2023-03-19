@@ -47,10 +47,12 @@ export default function CommentInput() {
   }
   const submitHandler = () => {
     axios
-  .post(`http://localhost:3001/diary`, {
-    comment: {text},
-    description: 'Unmissable Japanese Sushi restaurant. The cheese and salmon makis are delicious',
-    categories: [3],
+  .post(`http://localhost:3001/comment`, {
+    commentId: 2,
+    nickname: 'hdh',
+    body: '잘 보고 갑니다',
+    createdAt: '2023-03-18',
+    modifiedAt: '2023-03-18'
   })
   .then(response => {
     console.log(response);

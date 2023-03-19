@@ -34,7 +34,6 @@ function DetailDiary() {
   const { diary_id } = useParams();
 
   const getDetailData = async () => {
-    
     try{
       const res = await axios.get(`http://localhost:3001/diary?diary_id=${diary_id}`);
     setDetailData(res.data);
@@ -43,6 +42,7 @@ function DetailDiary() {
     console.error(err)
   };
 }
+    
   useEffect(() => {
     getDetailData();
   },[]);
@@ -50,14 +50,22 @@ function DetailDiary() {
   
   return (
     <Container>
-
-      <DetailHeader detail={detailData[0]} />
-      <Diary />
+      {
+        detailData.map((value) => (
+          <DetailHeader detail={value} key={value.diary_id} />
+        ))
+      }
+      {
+        detailData.map((value) => {
+      return <Diary detail={value} key={value.diary_id}/>
+        })
+      }
       <PlayList />
       <CommentInput />
     </Container>
   );
 }
+
 
 
 export default DetailDiary;

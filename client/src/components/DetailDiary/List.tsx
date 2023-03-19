@@ -19,15 +19,17 @@ const ListImg = styled.img`
   height:50px;
 `
 const ListTitle = styled.h3`
-  margin-left:1rem;
+  padding-left:1rem;
   width:400px;
 `
 const ListArtist = styled.h3`
-  width:130px;
+  padding-left:1rem;
+  width:200px;
 `
+
 const ListAlbum = styled.h3`
-  /* margin-left:1rem; */
-  width:170px;
+  padding-left:1rem;
+  width:250px;
 `
 
 export default function List() {
