@@ -4,11 +4,6 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const DiaryMainContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const ListTab = styled.ul`
   display: flex;
   justify-content: center;
@@ -48,6 +43,11 @@ const ListTab = styled.ul`
       font-weight: 700;
     }
   }
+`;
+
+const DiaryMainContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const DiaryMainWrapper = styled.ul`
