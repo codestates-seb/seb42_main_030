@@ -297,6 +297,13 @@
       "body": "첫번째 다이어리의 첫번째 댓글 내용",
       "createdAt": "2023-03-05",
       "modifiedAt": "2023-03-05"
+    },
+    {
+      "commentId": 2,
+      "nickname": "daehee",
+      "body": "첫번째 다이어리의 두번째 댓글 내용",
+      "createdAt": "2023-03-05",
+      "modifiedAt": "2023-03-05"
     }
   ]
 }

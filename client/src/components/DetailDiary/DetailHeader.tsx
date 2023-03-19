@@ -26,7 +26,7 @@ const TitleRight = styled.div`
   display:flex;
 `
 
-const Title = styled.h2`
+const Title = styled.h1`
   font-weight: bold;
   /* border: 1px solid ; */
   /* max-width: 60%; */
@@ -42,7 +42,9 @@ const Like = styled.button`
   border-radius:1rem;
   max-height:4rem;
   min-width:5rem;
-
+  display:flex;
+  align-items:center;
+  gap:0.3rem;
 `
 const Edit = styled.a`
   margin-left: 2rem;
@@ -78,15 +80,18 @@ const Writer = styled.div`
   display:flex;
   gap:1rem;
 `
-const H5 = styled.h3`
+const H3 = styled.h3`
 margin-left:1rem;
 margin-bottom: 1rem;
 /* display:inline-block; */
 width:5rem;
+font-weight:normal;
 `
-const H55 = styled.h4`
+const H4 = styled.h4`
   /* display: inline-block; */
   margin-left: 2rem;
+font-weight:normal;
+
   /* width:30rem; */
 `
 
@@ -127,6 +132,7 @@ export default function DetailHeader({detail}: propsType) {
           <Like>
             <AiFillHeart />
             좋아요
+            {detail.like}
           </Like>
         </TitleLeft>
         <TitleRight>
@@ -139,12 +145,12 @@ export default function DetailHeader({detail}: propsType) {
         <Img src='https://cdn.pixabay.com/photo/2023/02/18/16/02/bicycle-7798227_1280.jpg' />
         <Info>
           <Writer>
-            <H5>뮤직 pd</H5>
-            <H55>{detail.nickname}</H55>
+            <H3>뮤직 pd</H3>
+            <H4>{detail.nickname}</H4>
           </Writer>
           <Writer>
-            <H5>등록일</H5>
-            <H55>{detail.createdAt}</H55>
+            <H3>등록일</H3>
+            <H4>{detail.createdAt}</H4>
           </Writer>
           <Tag>
           {detail.tag.map((value, index) => {

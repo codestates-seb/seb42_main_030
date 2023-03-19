@@ -2,7 +2,8 @@ import DetailHeader from '../components/DetailDiary/DetailHeader';
 // import LoginHeader from '../components/LoginHeader';
 import Diary from '../components/DetailDiary/Diary'
 import PlayList from '../components/DetailDiary/PlayList';
-import CommentInput from '../components/DetailDiary/CommentInput';
+// import CommentList from '../components/DetailDiary/CommentList';
+import Comment from '../components/DetailDiary/Comment'
 import styled from 'styled-components';
 import  {useState,useEffect} from 'react';
 import { useParams } from 'react-router-dom';
@@ -28,9 +29,18 @@ export interface IDiaryData {
   viewcount: number;
 }
 
+// export interface CommentData {
+//   commentId: number;
+//   nickname: string;
+//   body: string;
+//   createdAt: string;
+//   modifiedAt: string;
+// }
+
 
 function DetailDiary() {
   const [detailData, setDetailData] = useState<IDiaryData[]>([]);
+  // const [commentData, setCommentData] = useState<CommentData[]>([])
   const { diary_id } = useParams();
 
   const getDetailData = async () => {
@@ -47,7 +57,13 @@ function DetailDiary() {
     getDetailData();
   },[]);
 
-  
+  // const getCommentData = async () => {
+  //   const comment = await axios.get(`http://localhost:3001/comment`)
+  //   setCommentData(comment.data)
+  // }
+  // useEffect(() => {
+  //   getCommentData();
+  // },[]);
   return (
     <Container>
       {
@@ -61,7 +77,13 @@ function DetailDiary() {
         })
       }
       <PlayList />
-      <CommentInput />
+      <Comment />
+      {/* <h1>댓글</h1> */}
+      {/* {
+        commentData.map((value) => {
+          return <CommentList comment={value} key={value.commentId} />
+        })
+      } */}
     </Container>
   );
 }
