@@ -1,9 +1,10 @@
 package com.seb42.main30.seb42_main_030.diary.service;
 
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
-import com.seb42.main30.seb42_main_030.diary.repository.DiaryRepository;
+
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
+import com.seb42.main30.seb42_main_030.mainpage.repository.DiaryRepository;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
 import com.seb42.main30.seb42_main_030.user.service.UserService;
