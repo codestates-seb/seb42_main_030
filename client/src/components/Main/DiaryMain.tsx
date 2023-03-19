@@ -65,11 +65,12 @@ export interface IDiaryData {
   nickname: string;
   title: string;
   body: string;
-  like: number;
-  tag: string[];
   createdAt: string;
   modifiedAt: string;
   viewcount: number;
+  tag: string[];
+  like: number;
+  comment: object[];
 }
 
 function DiaryMain() {

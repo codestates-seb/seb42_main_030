@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IDiaryData } from "./DiaryMain";
-// import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
+import { FaRegCommentDots } from "react-icons/fa";
 
 const DiaryListContainer = styled.li`
   box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
@@ -60,6 +61,7 @@ const Tag = styled.ul`
 const UserArea = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 8px 15px 8px 15px;
   border-top: 1px solid #f1f3f5;
 `;
@@ -75,6 +77,8 @@ const Profile = styled.div`
 
 const ByUsername = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
   font-size: 13px;
   font-weight: 500;
   color: #21252b;
@@ -83,6 +87,21 @@ const ByUsername = styled.div`
     font-size: 12px;
     color: gray;
     margin-right: 5px;
+  }
+`;
+
+const LikeAndComment = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+
+  > .likeIcon {
+    color: red;
+    margin-right: 5px;
+  }
+
+  > .commentIcon {
+    margin: 0 5px 0 10px;
   }
 `;
 
@@ -110,13 +129,17 @@ function DiaryList({ list }: IDiaryDataProps) {
         </Tag>
       </InfoArea>
       <UserArea>
-        <Profile />
         <ByUsername>
+          <Profile />
           <div className='by'>by</div>
           {list.nickname}
         </ByUsername>
-        {/* <AiFillHeart />
-        {list.like} */}
+        <LikeAndComment>
+          <AiFillHeart className='likeIcon' size={16} />
+          {list.like}
+          <FaRegCommentDots className='commentIcon' size={15} />
+          {list.comment.length}
+        </LikeAndComment>
       </UserArea>
     </DiaryListContainer>
   );
