@@ -1,5 +1,5 @@
 import DetailHeader from '../components/DetailDiary/DetailHeader';
-import LoginHeader from '../components/LoginHeader';
+// import LoginHeader from '../components/LoginHeader';
 import Diary from '../components/DetailDiary/Diary'
 import PlayList from '../components/DetailDiary/PlayList';
 import CommentInput from '../components/DetailDiary/CommentInput';
@@ -16,36 +16,42 @@ const Container = styled.div`
     padding: 0 10rem;
     margin:0 auto;
 `
-// export interface IDiaryData {
-//   diary_id: number;
-//   nickname: string;
-//   title: string;
-//   body: string;
-//   like: number;
-//   tag: string[];
-//   createdAt: string;
-//   modifiedAt: string;
-//   viewcount: number;
-// }
+export interface IDiaryData {
+  diary_id: number;
+  nickname: string;
+  title: string;
+  body: string;
+  like: number;
+  tag: string[];
+  createdAt: string;
+  modifiedAt: string;
+  viewcount: number;
+}
+
 
 function DetailDiary() {
-  const [detailData, setDetailData] = useState([]);
+  const [detailData, setDetailData] = useState<IDiaryData[]>([]);
   const { diary_id } = useParams();
 
   const getDetailData = async () => {
-    const res = await axios.get(`http://localhost:3001/diary?diary_id=${diary_id}`);
+    
+    try{
+      const res = await axios.get(`http://localhost:3001/diary?diary_id=${diary_id}`);
     setDetailData(res.data);
-    console.log(res)
+    console.log(res.data)
+  } catch (err) {
+    console.error(err)
   };
-  
+}
   useEffect(() => {
     getDetailData();
-  }, []);
+  },[]);
+
   
   return (
     <Container>
-      <LoginHeader />
-      <DetailHeader />
+
+      <DetailHeader detail={detailData[0]} />
       <Diary />
       <PlayList />
       <CommentInput />

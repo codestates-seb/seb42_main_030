@@ -35,14 +35,15 @@ const InfoImg = styled.div`
   height:20px;
 `
 const InfoSong = styled.div`
-  width:600px;
+  width:460px;
   height:20px;
-  margin-left:1rem;
+  margin-left:2rem;
 `
 const InfoArtist = styled.div`
-  width:200px;
+  width:150px;
 `
 const InfoAlbum = styled.div`
+  margin-left:1rem;
   width:170px;
 `
 const InfoListen = styled.div`

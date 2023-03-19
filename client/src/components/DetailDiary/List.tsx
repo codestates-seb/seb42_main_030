@@ -12,6 +12,7 @@ const Lists = styled.li`
 `
 const ListCheckbox = styled.input`
   margin-right:1rem;
+
 `
 const ListImg = styled.img`
   width:50px;
@@ -19,10 +20,10 @@ const ListImg = styled.img`
 `
 const ListTitle = styled.h3`
   margin-left:1rem;
-  width:470px;
+  width:400px;
 `
 const ListArtist = styled.h3`
-  width:200px;
+  width:130px;
 `
 const ListAlbum = styled.h3`
   /* margin-left:1rem; */

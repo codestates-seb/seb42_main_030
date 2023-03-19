@@ -93,7 +93,7 @@ interface IDiaryDataProps {
 
 function DiaryList({ list }: IDiaryDataProps) {
   const navigate = useNavigate()
-  
+  //아래 clickhandler는 내가 작성한 코드
   const clickHandler = () => {
     navigate(`/DetailDiary/${list.diary_id}`)
   }

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import Comment from './Comment'
+import Modal from './Modal'
 const Container = styled.div`
   max-width:1440px;
   padding:2rem;
@@ -12,6 +13,7 @@ const Container = styled.div`
 const Title = styled.div`
   display:flex;
   justify-content:space-between;
+  align-items:center;
 `
 const Form = styled.form`
   display:flex;
@@ -58,7 +60,8 @@ export default function CommentInput() {
     <Container>
       <Title>
         <h1>댓글달기</h1>
-        <PrincipalButton>댓글 운영 원칙</PrincipalButton>
+        <Modal />
+    
       </Title>
       <Form onSubmit={submitHandler}>
         <TextArea 
