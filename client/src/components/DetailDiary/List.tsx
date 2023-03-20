@@ -12,21 +12,24 @@ const Lists = styled.li`
 `
 const ListCheckbox = styled.input`
   margin-right:1rem;
+
 `
 const ListImg = styled.img`
   width:50px;
   height:50px;
 `
 const ListTitle = styled.h3`
-  margin-left:1rem;
-  width:470px;
+  padding-left:1rem;
+  width:400px;
 `
 const ListArtist = styled.h3`
+  padding-left:1rem;
   width:200px;
 `
+
 const ListAlbum = styled.h3`
-  /* margin-left:1rem; */
-  width:170px;
+  padding-left:1rem;
+  width:250px;
 `
 
 export default function List() {
