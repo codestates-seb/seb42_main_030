@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect,useRef,Dispatch, SetStateAction } from "react";
 import QuillEditor from "../components/NewDiary/QuillEditor";
 import SpotifyWebApi from "spotify-web-api-js";
-import LoginHeader from "../components/LoginHeader";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import AddPlaylist from "../components/NewDiary/Addplaylist";
 
 const NewDiaryContainer = styled.form`
 margin: 5px;
@@ -79,26 +80,18 @@ interface Track {
   album: { name: string };
   uri: string;
 }
-// type SearchResult = Track[];
 
-
-// interface SearchResult {
-//   id: string;
-//   name: string;
-//   artists: {
-//     name: string;
-//   }[];
-//   album: {
-//     name: string;
-//   };
-//   uri: string;
-// };
 interface SearchResult {
   id: string;
   name: string;
   artists: { name: string }[];
   album: { name: string };
   uri: string;
+}
+interface AddPlaylistModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  setShowAddPlaylistModal: Dispatch<SetStateAction<boolean>>;
 }
 //스포티파이 음악 검색 함수 만들어야됨
 async function searchMusic(query: string, setSearchResults: React.Dispatch<React.SetStateAction<SearchResult[]>>) {
@@ -123,12 +116,14 @@ async function searchMusic(query: string, setSearchResults: React.Dispatch<React
   }
 }
 export default function NewDiary(): JSX.Element {
-  const [body, setBody] = useState<string>(localStorage.getItem("body") || "");
   const [title, setTitle] = useState<string>('');
-  const quillRef = useRef(null);
+  const [body, setBody] = useState<string>(localStorage.getItem("body") || "");
+  const [createdAt, setCreatedAt] = useState<string>('');
   const [htmlContent, setHtmlContent] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-
+  const [show, setShow] = useState(false);
+  const [showAddPlaylistModal, setShowAddPlaylistModal] = useState(false);
+  const quillRef = useRef(null);
   useEffect(() => {
     localStorage.setItem("body", htmlContent);
   }, [htmlContent]);
@@ -136,8 +131,8 @@ export default function NewDiary(): JSX.Element {
   const handleSubmit = async () => {
     const diaryData = {
       "diary_Id": 1,
-      "title": "테스트",
-      'body':"테스트",
+      "title": "title",
+      'body':"htmlContent",
       "playList_id": 0,
       "like":0,
       "tag":"",
@@ -158,7 +153,6 @@ export default function NewDiary(): JSX.Element {
   const searchMusic = async (setSearchResults: React.Dispatch<React.SetStateAction<SearchResult[]>>) => {
     const features = 'width=500,height=500,resizable=yes,scrollbars=yes,status=yes';
     const popup = window.open('', '', features);
-  
     const input = document.createElement('input');
     input.placeholder = '검색어를 입력하세요';
     popup?.document.body.appendChild(input);
@@ -191,7 +185,6 @@ export default function NewDiary(): JSX.Element {
    
     // 등록버튼 누르면 정보 보내게끔 뉴 다이어리 css에 적어줘야됨
     <NewDiaryContainer onSubmit={handleSubmit}>
-       <LoginHeader/>
       <div className='DiaryTitle'>
         <h3>제목</h3>
       </div>
@@ -216,20 +209,26 @@ export default function NewDiary(): JSX.Element {
         htmlContent={htmlContent}
         setHtmlContent={setHtmlContent}
       />
+      
       <div className='apl'>
         {/* addplaylist button */}
-        <button className='aplbtn' onClick={()=> searchMusic(setSearchResults)}> 
-  플레이 리스트에 추가
-</button>
+        <button className='aplbtn' onClick={() => setShowAddPlaylistModal(true)}>플레이 리스트에 추가</button>
+        <AddPlaylist
+  isOpen={showAddPlaylistModal}
+  onClose={() => setShowAddPlaylistModal(false)}
+  setShowAddPlaylistModal={setShowAddPlaylistModal}
+/>
       </div>
       <div className='pl'>플레이 리스트 들어가는곳 (스포티파이 API로 불러와야됨)</div>
       <div className='register'>
         {/* addplaylist button */}
+        <Link to='/'>
         <button className='cancel'> 
           취소
         </button>
+        </Link>
         <button className='registration' type="submit"> 
-          등록.
+          등록
         </button>
       </div>
     </NewDiaryContainer>
