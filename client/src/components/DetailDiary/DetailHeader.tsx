@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import {AiFillHeart} from 'react-icons/ai'
 import { IDiaryData } from '../Main/DiaryMain'
 import axios from 'axios'
+
+
 const Container = styled.div`
   max-width:1440px;
   padding:2rem;
@@ -96,6 +98,8 @@ font-weight:normal;
 `
 
 const Tag = styled.ul`
+  display:flex;
+  gap:0.5rem;
   position:absolute;
   top:11rem;
   margin-left:1rem;
@@ -128,7 +132,7 @@ export default function DetailHeader({detail}: propsType) {
       <TitleWrap>
         <TitleLeft>
           <Title>{detail.title}</Title>
-          {/* <Title>Lorem ipsum dolor, sit amet consectetur adm  </Title> */}
+
           <Like>
             <AiFillHeart />
             좋아요

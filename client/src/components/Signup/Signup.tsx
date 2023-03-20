@@ -37,7 +37,7 @@ const BorderLine = styled.hr`
   width: 450px;
   margin: 30px;
   border: 1px solid gray;
-`
+`;
 
 const Form = styled.form`
   width: 450px;
@@ -124,7 +124,6 @@ const UsernameInput = styled.input`
   left: 8%;
 `;
 
-
 const LoginWrapper = styled.div`
   width: fit-content;
   height: fit-content;
@@ -133,7 +132,7 @@ const LoginWrapper = styled.div`
   align-items: center;
   position: absolute;
   top: 25%;
-`
+`;
 
 const LoginContainer = styled.div`
   width: 100%;
@@ -144,8 +143,7 @@ const LoginContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   box-sizing: border-box;
-`
-
+`;
 
 const Signup = () => {
   return (
@@ -158,23 +156,21 @@ const Signup = () => {
           </SpotifyButton>
         </Buttons>
 
-        <BorderLine/>
+        <BorderLine />
 
         <Form>
           <Text>이메일로 가입하기</Text>
           <EmailText>이메일 주소</EmailText>
-          <EmailInput/>
+          <EmailInput />
           <UserText>닉네임</UserText>
-          <UsernameInput/>
+          <UsernameInput />
           <PassText>비밀번호</PassText>
-          <PassInput/>
+          <PassInput />
         </Form>
 
-        <BorderLine/>
-    
-        <SignupButton>
-            가입하기
-        </SignupButton>
+        <BorderLine />
+
+        <SignupButton>가입하기</SignupButton>
       </LoginWrapper>
     </LoginContainer>
   );

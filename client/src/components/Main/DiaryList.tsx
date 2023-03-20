@@ -1,8 +1,8 @@
-import { Link,useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IDiaryData } from "./DiaryMain";
-// import { Link } from "react-router-dom";
-// import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
+import { FaRegCommentDots } from "react-icons/fa";
 
 const DiaryListContainer = styled.li`
   box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
@@ -45,14 +45,14 @@ const InfoArea = styled.div`
 
 const Tag = styled.ul`
   display: flex;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: #757170;
   list-style: none;
 
   > li {
     margin-right: 5px;
-    padding: 2px 5px 2px 5px;
+    padding: 3px 6px 3px 6px;
     border: 1px solid #d1d1d1;
     border-radius: 50px;
   }
@@ -61,7 +61,8 @@ const Tag = styled.ul`
 const UserArea = styled.div`
   display: flex;
   align-items: center;
-  padding: 7px 15px 0 15px;
+  justify-content: space-between;
+  padding: 8px 15px 8px 15px;
   border-top: 1px solid #f1f3f5;
 `;
 
@@ -76,6 +77,8 @@ const Profile = styled.div`
 
 const ByUsername = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: flex-end;
   font-size: 13px;
   font-weight: 500;
   color: #21252b;
@@ -87,16 +90,32 @@ const ByUsername = styled.div`
   }
 `;
 
+const LikeAndComment = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+
+  > .likeIcon {
+    color: red;
+    margin-right: 5px;
+  }
+
+  > .commentIcon {
+    margin: 0 5px 0 10px;
+  }
+`;
+
 interface IDiaryDataProps {
   list: IDiaryData;
 }
 
 function DiaryList({ list }: IDiaryDataProps) {
-  const navigate = useNavigate()
-  //아래 clickhandler는 내가 작성한 코드
+  const navigate = useNavigate();
+
   const clickHandler = () => {
-    navigate(`/DetailDiary/${list.diary_id}`)
-  }
+    navigate(`/DetailDiary/${list.diary_id}`);
+  };
+
   return (
     <DiaryListContainer onClick={clickHandler}>
       <Thumbnail>썸네일 이미지</Thumbnail>
@@ -110,13 +129,17 @@ function DiaryList({ list }: IDiaryDataProps) {
         </Tag>
       </InfoArea>
       <UserArea>
-        <Profile />
         <ByUsername>
+          <Profile />
           <div className='by'>by</div>
           {list.nickname}
         </ByUsername>
-        {/* <AiFillHeart />
-        {list.like} */}
+        <LikeAndComment>
+          <AiFillHeart className='likeIcon' size={16} />
+          {list.like}
+          <FaRegCommentDots className='commentIcon' size={15} />
+          {list.comment.length}
+        </LikeAndComment>
       </UserArea>
     </DiaryListContainer>
   );

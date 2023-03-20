@@ -4,6 +4,7 @@ import axios from 'axios'
 // import Comment from './Comment'
 import Modal from './Modal'
 import CommentList from './CommentList'
+import { IDiaryData } from './DetailMain'
 
 
 const Container = styled.div`
@@ -43,24 +44,28 @@ const Button = styled.button`
 
 `
 
-export interface CommentData {
-  commentId: number;
-  nickname: string;
-  body: string;
-  createdAt: string;
-  modifiedAt: string;
+// export interface CommentData {
+//   commentId: number;
+//   nickname: string;
+//   body: string;
+//   createdAt: string;
+//   modifiedAt: string;
+// }
+interface propsType {
+  detail: IDiaryData
 }
-
-export default function Comment() {
+export default function Comment({detail}: propsType) {
   const [text, setText] = useState('')
-  const [commentData, setCommentData] = useState<CommentData[]>([])
+  // const [commentData, setCommentData] = useState<CommentData[]>([])
 
   const changeHandler = (e: any) => {
     setText(e.target.value)
   }
-  const submitHandler = () => {
-    axios
-  .post(`http://localhost:3001/comment`, {
+  
+  const submitHandler = async (e: any) => {
+    e.prevendDefault();
+    
+    axios.post(`http://localhost:3001/comment`, {
     commentId: 2,
     nickname: 'hdh',
     body: '잘 보고 갑니다',
@@ -72,13 +77,15 @@ export default function Comment() {
   });
   }
 
-  const getCommentData = async () => {
-    const comment = await axios.get(`http://localhost:3001/comment`)
-    setCommentData(comment.data)
-  }
-  useEffect(() => {
-    getCommentData();
-  },[]);
+  // const getCommentData = async () => {
+  //   const comment = await axios.get(`http://localhost:3001/diary`)
+  //   setCommentData(comment.data)
+  // };
+  
+  // useEffect(() => {
+  //   getCommentData();
+  // },[]);
+  
   return (
     <Container>
       <CommentInput>
@@ -97,11 +104,12 @@ export default function Comment() {
       </CommentInput>
 
       <h1>댓글</h1>
-      {
+      {/* <CommentList /> */}
+      {/* {
         commentData.map((value) => {
           return <CommentList comment={value} key={value.commentId} />
         })
-      }
+      } */}
     </Container>
 
   )

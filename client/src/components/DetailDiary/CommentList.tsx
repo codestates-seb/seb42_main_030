@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
-import { CommentData } from './Comment'
+import { IDiaryData } from './DetailMain'
+// import { CommentType} from './DetailMain'
+// import { CommentData } from './Comment'
 
 const Container = styled.div`
   max-width:1440px;
@@ -22,17 +24,27 @@ const CommentWrap = styled.div`
   width:100%;
   height: 20%;
 `
-interface CommentDataProps {
-  comment: CommentData
+
+interface propsType {
+  comment: IDiaryData
 }
-export default function CommentList({comment}: CommentDataProps ) {
+
+export default function CommentList({comment}: propsType ) {
+  // const [comment,setComment] = useState<commentType[]>([])
+  
   return (
     
       <CommentWrap>
-        <h5>{comment.nickname}</h5>
+        {
+          comment.comment.map((value) => {
+            return <h5></h5>
+          })
+        }
+        {/* <h5>{detail.comment.nickname}</h5>
         <p>{comment.body}</p>
-        <h6>{comment.createdAt}</h6>
+        <h6>{comment.createdAt}</h6> */}
       </CommentWrap>
+        
   
   )
 }
