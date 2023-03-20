@@ -1,10 +1,6 @@
 // import React from 'react'
 import styled from 'styled-components'
 import {AiFillHeart} from 'react-icons/ai'
-import { IDiaryData } from '../Main/DiaryMain'
-import axios from 'axios'
-
-
 const Container = styled.div`
   max-width:1440px;
   padding:2rem;
@@ -15,48 +11,37 @@ const Container = styled.div`
 const TitleWrap = styled.div`
   /* padding:2rem; */
   margin: 2rem 0;
-  max-width: 1300px;
+  width: 100%;
   /* border: 1px solid red; */
   display:flex;
-  justify-content:space-between;
+  flex-direction:row;
+  /* justify-content:left; */
   align-items:center;
 `
-const TitleLeft = styled.div`
-  display:flex;
-`
-const TitleRight = styled.div`
-  display:flex;
-`
-
 const Title = styled.h1`
   font-weight: bold;
   /* border: 1px solid ; */
-  /* max-width: 60%; */
+  /* width: 50%; */
   /* display: inline-block; */
   /* align-items:center */
   /* flex-basis: 30rem; */
 `
 const Like = styled.button`
   /* position:absolute; */
-  margin-left: 1rem;
+  margin-left: 2rem;
   padding: 0.5rem;
   background-color: white;
   border-radius:1rem;
-  max-height:4rem;
-  min-width:5rem;
-  display:flex;
-  align-items:center;
-  gap:0.3rem;
+
+  /* justify-self: end; */
 `
 const Edit = styled.a`
-  margin-left: 2rem;
+  margin-left: 28rem;
   text-decoration: underline;
-  min-width:2rem;
 `
 const Delete = styled.a`
   margin-left:1rem;
   text-decoration:underline;
-  min-width:2rem;
 `
 const ImgWrap = styled.div`
   display:flex;
@@ -82,85 +67,60 @@ const Writer = styled.div`
   display:flex;
   gap:1rem;
 `
-const H3 = styled.h3`
+const H5 = styled.h3`
 margin-left:1rem;
 margin-bottom: 1rem;
 /* display:inline-block; */
 width:5rem;
-font-weight:normal;
 `
-const H4 = styled.h4`
+const H55 = styled.h4`
   /* display: inline-block; */
   margin-left: 2rem;
-font-weight:normal;
-
   /* width:30rem; */
 `
+const Tags = styled.div`
+  /* background-color:black; */
+  position: absolute;
+  top: 11rem;
 
-const Tag = styled.ul`
-  display:flex;
-  gap:0.5rem;
-  position:absolute;
-  top:11rem;
-  margin-left:1rem;
-  list-style:none;
 
-  > li {
-    margin-right: 5px;
-    padding: 2px 5px 2px 5px;
-    border: 1px solid #d1d1d1;
-    border-radius: 50px;
-  }
 `
-
-const postDelete= () => {
-  axios.delete(`http://localhost:3001/diary?diary_id=2`)
-    .then((res) => {
-      console.log(res.data)
-    } )
-    .catch((err) => {
-      console.log(err)
-    })
-}
-
-interface propsType {
-  detail: IDiaryData
-}
-export default function DetailHeader({detail}: propsType) {
+const Tag = styled.button`
+  font-weight:900;
+  background-color: #f5f5efdb;
+  border-radius:1rem;
+  width:5rem;
+  height:1.5rem;
+  margin-left:1rem;
+`
+export default function DetailHeader() {
   return (
     <Container>
       <TitleWrap>
-        <TitleLeft>
-          <Title>{detail.title}</Title>
-
-          <Like>
-            <AiFillHeart />
-            좋아요
-            {detail.like}
-          </Like>
-        </TitleLeft>
-        <TitleRight>
-          <Edit href="http://www.naver.com">수정</Edit>
-          <Delete onClick={postDelete}>삭제</Delete>
-        </TitleRight>
-
+        <Title>코딩하기 힘들 때 듣기 좋은 노래</Title>
+        <Like>
+          <AiFillHeart />
+          좋아요
+        </Like>
+        <Edit href="http://www.naver.com">수정</Edit>
+        <Delete href="http://www.naver.com">삭제</Delete>
       </TitleWrap>
       <ImgWrap>
         <Img src='https://cdn.pixabay.com/photo/2023/02/18/16/02/bicycle-7798227_1280.jpg' />
         <Info>
           <Writer>
-            <H3>뮤직 pd</H3>
-            <H4>{detail.nickname}</H4>
+            <H5>뮤직 pd</H5>
+            <H55>한대희 피디</H55>
           </Writer>
           <Writer>
-            <H3>등록일</H3>
-            <H4>{detail.createdAt}</H4>
+            <H5>등록일</H5>
+            <H55>2023.03.15</H55>
           </Writer>
-          <Tag>
-          {detail.tag.map((value, index) => {
-            return <li key={index}>{value}</li>;
-          })}
-          </Tag>
+          <Tags>
+            <Tag>즐거움</Tag>
+            <Tag>상쾌한</Tag>
+            <Tag>우울한</Tag>
+          </Tags>
         </Info>
       </ImgWrap>
     </Container>

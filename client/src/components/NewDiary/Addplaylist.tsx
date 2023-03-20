@@ -85,7 +85,7 @@ export default function Addplaylist() {
           className='searchinput'
           type={'text'}
           placeholder="듣고 싶은 음악을 검색해 주세요"
-          value={SearchTitle}
+           value={SearchTitle}
           onChange={(e) => {
             setSearchTitle(e.target.value);
             console.log(SearchTitle);
