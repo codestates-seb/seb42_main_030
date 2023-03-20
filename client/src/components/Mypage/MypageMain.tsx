@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DiaryList from "./MyDiaryList";
+import MypagePagination from "./MypagePagination";
+import MyCommentList from "./MyCommentList";
 
 const ListTab = styled.ul`
   display: flex;
@@ -14,7 +16,7 @@ const ListTab = styled.ul`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     width: 200px;
     height: 40px;
@@ -50,7 +52,15 @@ const DiaryMainWrapper = styled.ul`
   gap: 56.6px;
 `;
 
-export interface IDiaryData {
+export interface ICommentData {
+  comment_id: number;
+  nickname: string;
+  body: string;
+  createdAt: string;
+  modifiedAt: string;
+}
+
+export interface IMyDiaryData {
   diary_id: number;
   nickname: string;
   title: string;
@@ -60,27 +70,46 @@ export interface IDiaryData {
   viewcount: number;
   tag: string[];
   like: number;
-  comment: object[];
+  comment: ICommentData[];
 }
 
 function MypageMain() {
-  const [diaryData, setDiaryData] = useState<IDiaryData[]>([]); // 전체 diary 데이터
+  const [myDiaryData, setMyDiaryData] = useState<IMyDiaryData[]>([]);
+  const [myCommentData, setMyCommentData] = useState<IMyDiaryData[]>([]);
   const [currentTab, setCurrentTab] = useState<number>(0);
-  const [page, setPage] = useState<number>(1); // 현재 페이지 번호 (기본값: 1페이지부터 노출)
+  const [page, setPage] = useState<number>(1);
 
   const LIMIT_COUNT: number = 20;
-  const offset: number = (page - 1) * LIMIT_COUNT; // 각 페이지에서 첫 데이터의 위치(index) 계산
+  const offset: number = (page - 1) * LIMIT_COUNT;
 
-  const getDiaryData = async () => {
+  // 나의 다이어리 데이터 get 요청
+  const getMyDiaryData = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/diary");
-      setDiaryData(res.data);
+      // const isLogin = localStorage.getItem('nickname')
+      // nickname=${이 부분을 로그인한 사용자의 닉네임으로 변경}
+      const res = await axios.get(
+        `http://localhost:3001/diary?nickname=donggu`
+      );
+      setMyDiaryData(res.data);
     } catch (err) {
       console.error(err);
     }
   };
   useEffect(() => {
-    getDiaryData();
+    getMyDiaryData();
+  }, []);
+
+  // 내가 작성한 댓글 데이터 get 요청
+  const getMyCommentData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3001/diary`);
+      setMyCommentData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getMyCommentData();
   }, []);
 
   const tabArr = [
@@ -115,20 +144,31 @@ function MypageMain() {
           <div className='one'>1</div>
         ) : currentTab === 1 ? (
           <DiaryMainWrapper>
-            {diaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
+            {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
               return <DiaryList list={value} key={value.diary_id} />;
             })}
           </DiaryMainWrapper>
         ) : currentTab === 2 ? (
           <DiaryMainWrapper>
-            {diaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
+            {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
               return <DiaryList list={value} key={value.diary_id} />;
             })}
           </DiaryMainWrapper>
         ) : (
-          <div className='four'>4</div>
+          <DiaryMainWrapper>
+            {myCommentData.map((value) => {
+              return <MyCommentList list={value} key={value.diary_id} />;
+            })}
+          </DiaryMainWrapper>
         )}
       </MypageMainContainer>
+      <MypagePagination
+        myPageLength={myDiaryData.length}
+        LIMIT_COUNT={LIMIT_COUNT}
+        page={page}
+        setPage={setPage}
+        currentTab={currentTab}
+      />
     </>
   );
 }

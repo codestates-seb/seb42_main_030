@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IDiaryData } from "./MypageMain";
+import { IMyDiaryData } from "./MypageMain";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
@@ -105,11 +105,11 @@ const LikeAndComment = styled.div`
   }
 `;
 
-interface IDiaryDataProps {
-  list: IDiaryData;
+interface IMyDiaryDataProps {
+  list: IMyDiaryData;
 }
 
-function DiaryList({ list }: IDiaryDataProps) {
+function DiaryList({ list }: IMyDiaryDataProps) {
   const navigate = useNavigate();
 
   const clickHandler = () => {
