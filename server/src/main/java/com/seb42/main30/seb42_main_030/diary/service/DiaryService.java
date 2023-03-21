@@ -1,6 +1,5 @@
 package com.seb42.main30.seb42_main_030.diary.service;
 
-
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import com.seb42.main30.seb42_main_030.diary.repository.DiaryRepository;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
@@ -10,6 +9,8 @@ import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
 import com.seb42.main30.seb42_main_030.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,8 +47,12 @@ public class DiaryService {
     }
 
 //    read all
-    public List<Diary> readDiarys() {return diaryRepository.findAll(); }
+//    public List<Diary> readDiarys() {return diaryRepository.findAll(); }
 
+    //메인페이지 전체 게시글 조회 + 페이지네이션
+    public Page<Diary> readDiaryList(Pageable pageable){
+        return diaryRepository.findAll(pageable);
+    }
 
 //    update
     public Diary updateDiary(long diaryId, Diary diary){

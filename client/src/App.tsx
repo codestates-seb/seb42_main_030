@@ -1,3 +1,5 @@
+// import LogoutHeader from "./components/LogoutHeader";
+import LoginHeader from "./components/LoginHeader";
 import Main from "./pages/Main";
 import NewDiary from "./pages/NewDiary";
 import Mypage from "./pages/Mypage";
@@ -6,6 +8,7 @@ import DetailDiary from "./pages/DetailDiary";
 import Signup from "./pages/Signup";
 import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
+import Addplaylist from "./components/NewDiary/Addplaylist";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -13,31 +16,22 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
-
-  body {
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  .App {
-    width: 100vw;
-    max-width: 1440px;
-    min-width: 300px;
-  }
 `;
 
 function App() {
   return (
     <div className='App'>
       <GlobalStyle />
+      {/* <LogoutHeader /> */}
+      <LoginHeader />
       <Routes>
         <Route path='/' element={<Main />} />
         <Route path='/NewDiary' element={<NewDiary />} />
+        <Route path='/addplaylist' element={<Addplaylist />} />
         <Route path='/Mypage' element={<Mypage />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
-        <Route path='/DetailDiary/:id' element={<DetailDiary />} />
+        <Route path='/DetailDiary/:diary_id' element={<DetailDiary />} />
       </Routes>
     </div>
   );
