@@ -110,6 +110,7 @@ interface IDiaryDataProps {
 }
 
 function DiaryList({ list }: IDiaryDataProps) {
+  // const test: boolean = list.comment.length === 0;
   const navigate = useNavigate();
 
   const clickHandler = () => {

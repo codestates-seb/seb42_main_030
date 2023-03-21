@@ -1,4 +1,16 @@
 {
+  "user": [
+    {
+      "user_id": 1,
+      "nickname": "donggu",
+      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+    },
+    {
+      "user_id": 2,
+      "nickname": "동구",
+      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+    }
+  ],
   "diary": [
     {
       "diary_id": 1,
@@ -8,22 +20,106 @@
       "createdAt": "2023-03-19",
       "modifiedAt": "2023-03-19",
       "viewcount": 0,
-      "tag": ["#신나는", "#즐거운"],
+      "tag": [
+        "#신나는",
+        "#즐거운"
+      ],
       "like": 27,
       "comment": [
         {
           "comment_id": 1,
           "nickname": "donggu",
-          "body": "내가 쓴 다이어리의 첫번째 댓글 내용",
+          "body": "donggu가 쓴 첫번째 댓글donggu가 쓴 첫번째 댓글donggu가 쓴 첫번째 댓글donggu가 쓴 첫번째 댓글donggu가 쓴 첫번째 댓글donggu가 쓴 첫번째 댓글donggu가 쓴 첫번째 댓글",
           "createdAt": "2023-03-19",
           "modifiedAt": "2023-03-19"
         },
         {
           "comment_id": 2,
           "nickname": "minsu",
-          "body": "내가 쓴 다이어리의 두번째 댓글 내용",
+          "body": "다른 사람이 씀 첫번째 댓글",
           "createdAt": "2023-03-19",
           "modifiedAt": "2023-03-19"
+        }
+      ]
+    },
+    {
+      "diary_id": 2,
+      "nickname": "다른 사람",
+      "title": "다이어리 제목",
+      "body": "다이어리 소개 본문 내용",
+      "createdAt": "2023-03-19",
+      "modifiedAt": "2023-03-19",
+      "viewcount": 0,
+      "tag": [
+        "#신나는",
+        "#즐거운"
+      ],
+      "like": 27,
+      "comment": [
+        {
+          "comment_id": 1,
+          "nickname": "donggu",
+          "body": "플리 너무 좋아요~",
+          "createdAt": "2023-03-20",
+          "modifiedAt": "2023-03-20"
+        },
+        {
+          "comment_id": 2,
+          "nickname": "sujin",
+          "body": "다른 사람이 씀",
+          "createdAt": "2023-03-19",
+          "modifiedAt": "2023-03-19"
+        },
+        {
+          "comment_id": 3,
+          "nickname": "donggu",
+          "body": "플리 잘 듣고 갑니다!",
+          "createdAt": "2023-03-20",
+          "modifiedAt": "2023-03-20"
+        },
+        {
+          "comment_id": 4,
+          "nickname": "donggu",
+          "body": "최고!",
+          "createdAt": "2023-03-20",
+          "modifiedAt": "2023-03-20"
+        }
+      ]
+    },
+    {
+      "diary_id": 3,
+      "nickname": "다른 사람",
+      "title": "세번째 다이어리 제목",
+      "body": "다이어리 소개 본문 내용",
+      "createdAt": "2023-03-19",
+      "modifiedAt": "2023-03-19",
+      "viewcount": 0,
+      "tag": [
+        "#신나는",
+        "#즐거운"
+      ],
+      "like": 27,
+      "comment": [
+        {
+          "comment_id": 1,
+          "nickname": "donggu",
+          "body": "오오오오오오오오오",
+          "createdAt": "2023-02-10",
+          "modifiedAt": "2023-02-10"
+        },
+        {
+          "comment_id": 2,
+          "nickname": "hyun",
+          "body": "굿굿",
+          "createdAt": "2023-03-20",
+          "modifiedAt": "2023-03-20"
+        },
+        {
+          "comment_id": 3,
+          "nickname": "donggu",
+          "body": "최고입니다!",
+          "createdAt": "2023-03-08",
+          "modifiedAt": "2023-03-08"
         }
       ]
     }

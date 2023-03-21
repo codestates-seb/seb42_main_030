@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import DiaryList from "./MyDiaryList";
 import MypagePagination from "./MypagePagination";
-import MyCommentList from "./MyCommentList";
+import MyCommentProps from "./MyCommentProps";
+import MyInfo from "./MyInfo";
 
 const ListTab = styled.ul`
   display: flex;
@@ -50,6 +51,12 @@ const DiaryMainWrapper = styled.ul`
   flex-wrap: wrap;
   padding: 0 15px 0 15px;
   gap: 56.6px;
+`;
+
+const DiaryCommentWrapper = styled.ul`
+  width: 100vw;
+  max-width: 1440px;
+  min-width: 300px;
 `;
 
 export interface ICommentData {
@@ -141,7 +148,7 @@ function MypageMain() {
       </ListTab>
       <MypageMainContainer>
         {currentTab === 0 ? (
-          <div className='one'>1</div>
+          <MyInfo />
         ) : currentTab === 1 ? (
           <DiaryMainWrapper>
             {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
@@ -155,11 +162,11 @@ function MypageMain() {
             })}
           </DiaryMainWrapper>
         ) : (
-          <DiaryMainWrapper>
+          <DiaryCommentWrapper>
             {myCommentData.map((value) => {
-              return <MyCommentList list={value} key={value.diary_id} />;
+              return <MyCommentProps list={value} key={value.diary_id} />;
             })}
-          </DiaryMainWrapper>
+          </DiaryCommentWrapper>
         )}
       </MypageMainContainer>
       <MypagePagination
