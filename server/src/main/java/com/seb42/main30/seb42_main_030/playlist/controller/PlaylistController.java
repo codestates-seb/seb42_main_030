@@ -1,10 +1,10 @@
 package com.seb42.main30.seb42_main_030.playlist.controller;
 
-import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistPostDto;
+import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistDto;
 import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
 import com.seb42.main30.seb42_main_030.playlist.mapper.PlaylistMapper;
 import com.seb42.main30.seb42_main_030.playlist.service.PlaylistService;
-import com.seb42.main30.seb42_main_030.user.dto.UserDto;
+import com.seb42.main30.seb42_main_030.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -21,26 +21,27 @@ import java.util.List;
 @Valid
 public class PlaylistController {
     private final PlaylistService playlistService;
-    private final PlaylistMapper mapper;
+    private final PlaylistMapper playlistmapper;
+    private final UserService userService;
 
     // 플레이리스트 생성
     @PostMapping("")
-    public ResponseEntity postplaylist(@Valid @RequestBody PlaylistDto.Post post_){
-        Playlist playlist = playlistService.createPlaylist(plalistMapper.playlistPostToPlaylist(post));
+    public ResponseEntity postplaylist(@Valid @RequestBody PlaylistDto.Post post){
+        Playlist playlist = playlistService.createPlaylist(playlistmapper.playlistPostToPlaylist(post));
 
-        PlaylistDto.Response response = mapper.playlistToResponse(playlist);
+        PlaylistDto.Response response = playlistmapper.playlistToResponse(playlist);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     // 플레이리스 조회
     @GetMapping
-    public ResponseEntity getPlList(@Positive @RequestParam(required = false, defaultValue = "1") int page,
+    public ResponseEntity getPlayList(@Positive @RequestParam(required = false, defaultValue = "1") int page,
                                     @Positive @RequestParam(required = false, defaultValue = "10") int size) {
         Page<Playlist> pagePlList = playlistService.findPlList(page - 1, size);
         List<Playlist> playlists = pagePlList.getContent();
 
         return new ResponseEntity<>(
-                new MultiResponseDto<>(mapper.playlistToPlaylistResponseDtoList(playlists), pagePlList), HttpStatus.OK);
+                new MultiResponseDto<>(playlistmapper.playlistToPlaylistResponseDtoList(playlists), pagePlList), HttpStatus.OK);
     }
 
     // 플레이리스트 삭제
