@@ -1,5 +1,6 @@
 package com.seb42.main30.seb42_main_030.playlist.entity;
 
+import com.seb42.main30.seb42_main_030.audit.Auditable;
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Playlist {
+public class Playlist extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playlist_id;
@@ -32,7 +33,9 @@ public class Playlist {
 
     @Column
     @ElementCollection(fetch = FetchType.LAZY)
-    private List<String> Tag;
+    private List<String> TagList;
+
+    @
 
 
     // 연관관계 매핑

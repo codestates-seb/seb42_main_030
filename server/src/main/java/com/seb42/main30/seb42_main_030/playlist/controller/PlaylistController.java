@@ -1,9 +1,13 @@
 package com.seb42.main30.seb42_main_030.playlist.controller;
 
-import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistDto;
+import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistPatchDto;
+import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistPostDto;
 import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
 import com.seb42.main30.seb42_main_030.playlist.mapper.PlaylistMapper;
 import com.seb42.main30.seb42_main_030.playlist.service.PlaylistService;
+import com.seb42.main30.seb42_main_030.response.MultiResponseDto;
+import com.seb42.main30.seb42_main_030.response.SingleResponseDto;
+import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,35 +29,38 @@ public class PlaylistController {
     private final UserService userService;
 
     // 플레이리스트 생성
-    @PostMapping("")
-    public ResponseEntity postplaylist(@Valid @RequestBody PlaylistDto.Post post){
-        Playlist playlist = playlistService.createPlaylist(playlistmapper.playlistPostToPlaylist(post));
+    @PostMapping
+    public ResponseEntity postPlaylist(@Valid @RequestBody PlaylistPostDto playlistPostDto, Long authUserId) throws Exception {
+        User user = userService.findUser(authUserId);
+        /* 인증된 유저 호출 필요*/
+        Playlist playlist = playlistmapper.playlistPostDtoToPlaylist(playlistPostDto, user);
 
-        PlaylistDto.Response response = playlistmapper.playlistToResponse(playlist);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        Playlist savedPlaylist = playlistService.createPlaylist(playlist, playlistPostDto);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(playlistmapper.playlistToPlaylistResponseDto(savedPlaylist)), HttpStatus.CREATED);
     }
 
     // 플레이리스 조회
     @GetMapping
     public ResponseEntity getPlayList(@Positive @RequestParam(required = false, defaultValue = "1") int page,
-                                    @Positive @RequestParam(required = false, defaultValue = "10") int size) {
-        Page<Playlist> pagePlList = playlistService.findPlList(page - 1, size);
+                                      @Positive @RequestParam(required = false, defaultValue = "10") int size) {
+        Page<Playlist> pagePlList = playlistService.findPlayList(page - 1, size);
         List<Playlist> playlists = pagePlList.getContent();
 
         return new ResponseEntity<>(
                 new MultiResponseDto<>(playlistmapper.playlistToPlaylistResponseDtoList(playlists), pagePlList), HttpStatus.OK);
     }
 
+
     // 플레이리스트 삭제
     @DeleteMapping("/{playlist-id}")
-    public String deletePlaylist(@PathVariable("playlist-id") @Positive long playlistId) {
+    public String deletePlaylist(@PathVariable("playlist-id") @Positive long playlist_id) {
 
-        playlistService.deletePlaylist(playlistId);
+        playlistService.deletePlaylist(playlist_id);
 
         return "success playlist deleted";
     }
 
     // 곡 등록
-    @PostMapping("/{playlist_id}/tracks")
-    public ResponseEntity posttrack(@Valid @RequestBody )
 }
