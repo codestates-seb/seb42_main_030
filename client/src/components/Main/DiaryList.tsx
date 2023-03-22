@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IDiaryData } from "./DiaryMain";
+import { DiaryDataProps } from "../../Type";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
@@ -43,20 +43,20 @@ const InfoArea = styled.div`
   }
 `;
 
-const Tag = styled.ul`
-  display: flex;
-  font-size: 12px;
-  font-weight: 500;
-  color: #757170;
-  list-style: none;
+// const Tag = styled.ul`
+//   display: flex;
+//   font-size: 12px;
+//   font-weight: 500;
+//   color: #757170;
+//   list-style: none;
 
-  > li {
-    margin-right: 5px;
-    padding: 3px 6px 3px 6px;
-    border: 1px solid #d1d1d1;
-    border-radius: 50px;
-  }
-`;
+//   > li {
+//     margin-right: 5px;
+//     padding: 3px 6px 3px 6px;
+//     border: 1px solid #d1d1d1;
+//     border-radius: 50px;
+//   }
+// `;
 
 const UserArea = styled.div`
   display: flex;
@@ -105,16 +105,11 @@ const LikeAndComment = styled.div`
   }
 `;
 
-interface IDiaryDataProps {
-  list: IDiaryData;
-}
-
-function DiaryList({ list }: IDiaryDataProps) {
-  // const test: boolean = list.comment.length === 0;
+function DiaryList({ list }: DiaryDataProps) {
   const navigate = useNavigate();
 
   const clickHandler = () => {
-    navigate(`/DetailDiary/${list.id}`);
+    navigate(`/DetailDiary/${list.diaryId}`);
   };
 
   return (
@@ -123,23 +118,23 @@ function DiaryList({ list }: IDiaryDataProps) {
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>
         <div className='infoDate'>{list.createdAt}</div>
-        <Tag>
-          {list.tag.map((value, index) => {
+        {/* <Tag>
+          {list.tag.map((value: string, index: number) => {
             return <li key={index}>{value}</li>;
           })}
-        </Tag>
+        </Tag> */}
       </InfoArea>
       <UserArea>
         <ByUsername>
           <Profile />
           <div className='by'>by</div>
-          {list.nickname}
+          {list.userNickname}
         </ByUsername>
         <LikeAndComment>
           <AiFillHeart className='likeIcon' size={16} />
-          {list.like}
+          {list.likeCount}
           <FaRegCommentDots className='commentIcon' size={15} />
-          {list.comment.length}
+          {list.comments.length}
         </LikeAndComment>
       </UserArea>
     </DiaryListContainer>

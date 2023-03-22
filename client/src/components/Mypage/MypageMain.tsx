@@ -3,16 +3,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import MyDiaryList from "./MyDiary/MyDiaryList";
 import MypagePagination from "./MypagePagination";
-import MyCommentProps from "./MyComment/MyCommentProps";
 import MyInfo from "./MyInfo/MyInfo";
 import MyLikeList from "./MyLikeDiary/MyLikeList";
+import { DiaryData } from "../../Type";
+import MyCommentList from "./MyComment/MyCommentList";
+import { CommentData } from "../../Type";
 
 const ListTab = styled.ul`
   display: flex;
   justify-content: center;
   margin: 50px 0 50px 0;
   gap: 10px;
-  /* border: 1px solid black; */
 
   .tab {
     display: flex;
@@ -22,7 +23,6 @@ const ListTab = styled.ul`
     font-weight: 700;
     width: 200px;
     height: 40px;
-    /* border: 1px solid black; */
     text-align: center;
 
     > .el {
@@ -60,43 +60,10 @@ const DiaryCommentWrapper = styled.ul`
   min-width: 300px;
 `;
 
-interface ImageDataProps {
-  image: string;
-  setImage: React.Dispatch<React.SetStateAction<string>>;
-  userData: any;
-  getUserData: any;
-}
-
-export interface ICommentData {
-  id: number;
-  nickname: string;
-  body: string;
-  createdAt: string;
-  modifiedAt: string;
-}
-
-export interface IMyDiaryData {
-  id: number;
-  nickname: string;
-  title: string;
-  body: string;
-  createdAt: string;
-  modifiedAt: string;
-  viewcount: number;
-  tag: string[];
-  like: number;
-  comment: ICommentData[];
-}
-
-function MypageMain({
-  image,
-  setImage,
-  userData,
-  getUserData,
-}: ImageDataProps) {
-  const [myDiaryData, setMyDiaryData] = useState<IMyDiaryData[]>([]);
-  const [myLikeDiaryData, setLikeDiaryData] = useState<any[]>([]);
-  const [myCommentData, setMyCommentData] = useState<IMyDiaryData[]>([]);
+function MypageMain() {
+  const [myDiaryData, setMyDiaryData] = useState<DiaryData[]>([]);
+  const [myLikeDiaryData, setLikeDiaryData] = useState<DiaryData[]>([]);
+  const [myCommentData, setMyCommentData] = useState<CommentData[]>([]);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
 
@@ -109,7 +76,7 @@ function MypageMain({
       // const isLogin = localStorage.getItem('nickname')
       // nickname=${이 부분을 로그인한 사용자의 닉네임으로 변경}
       const res = await axios.get(
-        `http://localhost:3001/diary?nickname=donggu`
+        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary`
       );
       setMyDiaryData(res.data);
     } catch (err) {
@@ -138,7 +105,9 @@ function MypageMain({
   // 내가 작성한 댓글 데이터 get 요청
   const getMyCommentData = async () => {
     try {
-      const res = await axios.get(`http://localhost:3001/diary`);
+      const res = await axios.get(
+        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/comment`
+      );
       setMyCommentData(res.data);
     } catch (err) {
       console.error(err);
@@ -162,7 +131,6 @@ function MypageMain({
   return (
     <>
       <ListTab>
-        {" "}
         {tabArr.map((tab, index) => {
           return (
             <li
@@ -177,16 +145,11 @@ function MypageMain({
       </ListTab>
       <MypageMainContainer>
         {currentTab === 0 ? (
-          <MyInfo
-            image={image}
-            setImage={setImage}
-            userData={userData}
-            getUserData={getUserData}
-          />
+          <MyInfo />
         ) : currentTab === 1 ? (
           <DiaryMainWrapper>
             {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
-              return <MyLikeList list={value} key={value.id} />;
+              return <MyDiaryList list={value} key={value.diaryId} />;
             })}
           </DiaryMainWrapper>
         ) : currentTab === 2 ? (
@@ -194,13 +157,13 @@ function MypageMain({
             {myLikeDiaryData
               .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
-                return <MyDiaryList list={value} key={value.id} />;
+                return <MyLikeList list={value} key={value.diaryId} />;
               })}
           </DiaryMainWrapper>
         ) : (
           <DiaryCommentWrapper>
             {myCommentData.map((value) => {
-              return <MyCommentProps list={value} key={value.id} />;
+              return <MyCommentList list={value} key={value.commentId} />;
             })}
           </DiaryCommentWrapper>
         )}

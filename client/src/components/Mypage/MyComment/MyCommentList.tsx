@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ICommentData } from "../MypageMain";
+import { CommentDataProps } from "../../../Type";
 
 const CommentListContainer = styled.li`
   display: flex;
@@ -29,20 +29,16 @@ const CommentListWrapper = styled.div`
   }
 `;
 
-interface IMyCommentDataProps {
-  list: ICommentData;
-}
-
-function MyCommentList({ list }: IMyCommentDataProps) {
+function MyCommentList({ list }: CommentDataProps) {
   // const isLogin = localStorage.getItem('nickname')
   // list.nickname === {이 부분을 로그인한 사용자의 닉네임으로 변경}
-  const myComment: boolean = list.nickname === "donggu";
+  const myComment: boolean = list.userNickname === "light";
 
   return (
     <CommentListContainer>
       {myComment === true ? (
         <CommentListWrapper>
-          <div className='name'>{list.nickname}</div>
+          <div className='name'>{list.userNickname}</div>
           <div className='content'>{list.body}</div>
           <div className='date'>{list.createdAt}</div>
         </CommentListWrapper>

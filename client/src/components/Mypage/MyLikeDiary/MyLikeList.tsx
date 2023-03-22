@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IMyDiaryData } from "../MypageMain";
+import { DiaryDataProps } from "../../../Type";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
@@ -105,15 +105,11 @@ const LikeAndComment = styled.div`
   }
 `;
 
-interface IMyDiaryDataProps {
-  list: IMyDiaryData;
-}
-
-function MyLikeList({ list }: IMyDiaryDataProps) {
+function MyLikeList({ list }: DiaryDataProps) {
   const navigate = useNavigate();
 
   const clickHandler = () => {
-    navigate(`/DetailDiary/${list.id}`);
+    navigate(`/DetailDiary/${list.diaryId}`);
   };
 
   return (
@@ -132,13 +128,13 @@ function MyLikeList({ list }: IMyDiaryDataProps) {
         <ByUsername>
           <Profile />
           <div className='by'>by</div>
-          {list.nickname}
+          {list.userNickname}
         </ByUsername>
         <LikeAndComment>
           <AiFillHeart className='likeIcon' size={16} />
-          {list.like}
+          {list.likeCount}
           <FaRegCommentDots className='commentIcon' size={15} />
-          {list.comment.length}
+          {list.comments.length}
         </LikeAndComment>
       </UserArea>
     </DiaryListContainer>

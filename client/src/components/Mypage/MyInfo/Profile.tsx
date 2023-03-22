@@ -1,14 +1,13 @@
-import { IUserData } from "./MyInfo";
 import axios from "axios";
 import styled from "styled-components";
 import { useState, useRef } from "react";
+import { UserData } from "../../../Type";
 
 const MyInfoContainer = styled.div`
   display: flex;
   width: 100vw;
   max-width: 900px;
   font-size: 15px;
-  /* border: 1px solid red; */
 `;
 
 const ProfileImgWrapper = styled.div`
@@ -50,7 +49,6 @@ const NickNameWrapper = styled.div`
   width: 100%;
   height: 100px;
   margin: 0 20px 0 20px;
-  /* border: 1px solid black; */
 
   > .editNicknameArea {
     width: 100%;
@@ -86,28 +84,19 @@ const MySettingContainer = styled.div`
   max-width: 900px;
   font-size: 15px;
   margin-top: 30px;
-  /* padding: 0 20px 20px 20px; */
-  /* padding-left: 15px; */
-  /* border: 1px solid red; */
 `;
 
 const PasswordWrapper = styled.div`
   display: flex;
   align-items: center;
-  /* margin-top: 50px; */
-  /* border: 1px solid blue; */
   width: 100%;
   height: 50px;
-  /* margin: 0 20px 20px 20px; */
 
   > .passwordTitle {
-    /* background-color: pink; */
     width: 220px;
     margin: 0 20px 0 20px;
-    /* margin-right: 20px; */
     text-align: center;
     font-weight: 700;
-    /* border: 1px solid blue; */
   }
 
   > .editPasswordArea {
@@ -122,7 +111,6 @@ const PasswordWrapper = styled.div`
   > .passwordArea {
     width: 100%;
     margin-left: 20px;
-    /* border: 1px solid red; */
   }
 `;
 
@@ -144,24 +132,19 @@ const MyWithdrawalContainer = styled.div`
   max-width: 900px;
   font-size: 15px;
   margin-top: 30px;
-  /* border: 1px solid red; */
 `;
 
 const MyWithdrawalWrapper = styled.div`
   display: flex;
   align-items: center;
-  /* margin-top: 50px; */
-  /* border: 1px solid blue; */
   width: 100%;
   height: 50px;
 
   > .withdrawalTitle {
-    /* background-color: pink; */
     width: 150px;
     margin: 0 20px 0 20px;
     text-align: center;
     font-weight: 700;
-    /* border: 1px solid blue; */
   }
 
   > .withdrawalBtn {
@@ -186,15 +169,13 @@ const WarningText = styled.div`
   margin-left: 70px;
 `;
 
-export interface IUserDataProps {
-  list: IUserData;
+export interface UserDataProps {
+  list: UserData;
   getUserData: React.Dispatch<React.SetStateAction<object>>;
-  image: string;
-  setImage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function Profile({ list, image, setImage, getUserData }: IUserDataProps) {
-  // const [image, setImage] = useState(list.imageUrl);
+function Profile({ list, getUserData }: UserDataProps) {
+  const [image, setImage] = useState(list.imageUrl);
   const [userNickname, setUserNickname] = useState<string>(list.nickname);
   const [edit, setEdit] = useState<boolean>(false);
 
