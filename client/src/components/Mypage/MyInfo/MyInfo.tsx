@@ -11,8 +11,10 @@ const MyInfoContainer = styled.div`
 `;
 
 export interface IUserData {
-  user_id: number;
+  id: number;
   nickname: string;
+  email: string;
+  password: string;
   imageUrl: string;
 }
 
@@ -21,7 +23,7 @@ function MyInfo() {
 
   const getUserData = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/user");
+      const res = await axios.get("http://localhost:3001/user?id=1");
       setUserData(res.data);
     } catch (err) {
       console.error(err);
@@ -36,11 +38,7 @@ function MyInfo() {
       <ul>
         {userData.map((value) => {
           return (
-            <Profile
-              list={value}
-              key={value.user_id}
-              getUserData={getUserData}
-            />
+            <Profile list={value} key={value.id} getUserData={getUserData} />
           );
         })}
       </ul>

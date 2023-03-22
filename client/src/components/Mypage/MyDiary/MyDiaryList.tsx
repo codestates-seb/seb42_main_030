@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IMyDiaryData } from "./MypageMain";
+import { IMyDiaryData } from "../MypageMain";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
@@ -109,11 +109,11 @@ interface IMyDiaryDataProps {
   list: IMyDiaryData;
 }
 
-function DiaryList({ list }: IMyDiaryDataProps) {
+function MyDiaryList({ list }: IMyDiaryDataProps) {
   const navigate = useNavigate();
 
   const clickHandler = () => {
-    navigate(`/DetailDiary/${list.diary_id}`);
+    navigate(`/DetailDiary/${list.id}`);
   };
 
   return (
@@ -145,4 +145,4 @@ function DiaryList({ list }: IMyDiaryDataProps) {
   );
 }
 
-export default DiaryList;
+export default MyDiaryList;

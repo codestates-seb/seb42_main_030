@@ -40,6 +40,7 @@ const PageNum = styled.div`
 
 interface PaginationProps {
   myPageLength: number;
+  myLikePageLength: number;
   LIMIT_COUNT: number;
   page: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -52,13 +53,15 @@ function MypagePagination({
   setPage,
   currentTab,
   myPageLength,
+  myLikePageLength,
 }: PaginationProps) {
   const [blockNum, setBlockNum] = useState<number>(0); // 페이지 당 표시할 페이지네이션 수
 
   const PAGE_COUNT: number = 10; // 페이지 당 표시할 페이지네이션 수 (기본값 : 10개의 페이지네이션 노출)
   const blockArea: number = blockNum * PAGE_COUNT; // 각 페이지에서 첫 페이지네이션의 위치 계산
 
-  const numMyPages: number = Math.ceil(myPageLength / LIMIT_COUNT); // 필요한 페이지 개수
+  const numMyPages: number = Math.ceil(myPageLength / LIMIT_COUNT); // 나의 다이어리 페이지 개수
+  const numMyLikePages: number = Math.ceil(myLikePageLength / LIMIT_COUNT); // 좋아한 다이러리 페이지 개수
 
   // 새로운 배열 생성 함수
   const createArr = (n: number) => {
@@ -69,6 +72,7 @@ function MypagePagination({
     return iArr;
   };
   const allArr: number[] = createArr(numMyPages); // nArr 함수에 전체 페이지의 개수를 배열로 담음
+  const likeArr: number[] = createArr(numMyLikePages); // nArr 함수에 전체 페이지의 개수를 배열로 담음
 
   // 제일 처음 페이지로 이동하는 버튼 이벤트 핸들러
   const firstPageHandler = () => {
@@ -170,7 +174,7 @@ function MypagePagination({
           >
             <BiLeftArrowAlt size={19} />
           </button>
-          {allArr.slice(blockArea, PAGE_COUNT + blockArea).map((n) => (
+          {likeArr.slice(blockArea, PAGE_COUNT + blockArea).map((n) => (
             <button
               className={page === n ? "pageTab pageFocused" : "pageTab"}
               key={n}

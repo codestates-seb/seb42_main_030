@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import DiaryList from "./MyDiaryList";
+import MyDiaryList from "./MyDiary/MyDiaryList";
 import MypagePagination from "./MypagePagination";
-import MyCommentProps from "./MyCommentProps";
-import MyInfo from "./MyInfo";
+import MyCommentProps from "./MyComment/MyCommentProps";
+import MyInfo from "./MyInfo/MyInfo";
+import MyLikeList from "./MyLikeDiary/MyLikeList";
 
 const ListTab = styled.ul`
   display: flex;
@@ -60,7 +61,7 @@ const DiaryCommentWrapper = styled.ul`
 `;
 
 export interface ICommentData {
-  comment_id: number;
+  id: number;
   nickname: string;
   body: string;
   createdAt: string;
@@ -68,7 +69,7 @@ export interface ICommentData {
 }
 
 export interface IMyDiaryData {
-  diary_id: number;
+  id: number;
   nickname: string;
   title: string;
   body: string;
@@ -82,6 +83,7 @@ export interface IMyDiaryData {
 
 function MypageMain() {
   const [myDiaryData, setMyDiaryData] = useState<IMyDiaryData[]>([]);
+  const [myLikeDiaryData, setLikeDiaryData] = useState<any[]>([]);
   const [myCommentData, setMyCommentData] = useState<IMyDiaryData[]>([]);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
@@ -104,6 +106,21 @@ function MypageMain() {
   };
   useEffect(() => {
     getMyDiaryData();
+  }, []);
+
+  // 내가 좋아요 한 다이어리 데이터 get 요청
+  const getLikeData = async () => {
+    try {
+      // const isLogin = localStorage.getItem('nickname')
+      // nickname=${이 부분을 로그인한 사용자의 닉네임으로 변경}
+      const res = await axios.get(`http://localhost:3001/likediary`);
+      setLikeDiaryData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getLikeData();
   }, []);
 
   // 내가 작성한 댓글 데이터 get 요청
@@ -152,25 +169,28 @@ function MypageMain() {
         ) : currentTab === 1 ? (
           <DiaryMainWrapper>
             {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
-              return <DiaryList list={value} key={value.diary_id} />;
+              return <MyLikeList list={value} key={value.id} />;
             })}
           </DiaryMainWrapper>
         ) : currentTab === 2 ? (
           <DiaryMainWrapper>
-            {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
-              return <DiaryList list={value} key={value.diary_id} />;
-            })}
+            {myLikeDiaryData
+              .slice(offset, offset + LIMIT_COUNT)
+              .map((value) => {
+                return <MyDiaryList list={value} key={value.id} />;
+              })}
           </DiaryMainWrapper>
         ) : (
           <DiaryCommentWrapper>
             {myCommentData.map((value) => {
-              return <MyCommentProps list={value} key={value.diary_id} />;
+              return <MyCommentProps list={value} key={value.id} />;
             })}
           </DiaryCommentWrapper>
         )}
       </MypageMainContainer>
       <MypagePagination
         myPageLength={myDiaryData.length}
+        myLikePageLength={myLikeDiaryData.length}
         LIMIT_COUNT={LIMIT_COUNT}
         page={page}
         setPage={setPage}

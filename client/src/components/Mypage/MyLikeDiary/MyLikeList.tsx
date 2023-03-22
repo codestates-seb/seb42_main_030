@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { IDiaryData } from "./DiaryMain";
+import { IMyDiaryData } from "../MypageMain";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
@@ -105,12 +105,11 @@ const LikeAndComment = styled.div`
   }
 `;
 
-interface IDiaryDataProps {
-  list: IDiaryData;
+interface IMyDiaryDataProps {
+  list: IMyDiaryData;
 }
 
-function DiaryList({ list }: IDiaryDataProps) {
-  // const test: boolean = list.comment.length === 0;
+function MyLikeList({ list }: IMyDiaryDataProps) {
   const navigate = useNavigate();
 
   const clickHandler = () => {
@@ -146,4 +145,4 @@ function DiaryList({ list }: IDiaryDataProps) {
   );
 }
 
-export default DiaryList;
+export default MyLikeList;

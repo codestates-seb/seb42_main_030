@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ICommentData } from "./MypageMain";
+import { ICommentData } from "../MypageMain";
 
 const CommentListContainer = styled.li`
   display: flex;
