@@ -85,7 +85,7 @@ const ProfileButton = styled.div`
   }
 `;
 
-const Profile = styled.div`
+const Profile = styled.img`
   width: 40px;
   height: 40px;
   margin: 0 10px 0 20px;
@@ -94,7 +94,12 @@ const Profile = styled.div`
   position: relative;
 `;
 
-function LoginHeader() {
+interface ImageDataProps {
+  image: string;
+  setImage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function LoginHeader({ image, setImage }: ImageDataProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const openDropdown = () => {
@@ -118,7 +123,7 @@ function LoginHeader() {
             </SubmitButton>
           </Link>
           <ProfileButton onClick={openDropdown}>
-            <Profile />
+            <Profile src={image} />
             <GoTriangleDown className='triangleDown' size={14} />
           </ProfileButton>
           {isOpen ? (

@@ -2,10 +2,10 @@
   "user": [
     {
       "id": 1,
-      "nickname": "22",
+      "nickname": "Donggu(oo)",
       "email": "kdonggoo44&gmail.com",
-      "password": "1234rerfefe",
-      "imageUrl": "blob:http://localhost:3000/697166b3-da40-47f3-81a0-b5b5b3f1a9cc"
+      "password": "비밀번호 수정",
+      "imageUrl": "blob:http://localhost:3000/140ebde7-ca75-481e-b1d5-7b9c94503cc8"
     },
     {
       "id": 2,
@@ -43,6 +43,13 @@
           "body": "다른 사람이 씀 첫번째 댓글",
           "createdAt": "2023-03-19",
           "modifiedAt": "2023-03-19"
+        },
+        {
+          "id": 3,
+          "nickname": "donggu",
+          "body": "donggu가 쓴 첫번째 댓글",
+          "createdAt": "2023-03-19",
+          "modifiedAt": "2023-03-19"
         }
       ]
     },
@@ -58,9 +65,26 @@
         "#신나는",
         "#즐거운"
       ],
-      "like": 42,
+      "like": 44,
       "comment": []
     },
+    {
+      "id": 3,
+      "nickname": "다른 사람",
+      "title": "세번째 다이어리 제목",
+      "body": "세번째 다이어리 본문 내용",
+      "createdAt": "2023-03-19",
+      "modifiedAt": "2023-03-19",
+      "viewcount": 0,
+      "tag": [
+        "#신나는",
+        "#즐거운"
+      ],
+      "like": 54,
+      "comment": []
+    }
+  ],
+  "likediary": [
     {
       "id": 3,
       "nickname": "다른 사람",
@@ -76,6 +100,5 @@
       "like": 53,
       "comment": []
     }
-  ],
-  "likediary": []
+  ]
 }

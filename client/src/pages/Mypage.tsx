@@ -1,9 +1,22 @@
 import MypageMain from "../components/Mypage/MypageMain";
+// import { ImageData } from "../App";
 
-function Mypage() {
+interface ImageDataProps {
+  image: string;
+  setImage: React.Dispatch<React.SetStateAction<string>>;
+  userData: any;
+  getUserData: any;
+}
+
+function Mypage({ image, setImage, userData, getUserData }: ImageDataProps) {
   return (
     <div>
-      <MypageMain />
+      <MypageMain
+        image={image}
+        setImage={setImage}
+        userData={userData}
+        getUserData={getUserData}
+      />
     </div>
   );
 }

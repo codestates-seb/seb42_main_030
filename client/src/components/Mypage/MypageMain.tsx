@@ -60,6 +60,13 @@ const DiaryCommentWrapper = styled.ul`
   min-width: 300px;
 `;
 
+interface ImageDataProps {
+  image: string;
+  setImage: React.Dispatch<React.SetStateAction<string>>;
+  userData: any;
+  getUserData: any;
+}
+
 export interface ICommentData {
   id: number;
   nickname: string;
@@ -81,7 +88,12 @@ export interface IMyDiaryData {
   comment: ICommentData[];
 }
 
-function MypageMain() {
+function MypageMain({
+  image,
+  setImage,
+  userData,
+  getUserData,
+}: ImageDataProps) {
   const [myDiaryData, setMyDiaryData] = useState<IMyDiaryData[]>([]);
   const [myLikeDiaryData, setLikeDiaryData] = useState<any[]>([]);
   const [myCommentData, setMyCommentData] = useState<IMyDiaryData[]>([]);
@@ -165,7 +177,12 @@ function MypageMain() {
       </ListTab>
       <MypageMainContainer>
         {currentTab === 0 ? (
-          <MyInfo />
+          <MyInfo
+            image={image}
+            setImage={setImage}
+            userData={userData}
+            getUserData={getUserData}
+          />
         ) : currentTab === 1 ? (
           <DiaryMainWrapper>
             {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {

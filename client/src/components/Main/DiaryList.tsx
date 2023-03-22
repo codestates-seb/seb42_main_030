@@ -63,7 +63,7 @@ const UserArea = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 8px 15px 8px 15px;
-  border-top: 1px solid #f1f3f5;
+  border-top: 1px solid #d1d1d1;
 `;
 
 const Profile = styled.div`

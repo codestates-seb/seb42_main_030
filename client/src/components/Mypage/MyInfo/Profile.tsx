@@ -8,7 +8,7 @@ const MyInfoContainer = styled.div`
   width: 100vw;
   max-width: 900px;
   font-size: 15px;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 `;
 
 const ProfileImgWrapper = styled.div`
@@ -49,7 +49,7 @@ const NickNameWrapper = styled.div`
   justify-content: flex-start;
   width: 100%;
   height: 100px;
-  margin-left: 20px;
+  margin: 0 20px 0 20px;
   /* border: 1px solid black; */
 
   > .editNicknameArea {
@@ -85,37 +85,116 @@ const MySettingContainer = styled.div`
   width: 100vw;
   max-width: 900px;
   font-size: 15px;
-  padding: 0 20px 20px 20px;
-  border: 1px solid red;
+  margin-top: 30px;
+  /* padding: 0 20px 20px 20px; */
+  /* padding-left: 15px; */
+  /* border: 1px solid red; */
 `;
 
-const PasswordArea = styled.div`
+const PasswordWrapper = styled.div`
   display: flex;
-  margin-top: 50px;
-  /* background-color: pink; */
+  align-items: center;
+  /* margin-top: 50px; */
+  /* border: 1px solid blue; */
   width: 100%;
+  height: 50px;
+  /* margin: 0 20px 20px 20px; */
 
   > .passwordTitle {
-    width: 150px;
-    margin-right: 20px;
+    /* background-color: pink; */
+    width: 220px;
+    margin: 0 20px 0 20px;
+    /* margin-right: 20px; */
     text-align: center;
     font-weight: 700;
     /* border: 1px solid blue; */
   }
 
-  > .password {
+  > .editPasswordArea {
+    width: 100%;
     margin-left: 20px;
-    border: 1px solid blue;
+    color: #21252b;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 5px;
   }
+
+  > .passwordArea {
+    width: 100%;
+    margin-left: 20px;
+    /* border: 1px solid red; */
+  }
+`;
+
+const EditPasswordBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  color: #21252b;
+  width: 100px;
+  border: none;
+  text-align: left;
+  background-color: transparent;
+  text-decoration: underline;
+  font-size: 15px;
+  font-weight: 600;
+`;
+
+const MyWithdrawalContainer = styled.div`
+  width: 100vw;
+  max-width: 900px;
+  font-size: 15px;
+  margin-top: 30px;
+  /* border: 1px solid red; */
+`;
+
+const MyWithdrawalWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  /* margin-top: 50px; */
+  /* border: 1px solid blue; */
+  width: 100%;
+  height: 50px;
+
+  > .withdrawalTitle {
+    /* background-color: pink; */
+    width: 150px;
+    margin: 0 20px 0 20px;
+    text-align: center;
+    font-weight: 700;
+    /* border: 1px solid blue; */
+  }
+
+  > .withdrawalBtn {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ec1d36;
+    font-weight: 700;
+    color: white;
+    margin-left: 20px;
+
+    &:hover {
+      background-color: #ff6b6c;
+    }
+  }
+`;
+
+const WarningText = styled.div`
+  font-size: 13px;
+  color: gray;
+  margin-left: 70px;
 `;
 
 export interface IUserDataProps {
   list: IUserData;
   getUserData: React.Dispatch<React.SetStateAction<object>>;
+  image: string;
+  setImage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function Profile({ list, getUserData }: IUserDataProps) {
-  const [image, setImage] = useState(list.imageUrl);
+function Profile({ list, image, setImage, getUserData }: IUserDataProps) {
+  // const [image, setImage] = useState(list.imageUrl);
   const [userNickname, setUserNickname] = useState<string>(list.nickname);
   const [edit, setEdit] = useState<boolean>(false);
 
@@ -227,31 +306,39 @@ function Profile({ list, getUserData }: IUserDataProps) {
         </NickNameWrapper>
       </MyInfoContainer>
       <MySettingContainer>
-        <PasswordArea>
+        <PasswordWrapper>
           <div className='passwordTitle'>비밀번호</div>
-
           {editPassword ? (
             <input
-              className='editNicknameArea'
+              className='editPasswordArea'
               type='text'
               value={userPassword}
               onChange={onChangePasswordInput}
             ></input>
           ) : (
-            <div className='password'>{list.password}</div>
+            <div className='passwordArea'>{list.password}</div>
           )}
-
           {editPassword ? (
-            <EditNicknameBtn onClick={() => changePassword(list.id)}>
+            <EditPasswordBtn onClick={() => changePassword(list.id)}>
               저장
-            </EditNicknameBtn>
+            </EditPasswordBtn>
           ) : (
-            <EditNicknameBtn onClick={onClickPasswordButton}>
+            <EditPasswordBtn onClick={onClickPasswordButton}>
               수정
-            </EditNicknameBtn>
+            </EditPasswordBtn>
           )}
-        </PasswordArea>
+        </PasswordWrapper>
+        <WarningText>로그인 시 사용되는 비밀번호입니다.</WarningText>
       </MySettingContainer>
+      <MyWithdrawalContainer>
+        <MyWithdrawalWrapper>
+          <div className='withdrawalTitle'>회원 탈퇴</div>
+          <button className='withdrawalBtn'>회원 탈퇴</button>
+        </MyWithdrawalWrapper>
+        <WarningText>
+          탈퇴 시 작성하신 다이어리 및 댓글이 모두 삭제되며 복구되지 않습니다.
+        </WarningText>
+      </MyWithdrawalContainer>
     </>
   );
 }
