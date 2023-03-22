@@ -35,9 +35,6 @@ public class Playlist extends Auditable {
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> TagList;
 
-    @
-
-
     // 연관관계 매핑
     @ManyToOne
     @JoinColumn(name = "diary_id")
