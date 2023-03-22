@@ -113,7 +113,8 @@ function DiaryList({ list }: IDiaryDataProps) {
   const navigate = useNavigate();
 
   const clickHandler = () => {
-    navigate(`/DetailDiary/${list.diary_id}`);
+    navigate(`/DetailDiary/${list.id}`);
+    navigate(`/DetailDiary/${list.nickname}`)
   };
 
   return (

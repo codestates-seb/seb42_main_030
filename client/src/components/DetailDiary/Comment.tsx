@@ -3,22 +3,21 @@ import styled from 'styled-components'
 import axios from 'axios'
 // import Comment from './Comment'
 import Modal from './Modal'
-import CommentList from './CommentList'
-import { IDiaryData } from './DetailMain'
+import { useParams } from 'react-router-dom'
+// import CommentList from './CommentList'
+// import { IDiaryData } from './DetailMain'
 
 
 const Container = styled.div`
   max-width:1440px;
-  height:100vh;
+  /* height:100vh; */
   padding:2rem;
-  /* border:1px solid; */
-  /* display:flex;
-  flex-direction:column; */
+
 `
 const CommentInput = styled.div`
   display:flex;
   flex-direction:column;
-  margin-bottom:5rem;
+  margin-bottom:1rem;
 `
 const InputTitle = styled.div`
   display:flex;
@@ -44,48 +43,27 @@ const Button = styled.button`
 
 `
 
-// export interface CommentData {
-//   commentId: number;
-//   nickname: string;
-//   body: string;
-//   createdAt: string;
-//   modifiedAt: string;
-// }
-interface propsType {
-  detail: IDiaryData
-}
-export default function Comment({detail}: propsType) {
+
+export default function Comment() {
   const [text, setText] = useState('')
-  // const [commentData, setCommentData] = useState<CommentData[]>([])
+  const{diary_id} = useParams()
 
   const changeHandler = (e: any) => {
     setText(e.target.value)
   }
   
-  const submitHandler = async (e: any) => {
-    e.prevendDefault();
-    
-    axios.post(`http://localhost:3001/comment`, {
-    commentId: 2,
-    nickname: 'hdh',
-    body: '잘 보고 갑니다',
-    createdAt: '2023-03-18',
-    modifiedAt: '2023-03-18'
-  })
-  .then(response => {
-    console.log(response);
-  });
+  const submitHandler = async () => {
+    const newComment = {
+      comment: [{
+        
+        body:text,
+        createAt: "2023-3-19",
+        modifedAt: "2023-03-19"
+      }]
+    }
+    await axios.patch(`http://localhost:3001/diary?diary_id=${diary_id}`, newComment);
   }
 
-  // const getCommentData = async () => {
-  //   const comment = await axios.get(`http://localhost:3001/diary`)
-  //   setCommentData(comment.data)
-  // };
-  
-  // useEffect(() => {
-  //   getCommentData();
-  // },[]);
-  
   return (
     <Container>
       <CommentInput>
@@ -93,23 +71,18 @@ export default function Comment({detail}: propsType) {
           <h1>댓글 달기</h1>
           <Modal />
         </InputTitle>
-        <Form onSubmit={submitHandler}>
+        <Form >
           <TextArea 
             placeholder='댓글을 남겨주세요~!'
             value={text}
             onChange={changeHandler}
           />
-          <Button>등록</Button>
+          <Button onClick={submitHandler}>등록</Button>
         </Form>
       </CommentInput>
 
-      <h1>댓글</h1>
-      {/* <CommentList /> */}
-      {/* {
-        commentData.map((value) => {
-          return <CommentList comment={value} key={value.commentId} />
-        })
-      } */}
+      {/* <h1>댓글</h1> */}
+
     </Container>
 
   )

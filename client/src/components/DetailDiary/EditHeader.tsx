@@ -26,7 +26,7 @@ const TitleRight = styled.div`
   display:flex;
 `
 
-const Title = styled.h1`
+const Title = styled.input`
   font-weight: bold;
 `
 
@@ -99,7 +99,7 @@ margin-bottom: 1rem;
 width:5rem;
 font-weight:normal;
 `
-const H4 = styled.h4`
+const H4 = styled.input`
   /* display: inline-block; */
   margin-left: 2rem;
 font-weight:normal;
@@ -129,7 +129,7 @@ interface propsType {
   detail: IDiaryData
   getDetailData: any
 }
-export default function DetailHeader({detail, getDetailData}: propsType) {
+export default function EditHeader({detail, getDetailData}: propsType) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
 
 
@@ -179,7 +179,7 @@ export default function DetailHeader({detail, getDetailData}: propsType) {
     <Container>
       <TitleWrap>
         <TitleLeft>
-          <Title>{detail.title}</Title>
+          <Title placeholder={detail.title}></Title>
           {checkLike && <Like onClick={(() => {
             plusLikeCount(detail.id)
             onClickLike()
@@ -225,11 +225,11 @@ export default function DetailHeader({detail, getDetailData}: propsType) {
         <Info>
           <Writer>
             <H3>뮤직 pd</H3>
-            <H4>{detail.nickname}</H4>
+            <H4 placeholder={detail.nickname}></H4>
           </Writer>
           <Writer>
             <H3>등록일</H3>
-            <H4>{detail.createdAt}</H4>
+            <H4 placeholder={detail.createdAt}></H4>
           </Writer>
           <Tag>
           {detail.tag.map((value, index) => {
@@ -241,9 +241,3 @@ export default function DetailHeader({detail, getDetailData}: propsType) {
     </Container>
   )
 }
-
-
-        
-
-        
-

@@ -7,9 +7,6 @@ import styled from "styled-components";
 import axios from "axios";
 import CommentList from './CommentList'
 import Comment from './Comment';
-import EditHeader from './EditHeader';
-
-
 
 const Container = styled.div`
     width: 100vw;
@@ -37,17 +34,13 @@ export interface CommentData {
   createAt: string;
   modifiedAt: string;
 }
-
-
-function DetailMain() {
+export default function EditDiary() {
+  
   const [detailData, setDetailData] = useState<IDiaryData[]>([]);
   const { diary_id } = useParams();
-  const [edit, setEdit] =useState(false)
-  // const {nickname} =useParams()
+  const {nickname} =useParams()
 
-const clickHandler = () => {
-  setEdit(!edit)
-}
+
   const getDetailData = async () => {
     try{
       const res = await axios.get(`http://localhost:3001/diary?diary_id=${diary_id}`);
@@ -72,12 +65,6 @@ const clickHandler = () => {
 
   return (
     <Container>
-      <button onClick={clickHandler}>수정</button>
-      {edit &&
-        detailData.map((value) => (
-          <EditHeader  detail={value} getDetailData={getDetailData} key={value.id}/>
-        ))
-      }
       {/* {detailData[0].title} */}
       {/* <DetailHeader detail={detailData[0]} /> */}
       {
@@ -100,18 +87,4 @@ const clickHandler = () => {
     </Container>
   );
 }
-
-
-
-export default DetailMain;
-
-
-
-
-
-
-
-
-
-
 

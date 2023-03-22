@@ -1,15 +1,18 @@
 {
   "diary": [
     {
-      "diary_id": 1,
+      "id": 1,
       "nickname": "donggu",
       "title": "다이어리 제목",
       "body": "다이어리 소개 본문 내용",
       "createdAt": "2023-03-19",
       "modifiedAt": "2023-03-19",
       "viewcount": 0,
-      "tag": ["#신나는", "#즐거운"],
-      "like": 27,
+      "tag": [
+        "#신나는",
+        "#즐거운"
+      ],
+      "like": 44,
       "comment": [
         {
           "comment_id": 1,
@@ -27,4 +30,3 @@
     }
   ]
 }
-
