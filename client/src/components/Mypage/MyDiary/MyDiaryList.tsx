@@ -43,20 +43,20 @@ const InfoArea = styled.div`
   }
 `;
 
-const Tag = styled.ul`
-  display: flex;
-  font-size: 12px;
-  font-weight: 500;
-  color: #757170;
-  list-style: none;
+// const Tag = styled.ul`
+//   display: flex;
+//   font-size: 12px;
+//   font-weight: 500;
+//   color: #757170;
+//   list-style: none;
 
-  > li {
-    margin-right: 5px;
-    padding: 3px 6px 3px 6px;
-    border: 1px solid #d1d1d1;
-    border-radius: 50px;
-  }
-`;
+//   > li {
+//     margin-right: 5px;
+//     padding: 3px 6px 3px 6px;
+//     border: 1px solid #d1d1d1;
+//     border-radius: 50px;
+//   }
+// `;
 
 const UserArea = styled.div`
   display: flex;
