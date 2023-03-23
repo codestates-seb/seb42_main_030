@@ -1,12 +1,11 @@
+import DetailDiaryMain from "../components/DetailDiary/DetailDiaryMain";
 
-import DetailMain from '../components/DetailDiary/DetailMain'
-
-
-export default function DetailDiary() {
+function DetailDiary() {
   return (
-    <div>
-      <DetailMain />
-    </div>
-  )
+    <>
+      <DetailDiaryMain />
+    </>
+  );
 }
 
+export default DetailDiary;

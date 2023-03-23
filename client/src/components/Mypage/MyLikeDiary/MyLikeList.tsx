@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { DiaryDataProps } from "../../Type";
+import { DiaryDataProps } from "../../../Type";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
@@ -43,27 +43,27 @@ const InfoArea = styled.div`
   }
 `;
 
-// const Tag = styled.ul`
-//   display: flex;
-//   font-size: 12px;
-//   font-weight: 500;
-//   color: #757170;
-//   list-style: none;
+const Tag = styled.ul`
+  display: flex;
+  font-size: 12px;
+  font-weight: 500;
+  color: #757170;
+  list-style: none;
 
-//   > li {
-//     margin-right: 5px;
-//     padding: 3px 6px 3px 6px;
-//     border: 1px solid #d1d1d1;
-//     border-radius: 50px;
-//   }
-// `;
+  > li {
+    margin-right: 5px;
+    padding: 3px 6px 3px 6px;
+    border: 1px solid #d1d1d1;
+    border-radius: 50px;
+  }
+`;
 
 const UserArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px 15px 8px 15px;
-  border-top: 1px solid #d1d1d1;
+  border-top: 1px solid #f1f3f5;
 `;
 
 const Profile = styled.div`
@@ -105,7 +105,7 @@ const LikeAndComment = styled.div`
   }
 `;
 
-function DiaryList({ list }: DiaryDataProps) {
+function MyLikeList({ list }: DiaryDataProps) {
   const navigate = useNavigate();
 
   const clickHandler = () => {
@@ -118,11 +118,11 @@ function DiaryList({ list }: DiaryDataProps) {
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>
         <div className='infoDate'>{list.createdAt}</div>
-        {/* <Tag>
-          {list.tag.map((value: string, index: number) => {
+        <Tag>
+          {list.tag.map((value, index) => {
             return <li key={index}>{value}</li>;
           })}
-        </Tag> */}
+        </Tag>
       </InfoArea>
       <UserArea>
         <ByUsername>
@@ -141,4 +141,4 @@ function DiaryList({ list }: DiaryDataProps) {
   );
 }
 
-export default DiaryList;
+export default MyLikeList;
