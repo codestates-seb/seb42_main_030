@@ -4,8 +4,8 @@
       "id": 1,
       "nickname": "Donggu(oo)",
       "email": "kdonggoo44&gmail.com",
-      "password": "비밀번호 수정",
-      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+      "password": "1234567",
+      "imageUrl": "blob:http://localhost:3000/84680859-e933-4771-a78b-ba88d2373d2b"
     },
     {
       "id": 2,
