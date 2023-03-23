@@ -113,8 +113,8 @@ function DiaryList({ list }: IDiaryDataProps) {
   const navigate = useNavigate();
 
   const clickHandler = () => {
-    navigate(`/DetailDiary/${list.id}`);
-    navigate(`/DetailDiary/${list.nickname}`)
+    navigate(`/DetailDiary/${list.diaryId}`);
+    // navigate(`/DetailDiary/${list.nickname}`)
   };
 
   return (
@@ -124,9 +124,9 @@ function DiaryList({ list }: IDiaryDataProps) {
         <div className='infoTitle'>{list.title}</div>
         <div className='infoDate'>{list.createdAt}</div>
         <Tag>
-          {list.tag.map((value, index) => {
+          {/* {list.tag.map((value, index) => {
             return <li key={index}>{value}</li>;
-          })}
+          })} */}
         </Tag>
       </InfoArea>
       <UserArea>
@@ -139,7 +139,7 @@ function DiaryList({ list }: IDiaryDataProps) {
           <AiFillHeart className='likeIcon' size={16} />
           {list.like}
           <FaRegCommentDots className='commentIcon' size={15} />
-          {list.comment.length}
+          {/* {list.comment.length} */}
         </LikeAndComment>
       </UserArea>
     </DiaryListContainer>

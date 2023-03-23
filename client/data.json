@@ -2,9 +2,9 @@
   "diary": [
     {
       "id": 1,
-      "nickname": "donggu",
+      "nickname": "한대희",
       "title": "다이어리 제목",
-      "body": "다이어리 소개 본문 내용",
+      "body": "다이어리 소개 본문 내용asdfsdfsdfasdfasdfasfdasdf",
       "createdAt": "2023-03-19",
       "modifiedAt": "2023-03-19",
       "viewcount": 0,
@@ -12,7 +12,7 @@
         "#신나는",
         "#즐거운"
       ],
-      "like": 44,
+      "like": 21,
       "comment": [
         {
           "comment_id": 1,

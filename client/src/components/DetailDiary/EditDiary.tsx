@@ -5,8 +5,8 @@ import Diary from "./Diary";
 import PlayList from "./PlayList";
 import styled from "styled-components";
 import axios from "axios";
-import CommentList from './CommentList'
-import Comment from './Comment';
+import CommentList from './Comment'
+import Comment from './CommentInput';
 
 const Container = styled.div`
     width: 100vw;
@@ -35,14 +35,14 @@ export interface CommentData {
   modifiedAt: string;
 }
 export default function EditDiary() {
-  
+
   const [detailData, setDetailData] = useState<IDiaryData[]>([]);
   const { diary_id } = useParams();
-  const {nickname} =useParams()
+  const { nickname } = useParams()
 
 
   const getDetailData = async () => {
-    try{
+    try {
       const res = await axios.get(`http://localhost:3001/diary?diary_id=${diary_id}`);
       // setDetailData(res.data);
       const Data = JSON.stringify(res.data)
@@ -57,33 +57,33 @@ export default function EditDiary() {
 
   useEffect(() => {
     getDetailData();
-  // const data = window.localStorage.getItem('hello')
+    // const data = window.localStorage.getItem('hello')
 
-  },[]);
+  }, []);
 
   // const data = window.localStorage.getItem('hello')
 
   return (
     <Container>
-      {/* {detailData[0].title} */}
-      {/* <DetailHeader detail={detailData[0]} /> */}
+      {/* {detailData[0].title}
+      <DetailHeader detail={detailData[0]} />
       {
         detailData.map((value) => (
-          <DetailHeader detail={value} getDetailData={getDetailData}  key={value.id} />
+          <DetailHeader detail={value} getDetailData={getDetailData} key={value.id} />
         ))
       }
       {
         detailData.map((value) => {
-      return <Diary detail={value} key={value.id}/>
+          return <Diary detail={value} key={value.id} />
         })
       }
       <PlayList />
       <Comment />
       {
         detailData.map((value) => {
-          return <CommentList detail={value} key={value.id}/>
+          return <CommentList detail={value} key={value.id} />
         })
-      }
+      } */}
     </Container>
   );
 }

@@ -126,29 +126,29 @@ const Tag = styled.ul`
 
 
 interface propsType {
-  detail: IDiaryData
+  detail: any
   getDetailData: any
 }
-export default function DetailHeader({detail, getDetailData}: propsType) {
+export default function DetailHeader({detail,getDetailData}: propsType) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
 
 
-  const plusLikeCount = async (id: number) => {
+  const plusLikeCount = async (diaryId: number) => {
     if (checkLike === false) {
       const like = {
-        like: detail.like + 1,
+        likeCount: detail.likeCount + 1,
       };
       const res = await axios.patch(
-        `http://localhost:3001/diary/${id}`,
+        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`,
         like
       );
       getDetailData(res.data);
     } else {
       const like = {
-        like: detail.like - 1,
+        likeCount: detail.likeCount - 1,
       };
       const res = await axios.patch(
-        `http://localhost:3001/diary/${id}`,
+        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`,
         like
       );
       getDetailData(res.data);
@@ -181,25 +181,25 @@ export default function DetailHeader({detail, getDetailData}: propsType) {
         <TitleLeft>
           <Title>{detail.title}</Title>
           {checkLike && <Like onClick={(() => {
-            plusLikeCount(detail.id)
+            plusLikeCount(detail.diaryId)
             onClickLike()
           })}>
             <Icon>
               <AiFillHeart />
             </Icon>
             좋아요
-            {detail.like}
+            {detail.likeCount}
           </Like>}
           {
             !checkLike && <Like onClick={(() => {
-              plusLikeCount(detail.id)
+              plusLikeCount(detail.diaryId)
               onClickLike()
             })}>
               <FalseIcon>
                 <AiFillHeart />
               </FalseIcon>
               좋아요
-              {detail.like}
+              {detail.likeCount}
             </Like>
           }
           {/* <Like onClick={(() => {
@@ -216,7 +216,7 @@ export default function DetailHeader({detail, getDetailData}: propsType) {
         <TitleRight>
           <Edit href='#'>수정</Edit>
           <Delete onClick={() => {
-            postDelete(detail.id)
+            postDelete(detail.diaryId)
           }}>삭제</Delete>
         </TitleRight>
       </TitleWrap>
@@ -225,16 +225,16 @@ export default function DetailHeader({detail, getDetailData}: propsType) {
         <Info>
           <Writer>
             <H3>뮤직 pd</H3>
-            <H4>{detail.nickname}</H4>
+            <H4>{detail.userNickname}</H4>
           </Writer>
           <Writer>
             <H3>등록일</H3>
             <H4>{detail.createdAt}</H4>
           </Writer>
           <Tag>
-          {detail.tag.map((value, index) => {
+          {/* {detail.tag.map((value, index) => {
             return <li key={index}>{value}</li>;
-          })}
+          })} */}
           </Tag>
         </Info>
       </ImgWrap>

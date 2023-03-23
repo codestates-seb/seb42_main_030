@@ -5,9 +5,11 @@ import Diary from "./Diary";
 import PlayList from "./PlayList";
 import styled from "styled-components";
 import axios from "axios";
-import CommentList from './CommentList'
+// import CommentList from './CommentList'
 import Comment from './Comment';
-import EditHeader from './EditHeader';
+// import EditHeader from './EditHeader';
+import CommentInput from './CommentInput';
+
 
 
 
@@ -18,85 +20,92 @@ const Container = styled.div`
     padding: 0 10rem;
     margin:0 auto;
 `
+
+const DiaryWrap = styled.div`
+  padding:2rem;
+`
+const H1 = styled.h1`
+  margin-bottom: 2rem;
+`
 export interface IDiaryData {
-  id: number;
-  nickname: string;
+  diaryId: number;
   title: string;
   body: string;
-  like: number;
-  tag: string[];
+  viewCount: number;
+  likeCount: number;
   createdAt: string;
   modifiedAt: string;
-  viewcount: number;
+  userNickname: string;
   comment: CommentData[]
+  tag: string[];
+  viewcount: number;
 }
 
 export interface CommentData {
   comment_id: number;
+  diaryId: number;
   body: string;
   createAt: string;
   modifiedAt: string;
+  userNickname:string;
 }
+  
 
 
 function DetailMain() {
   const [detailData, setDetailData] = useState<IDiaryData[]>([]);
-  const { diary_id } = useParams();
-  const [edit, setEdit] =useState(false)
-  // const {nickname} =useParams()
+  const { diaryId } = useParams();
 
-const clickHandler = () => {
-  setEdit(!edit)
-}
   const getDetailData = async () => {
-    try{
-      const res = await axios.get(`http://localhost:3001/diary?diary_id=${diary_id}`);
-      // setDetailData(res.data);
-      const Data = JSON.stringify(res.data)
-      window.localStorage.setItem('hello', Data)
-      const data = JSON.parse(window.localStorage.getItem('hello') || '{}')
-      setDetailData(data)
+    try {
+      const res = await axios.get(`http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`);
+      setDetailData(res.data);
     } catch (err) {
       console.error(err)
     }
   }
 
 
+
   useEffect(() => {
     getDetailData();
-  // const data = window.localStorage.getItem('hello')
+  }, []);
 
-  },[]);
 
-  // const data = window.localStorage.getItem('hello')
+
+
 
   return (
     <Container>
-      <button onClick={clickHandler}>수정</button>
-      {edit &&
+      {detailData[0].title}
+      <DetailHeader detail={detailData} getDetailData={getDetailData} />
+      {/* {
         detailData.map((value) => (
-          <EditHeader  detail={value} getDetailData={getDetailData} key={value.id}/>
+          <DetailHeader detail={value} getDetailData={getDetailData} key={value.diaryId} />
         ))
-      }
-      {/* {detailData[0].title} */}
-      {/* <DetailHeader detail={detailData[0]} /> */}
-      {
-        detailData.map((value) => (
-          <DetailHeader detail={value} getDetailData={getDetailData}  key={value.id} />
-        ))
-      }
-      {
+      } */}
+    {/* <DiaryWrap>
+      <H1>음악과 함께 작성할 다이어리</H1>
+      <div>
+        {detailData.body}
+      </div>
+    </DiaryWrap> */}
+
+
+      <Diary detail={detailData} />
+      {/* {
         detailData.map((value) => {
-      return <Diary detail={value} key={value.id}/>
+          return <Diary detail={value} key={value.diaryId} />
         })
-      }
+      } */}
       <PlayList />
-      <Comment />
-      {
+      <CommentInput />
+      {/* <Comment detail={detailData[0]}/> */}
+      {/* {
         detailData.map((value) => {
-          return <CommentList detail={value} key={value.id}/>
+          return <Comment detail={value} key={value.diaryId} />
         })
-      }
+      } */}
     </Container>
   );
 }

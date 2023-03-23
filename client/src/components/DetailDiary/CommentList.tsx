@@ -1,10 +1,7 @@
-import React, {useState} from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components'
 import { IDiaryData } from './DetailMain'
-
-// import { CommentType} from './DetailMain'
-// import { CommentData } from './Comment'
-
+import { CommentData } from './DetailMain'
 const Container = styled.div`
   max-width:1440px;
   padding:2rem;
@@ -28,7 +25,7 @@ const CommentFooter = styled.div`
   display:flex;
   justify-content:space-between;
 `
-const CommentButton = styled.div`
+const CommentButton = styled.form`
   display:flex;
   gap:1rem;
 `
@@ -52,15 +49,13 @@ const DeleteButton = styled.button`
     color:blue;
   }
 `
-
 interface propsType {
-  detail: IDiaryData
+  data: IDiaryData
+  comment: CommentData
 }
 
+export default function CommentList({data, comment}: propsType) {
 
-
-export default function CommentList({detail}: propsType) {
-  // const [comment,setComment] = useState<commentType[]>([])
   const [click, setClick] = useState(false)
   
   const clickHandler = (e:any) => {
@@ -68,77 +63,22 @@ export default function CommentList({detail}: propsType) {
     console.log(e)
   }
   return (
-
-    <Container>
-      <h1>댓글</h1>
-      {!click &&
-        detail.comment.map((value) => {
-          return (
-          <CommentWrap key={value.comment_id}>
-            <h5>{detail.nickname}</h5>
-            {/* {!click && <p>{value.body}</p>} */}
-            <p>{value.body}</p>
+    <>
+      <CommentWrap key={data.diaryId}>
+            <h5>{data.userNickname}</h5>
+            {!click && <p>{comment.body}</p>}
+            {click && <input placeholder={comment.body}></input>}
             <CommentFooter>
-              <h6>{detail.createdAt}</h6>
+              <h6>{data.createdAt}</h6>
               <CommentButton>
-                <EditButton onClick={clickHandler}>수정</EditButton>
+                {click && <EditButton onClick={clickHandler}>확인</EditButton>}
+                {!click && <EditButton onClick={clickHandler}>수정</EditButton>}
                 <DeleteButton>삭제</DeleteButton>
               </CommentButton>
             </CommentFooter>
             {/* <h6>{detail.createdAt}</h6> */}
-          </CommentWrap>)
-        
-        })
-      }
-      {
-        click && 
-        detail.comment.map((value) => {
-          return (
-          <CommentWrap key={value.comment_id}>
-            <h5>{detail.nickname}</h5>
-            <input placeholder={value.body}></input>
-            <CommentFooter>
-              <h6>{detail.createdAt}</h6>
-              <CommentButton>
-                <EditButton onClick={clickHandler}>수정</EditButton>
-                <DeleteButton>삭제</DeleteButton>
-              </CommentButton>
-            </CommentFooter>
-            {/* <h6>{detail.createdAt}</h6> */}
-          </CommentWrap>)
-        }
-        )
-      }
-      {/* {
-        detail.comment.map((value) => {
-          return (
-          <CommentWrap key={value.comment_id}>
-            <h5>{detail.nickname}</h5>
-            <p>{value.body}</p>
-            <CommentFooter>
-              <h6>{detail.createdAt}</h6>
-              <CommentButton>
-                <EditButton onClick={clickHandler}>수정</EditButton>
-                <DeleteButton>삭제</DeleteButton>
-              </CommentButton>
-            </CommentFooter>
-            <h6>{detail.createdAt}</h6>
-          </CommentWrap>)
-        }
-        )
-      } */}
-    </Container>
+          </CommentWrap>
+    </>
   )
 }
-
-
-
-
-
-
-
-      
-
-    
-
 

@@ -1,90 +1,146 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
-// import Comment from './Comment'
-import Modal from './Modal'
-import { useParams } from 'react-router-dom'
-// import CommentList from './CommentList'
-// import { IDiaryData } from './DetailMain'
-
+import { IDiaryData } from './DetailMain'
+import CommentList from './CommentList'
+// import { CommentType} from './DetailMain'
+import { CommentData } from './DetailMain'
 
 const Container = styled.div`
   max-width:1440px;
-  /* height:100vh; */
   padding:2rem;
-
-`
-const CommentInput = styled.div`
-  display:flex;
-  flex-direction:column;
-  margin-bottom:1rem;
-`
-const InputTitle = styled.div`
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-`
-const Form = styled.form`
-  display:flex;
-  align-items:center;
-  margin-top:1rem;
-  width:100%;
+  height:100vh;
   /* border:1px solid; */
 `
-const TextArea = styled.textarea`
-  padding:1rem;
-  width:90%;
-  height:8rem;
+
+const CommentWrap = styled.div`
+  max-width:1440px;
+  padding:2rem;
+  margin-top:1rem;
+  border-top: 1px dotted;
+  padding:1rem 0 1rem 1rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  width:100%;
+  height: 20%;
 `
-const Button = styled.button`
-  margin-left:2% ;
-  width:8%;
-  height:8rem;
-
+const CommentFooter = styled.div`
+  display:flex;
+  justify-content:space-between;
+`
+const CommentButton = styled.div`
+  display:flex;
+  gap:1rem;
 `
 
-
-export default function Comment() {
-  const [text, setText] = useState('')
-  const{diary_id} = useParams()
-
-  const changeHandler = (e: any) => {
-    setText(e.target.value)
+const EditButton = styled.button`
+  background-color:transparent;
+  border:none;
+  &:hover{
+    cursor: pointer;
+    color: blue;
   }
+  &:active{
+
+  }
+`
+const DeleteButton = styled.button`
+  background-color:transparent;
+  border:none;
+  &:hover{
+    cursor: pointer;
+    color:blue;
+  }
+`
+
+interface propsType {
+  detail: IDiaryData
+}
+
+
+
+export default function Comment({detail}: propsType) {
+  // const [comment,setComment] = useState<commentType[]>([])
+  // const [click, setClick] = useState(false)
   
-  const submitHandler = async () => {
-    const newComment = {
-      comment: [{
-        
-        body:text,
-        createAt: "2023-3-19",
-        modifedAt: "2023-03-19"
-      }]
-    }
-    await axios.patch(`http://localhost:3001/diary?diary_id=${diary_id}`, newComment);
-  }
-
+  // const clickHandler = (e:any) => {
+  //   setClick(!click)
+  //   console.log(e)
+  // }
   return (
+
     <Container>
-      <CommentInput>
-        <InputTitle>
-          <h1>댓글 달기</h1>
-          <Modal />
-        </InputTitle>
-        <Form >
-          <TextArea 
-            placeholder='댓글을 남겨주세요~!'
-            value={text}
-            onChange={changeHandler}
-          />
-          <Button onClick={submitHandler}>등록</Button>
-        </Form>
-      </CommentInput>
+      <h1>댓글</h1>
+      {/* {
+        detail.comment.map((value) => {
+          return (
+            <CommentList data={detail} comment={value}  key={value.comment_id}/>
+          <CommentWrap key={value.comment_id}>
+            <h5>{detail.nickname}</h5>
+            {!click && <p>{value.body}</p>}
+            <p>{value.body}</p>
+            <CommentFooter>
+              <h6>{detail.createdAt}</h6>
+              <CommentButton>
+                <EditButton onClick={clickHandler}>수정</EditButton>
+                <DeleteButton>삭제</DeleteButton>
+              </CommentButton>
+            </CommentFooter>
+            <h6>{detail.createdAt}</h6>
+          </CommentWrap>
+          )
+        
+        })
+      } */}
+      {/* {
+        click && 
+        detail.comment.map((value) => {
+          return (
+          <CommentWrap key={value.comment_id}>
+            <h5>{detail.nickname}</h5>
+            <input placeholder={value.body}></input>
+            <CommentFooter>
+              <h6>{detail.createdAt}</h6>
+              <CommentButton>
+                <EditButton onClick={clickHandler}>수정</EditButton>
+                <DeleteButton>삭제</DeleteButton>
+              </CommentButton>
+            </CommentFooter>
 
-      {/* <h1>댓글</h1> */}
-
+          </CommentWrap>)
+        }
+        )
+      } */}
+      {/* {
+        detail.comment.map((value) => {
+          return (
+          <CommentWrap key={value.comment_id}>
+            <h5>{detail.nickname}</h5>
+            <p>{value.body}</p>
+            <CommentFooter>
+              <h6>{detail.createdAt}</h6>
+              <CommentButton>
+                <EditButton onClick={clickHandler}>수정</EditButton>
+                <DeleteButton>삭제</DeleteButton>
+              </CommentButton>
+            </CommentFooter>
+            <h6>{detail.createdAt}</h6>
+          </CommentWrap>)
+        }
+        )
+      } */}
     </Container>
-
   )
 }
+
+
+
+
+
+
+
+      
+
     
+
+
