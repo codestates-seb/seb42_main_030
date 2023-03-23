@@ -105,9 +105,7 @@ export default function Addplaylist() {
         <div
           className='search-button'
           onClick={() => {
-            {
-              handleSearch();
-            }
+            handleSearch();
           }}
         >
           🔍검색

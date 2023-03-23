@@ -25,10 +25,7 @@
       "userNickname": "donggu",
       "createdAt": "2023-03-19",
       "modifiedAt": "2023-03-19",
-      "tag": [
-        "#신나는",
-        "#즐거운"
-      ],
+      "tag": ["#신나는", "#즐거운"],
       "comment": [
         {
           "id": 1,
