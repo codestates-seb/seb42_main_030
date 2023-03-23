@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { GoTriangleDown } from "react-icons/go";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { UserData } from "../Type";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -85,17 +87,30 @@ const ProfileButton = styled.div`
   }
 `;
 
-const Profile = styled.div`
+const Profile = styled.img`
   width: 40px;
   height: 40px;
   margin: 0 10px 0 20px;
-  background-color: lightgray;
   border-radius: 50%;
   position: relative;
 `;
 
 function LoginHeader() {
+  const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // 내 유저 정보 get 요청
+  const getImageData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3001/user/1`);
+      setImageData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getImageData();
+  }, []);
 
   const openDropdown = () => {
     setIsOpen(!isOpen);
@@ -118,7 +133,7 @@ function LoginHeader() {
             </SubmitButton>
           </Link>
           <ProfileButton onClick={openDropdown}>
-            <Profile />
+            <Profile src={imageData.imageUrl} alt='헤더 프로필 이미지' />
             <GoTriangleDown className='triangleDown' size={14} />
           </ProfileButton>
           {isOpen ? (

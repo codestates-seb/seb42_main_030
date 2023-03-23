@@ -118,11 +118,11 @@ function MyLikeList({ list }: DiaryDataProps) {
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>
         <div className='infoDate'>{list.createdAt}</div>
-        <Tag>
+        {/* <Tag>
           {list.tag.map((value, index) => {
             return <li key={index}>{value}</li>;
           })}
-        </Tag>
+        </Tag> */}
       </InfoArea>
       <UserArea>
         <ByUsername>

@@ -169,6 +169,84 @@ const WarningText = styled.div`
   margin-left: 70px;
 `;
 
+// 투두 삭재 부분
+const Delete = styled.div`
+  flex: 0.8;
+  text-align: center;
+  margin: auto;
+`;
+
+const DeleteModalBackdrop = styled.div`
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: grid;
+  place-items: center;
+`;
+
+const DeleteModalView = styled.div`
+  border-radius: 5px;
+  background-color: white;
+  width: 90vw;
+  height: 200px;
+  color: ${(props) => props.theme.text};
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
+
+  > .deleteModalTitle {
+    font-size: 20px;
+    color: ${(props) => props.theme.title};
+    font-weight: 600;
+    text-align: left;
+    margin: 10px 0px 35px 20px;
+  }
+
+  > .warningText {
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
+
+  > button {
+    margin-top: 20px;
+    font-weight: 500;
+    width: 70px;
+    height: 27px;
+    color: white;
+    border: none;
+    border-radius: 7px;
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  > .deleteCancelButton + .deleteButton {
+    margin-left: 15px;
+  }
+
+  > .deleteCancelButton {
+    background-color: #a0a0a0;
+    &:active {
+      background-color: lightgray;
+    }
+  }
+
+  > .deleteButton {
+    background-color: #d33031;
+    &:active {
+      background-color: #e68282;
+    }
+  }
+
+  @media screen and (min-width: 550px) {
+    width: 550px;
+  }
+`;
+
 export interface UserDataProps {
   list: UserData;
   getUserData: React.Dispatch<React.SetStateAction<object>>;
@@ -181,6 +259,8 @@ function Profile({ list, getUserData }: UserDataProps) {
 
   const [userPassword, setUserPassword] = useState<string>(list.password);
   const [editPassword, setEditPassword] = useState<boolean>(false);
+
+  const [withDrawalModalOpen, setWithdrawalModalOpen] = useState(false); // 회원 탈퇴 모달 오픈
 
   const fileInput: any = useRef(null);
 
@@ -251,6 +331,11 @@ function Profile({ list, getUserData }: UserDataProps) {
     window.location.reload();
   };
 
+  // 회원 탈퇴 모달 오픈 이벤트 핸들러
+  const openModalHandler = () => {
+    setWithdrawalModalOpen(!withDrawalModalOpen);
+  };
+
   return (
     <>
       <MyInfoContainer>
@@ -314,7 +399,26 @@ function Profile({ list, getUserData }: UserDataProps) {
       <MyWithdrawalContainer>
         <MyWithdrawalWrapper>
           <div className='withdrawalTitle'>회원 탈퇴</div>
-          <button className='withdrawalBtn'>회원 탈퇴</button>
+          <button className='withdrawalBtn' onClick={openModalHandler}>
+            회원 탈퇴
+          </button>
+          <Delete>
+            {withDrawalModalOpen ? (
+              <DeleteModalBackdrop>
+                <DeleteModalView>
+                  <div className='deleteModalTitle'>회원 탈퇴</div>
+                  <div className='warningText'>정말 탈퇴 하시겠습니까?</div>
+                  <button
+                    className='deleteCancelButton'
+                    onClick={openModalHandler}
+                  >
+                    취소
+                  </button>
+                  <button className='deleteButton'>탈퇴</button>
+                </DeleteModalView>
+              </DeleteModalBackdrop>
+            ) : null}
+          </Delete>
         </MyWithdrawalWrapper>
         <WarningText>
           탈퇴 시 작성하신 다이어리 및 댓글이 모두 삭제되며 복구되지 않습니다.

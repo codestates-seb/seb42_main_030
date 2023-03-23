@@ -52,6 +52,10 @@ const ContentArea = styled.div`
       margin-left: 50px;
       height: 300px;
       object-fit: contain;
+
+      @media screen and (max-width: 1024px) {
+        display: none;
+      }
     }
   }
 `;

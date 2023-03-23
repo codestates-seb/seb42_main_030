@@ -155,11 +155,11 @@ export default function DetailHeader({ detail }: propsType) {
             <H3>등록일</H3>
             <H4>{detail.createdAt}</H4>
           </Writer>
-          <Tag>
+          {/* <Tag>
             {detail.tag.map((value, index) => {
               return <li key={index}>{value}</li>;
             })}
-          </Tag>
+          </Tag> */}
         </Info>
       </ImgWrap>
     </Container>

@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { DiaryDataProps } from "../../Type";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const DiaryListContainer = styled.li`
   box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
@@ -66,11 +68,10 @@ const UserArea = styled.div`
   border-top: 1px solid #d1d1d1;
 `;
 
-const Profile = styled.div`
+const Profile = styled.img`
   width: 25px;
   height: 25px;
   margin-right: 8px;
-  background-color: lightgray;
   border-radius: 50%;
   position: relative;
 `;
@@ -106,6 +107,23 @@ const LikeAndComment = styled.div`
 `;
 
 function DiaryList({ list }: DiaryDataProps) {
+  const [imageData, setImageData] = useState<any>([]);
+
+  // 내 유저 정보 get 요청
+  const getImageData = async () => {
+    // const isLogin = localStorage.getItem('userId')
+    // URI -> `http://localhost:3001/user/${isLogin}`으로 변경
+    try {
+      const res = await axios.get(`http://localhost:3001/user/1`);
+      setImageData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getImageData();
+  }, []);
+
   const navigate = useNavigate();
 
   const clickHandler = () => {
@@ -126,7 +144,7 @@ function DiaryList({ list }: DiaryDataProps) {
       </InfoArea>
       <UserArea>
         <ByUsername>
-          <Profile />
+          <Profile src={imageData.imageUrl} alt='헤더 프로필 이미지' />
           <div className='by'>by</div>
           {list.userNickname}
         </ByUsername>

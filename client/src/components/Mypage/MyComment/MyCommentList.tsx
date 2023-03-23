@@ -31,7 +31,7 @@ const CommentListWrapper = styled.div`
 
 function MyCommentList({ list }: CommentDataProps) {
   // const isLogin = localStorage.getItem('nickname')
-  // list.nickname === {이 부분을 로그인한 사용자의 닉네임으로 변경}
+  // list.userNickname === {이 부분을 로그인한 사용자의 닉네임으로 변경}
   const myComment: boolean = list.userNickname === "light";
 
   return (

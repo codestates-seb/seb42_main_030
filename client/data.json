@@ -5,7 +5,7 @@
       "nickname": "Donggu(oo)",
       "email": "kdonggoo44&gmail.com",
       "password": "1234567",
-      "imageUrl": "blob:http://localhost:3000/84680859-e933-4771-a78b-ba88d2373d2b"
+      "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     },
     {
       "id": 2,
@@ -19,6 +19,26 @@
     {
       "id": 1,
       "title": "첫번째 다이어리 제목",
+      "body": "첫번째 다이어리 본문 내용",
+      "viewCount": 0,
+      "likeCount": 27,
+      "userNickname": "donggu",
+      "createdAt": "2023-03-19",
+      "modifiedAt": "2023-03-19",
+      "tag": ["#신나는", "#즐거운"],
+      "comment": [
+        {
+          "id": 1,
+          "body": "donggu가 쓴 첫번째 댓글",
+          "createdAt": "2023-03-19",
+          "modifiedAt": "2023-03-19",
+          "nickname": "donggu"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "두번째 다이어리 제목",
       "body": "첫번째 다이어리 본문 내용",
       "viewCount": 0,
       "likeCount": 27,
