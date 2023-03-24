@@ -96,11 +96,13 @@ const Profile = styled.img`
 `;
 
 function LoginHeader() {
-  const [imageData, setImageData] = useState<any>([]);
+  const [imageData, setImageData] = useState<UserData>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // 내 유저 정보 get 요청
   const getImageData = async () => {
+    // const isLogin = localStorage.getItem('usernickname')
+    // URI -> `http://localhost:3001/user/${isLogin}`으로 변경
     try {
       const res = await axios.get(`http://localhost:3001/user/1`);
       setImageData(res.data);
@@ -133,7 +135,10 @@ function LoginHeader() {
             </SubmitButton>
           </Link>
           <ProfileButton onClick={openDropdown}>
-            <Profile src={imageData.imageUrl} alt='헤더 프로필 이미지' />
+            <Profile
+              src={imageData && imageData.imageUrl}
+              alt='헤더 프로필 이미지'
+            />
             <GoTriangleDown className='triangleDown' size={14} />
           </ProfileButton>
           {isOpen ? (

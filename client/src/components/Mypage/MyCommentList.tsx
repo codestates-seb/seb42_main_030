@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { CommentDataProps } from "../../../Type";
+import { CommentDataProps } from "../../Type";
 
 const CommentListContainer = styled.li`
   display: flex;

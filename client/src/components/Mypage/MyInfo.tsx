@@ -1,7 +1,7 @@
 import axios from "axios";
 import styled from "styled-components";
 import { useState, useRef } from "react";
-import { UserData } from "../../../Type";
+import { UserData } from "../../Type";
 
 const MyInfoContainer = styled.div`
   display: flex;
@@ -252,35 +252,36 @@ export interface UserDataProps {
   getUserData: React.Dispatch<React.SetStateAction<object>>;
 }
 
-function Profile({ list, getUserData }: UserDataProps) {
+function MyInfo({ list, getUserData }: UserDataProps) {
   const [image, setImage] = useState(list.imageUrl);
-  const [userNickname, setUserNickname] = useState<string>(list.nickname);
-  const [edit, setEdit] = useState<boolean>(false);
 
-  const [userPassword, setUserPassword] = useState<string>(list.password);
+  const [nickname, setNickname] = useState<string>(list.nickname);
+  const [editNickname, setEditNickname] = useState<boolean>(false);
+
+  const [password, setPassword] = useState<string>(list.password);
   const [editPassword, setEditPassword] = useState<boolean>(false);
 
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState(false); // 회원 탈퇴 모달 오픈
 
-  const fileInput: any = useRef(null);
+  const fileInput = useRef<HTMLInputElement>(null);
 
   // 유저 닉네임 patch 요청
   const changeNickname = async (id: number) => {
     const newNickname = {
-      nickname: userNickname,
+      nickname: nickname,
     };
     const res = await axios.patch(
       `http://localhost:3001/user/${id}`,
       newNickname
     );
     getUserData(res.data);
-    setEdit(false);
+    setEditNickname(false);
   };
 
   // 유저 패스워드 patch 요청
   const changePassword = async (id: number) => {
     const newPassword = {
-      password: userPassword,
+      password: password,
     };
     const res = await axios.patch(
       `http://localhost:3001/user/${id}`,
@@ -292,7 +293,7 @@ function Profile({ list, getUserData }: UserDataProps) {
 
   // 유저 닉네임 변경 클릭 이벤트
   const onClickEditButton = () => {
-    setEdit(!edit);
+    setEditNickname(!editNickname);
   };
 
   // 유저 패스워드 변경 클릭 이벤트
@@ -302,17 +303,17 @@ function Profile({ list, getUserData }: UserDataProps) {
 
   // 유저 닉네임 변경 체인지 이벤트
   const onChangeEditInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserNickname(e.target.value);
+    setNickname(e.target.value);
   };
 
   // 유저 패스워드 변경 체인지 이벤트
   const onChangePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserPassword(e.target.value);
+    setPassword(e.target.value);
   };
 
   // 프로필 이미지 클릭 시 input으로 연결되는 이벤트
   const clickProfile = () => {
-    fileInput.current.click();
+    fileInput.current?.click();
   };
 
   // 선택한 이미지 미리보기 이벤트
@@ -352,17 +353,17 @@ function Profile({ list, getUserData }: UserDataProps) {
           </ImgSubmitBtn>
         </ProfileImgWrapper>
         <NickNameWrapper>
-          {edit ? (
+          {editNickname ? (
             <input
               className='editNicknameArea'
               type='text'
-              value={userNickname}
+              value={nickname}
               onChange={onChangeEditInput}
             ></input>
           ) : (
             <div className='nicknameArea'>{list.nickname}</div>
           )}
-          {edit ? (
+          {editNickname ? (
             <EditNicknameBtn onClick={() => changeNickname(list.id)}>
               저장
             </EditNicknameBtn>
@@ -378,7 +379,7 @@ function Profile({ list, getUserData }: UserDataProps) {
             <input
               className='editPasswordArea'
               type='text'
-              value={userPassword}
+              value={password}
               onChange={onChangePasswordInput}
             ></input>
           ) : (
@@ -428,4 +429,4 @@ function Profile({ list, getUserData }: UserDataProps) {
   );
 }
 
-export default Profile;
+export default MyInfo;

@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { DiaryDataProps } from "../../Type";
+import { DiaryDataProps, UserData } from "../../Type";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 const DiaryListContainer = styled.li`
-  box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
   width: 310px;
   height: 339px;
   list-style: none;
@@ -107,7 +107,7 @@ const LikeAndComment = styled.div`
 `;
 
 function DiaryList({ list }: DiaryDataProps) {
-  const [imageData, setImageData] = useState<any>([]);
+  const [imageData, setImageData] = useState<UserData>();
 
   // 내 유저 정보 get 요청
   const getImageData = async () => {
@@ -144,7 +144,10 @@ function DiaryList({ list }: DiaryDataProps) {
       </InfoArea>
       <UserArea>
         <ByUsername>
-          <Profile src={imageData.imageUrl} alt='헤더 프로필 이미지' />
+          <Profile
+            src={imageData && imageData.imageUrl}
+            alt='헤더 프로필 이미지'
+          />
           <div className='by'>by</div>
           {list.userNickname}
         </ByUsername>
