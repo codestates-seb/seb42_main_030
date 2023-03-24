@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import styled from 'styled-components'
 import {AiFillHeart} from 'react-icons/ai'
-import { IDiaryData } from './DetailMain'
+import { DiaryData } from './DetailMain'
 import axios from 'axios'
 
 
@@ -49,10 +49,10 @@ const Like = styled.a`
   }
 `
 
-const Icon = styled.span`
+const LikeIcon = styled.span`
   color:red;
 `
-const FalseIcon = styled.span`
+const UnlikeIcon = styled.span`
   color:black;
 `
 const Edit = styled.a`
@@ -72,10 +72,8 @@ const ImgWrap = styled.div`
   display:flex;
   flex-direction:row;
   position:relative;
-  /* height: 30%; */
-  /* border:1px solid; */
-  /* padding: 2rem; */
-`
+  `
+
 const Img = styled.img`
   width: 200px;
   height: 200px;
@@ -85,27 +83,27 @@ const Info = styled.div`
   flex-direction:column;
   width:100%;
   height: 200px;
-  /* border:1px solid; */
   margin-left: 2rem;
 `
+
 const Writer = styled.div`
   display:flex;
   gap:1rem;
 `
 const H3 = styled.h3`
-margin-left:1rem;
-margin-bottom: 1rem;
-/* display:inline-block; */
-width:5rem;
-font-weight:normal;
+  margin-left:1rem;
+  margin-bottom: 1rem;
+  width:5rem;
+  font-weight:normal;
 `
-const H4 = styled.h4`
-  /* display: inline-block; */
-  margin-left: 2rem;
-font-weight:normal;
 
-  /* width:30rem; */
+const H4 = styled.h4`
+  margin-left: 2rem;
+  font-weight:normal;
 `
+
+
+
 
 const Tag = styled.ul`
   display:flex;
@@ -123,12 +121,11 @@ const Tag = styled.ul`
   }
 `
 
-
-
 interface propsType {
-  detail: any
+  detail: DiaryData
   getDetailData: any
 }
+
 export default function DetailHeader({detail,getDetailData}: propsType) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
 
@@ -159,59 +156,51 @@ export default function DetailHeader({detail,getDetailData}: propsType) {
     setCheckLike(!checkLike);
   };
 
-  const postDelete= (id: number) => {
-    const deleteDiary =window.confirm('정말 게시글을 삭제하시겠습니까?')
+  const postDelete= async (diaryId: number) => {
+    const deleteDiary = window.confirm('정말 게시글을 삭제하시겠습니까?')
     if(deleteDiary === true) {
-      const nickname = {
-        nickname: ''
-      };
-      const res = axios.delete(`http://localhost:3001/diary/${id}`)
-
-      .catch((err) => {
-        console.log(err)
-      })
+      const res = await axios.delete(`http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`)
+      getDetailData(res.data)
       alert('삭제되었습니다.')
+    } else {
+      return;
     }
-
   }
+
+
+
+
 
   return (
     <Container>
       <TitleWrap>
         <TitleLeft>
           <Title>{detail.title}</Title>
-          {checkLike && <Like onClick={(() => {
-            plusLikeCount(detail.diaryId)
-            onClickLike()
-          })}>
-            <Icon>
-              <AiFillHeart />
-            </Icon>
-            좋아요
-            {detail.likeCount}
-          </Like>}
-          {
-            !checkLike && <Like onClick={(() => {
-              plusLikeCount(detail.diaryId)
-              onClickLike()
-            })}>
-              <FalseIcon>
+          { checkLike && 
+            <Like onClick={(() => {
+                plusLikeCount(detail.diaryId)
+                onClickLike()
+              })}>
+              <LikeIcon>
                 <AiFillHeart />
-              </FalseIcon>
+              </LikeIcon>
               좋아요
               {detail.likeCount}
             </Like>
           }
-          {/* <Like onClick={(() => {
-            plusLikeCount(detail.id)
-            onClickLike()
-          })}>
-            <Icon>
-              <AiFillHeart />
-            </Icon>
-            좋아요
-            {detail.like}
-          </Like> */}
+          {
+            !checkLike && 
+            <Like onClick={(() => {
+              plusLikeCount(detail.diaryId)
+              onClickLike()
+            })}>
+              <UnlikeIcon>
+                <AiFillHeart />
+              </UnlikeIcon>
+              좋아요
+              {detail.likeCount}
+            </Like>
+          }
         </TitleLeft>
         <TitleRight>
           <Edit href='#'>수정</Edit>
@@ -241,6 +230,9 @@ export default function DetailHeader({detail,getDetailData}: propsType) {
     </Container>
   )
 }
+      
+
+
 
 
         

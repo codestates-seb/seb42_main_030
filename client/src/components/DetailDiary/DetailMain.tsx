@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
-import DetailHeader from "./DetailHeader";
-import Diary from "./Diary";
-import PlayList from "./PlayList";
-import styled from "styled-components";
 import axios from "axios";
-// import CommentList from './CommentList'
-import Comment from './Comment';
-// import EditHeader from './EditHeader';
+import styled from "styled-components";
+import DetailHeader from "./DetailHeader";
+import PlayList from "./PlayList";
 import CommentInput from './CommentInput';
+import CommentList from './CommentList'
+
+
 
 
 
@@ -27,7 +26,13 @@ const DiaryWrap = styled.div`
 const H1 = styled.h1`
   margin-bottom: 2rem;
 `
-export interface IDiaryData {
+const CommentContainer = styled.div`
+  max-width:1600px;
+  padding:2rem;
+  height:100vh;
+  /* border:1px solid; */
+`
+export interface DiaryData {
   diaryId: number;
   title: string;
   body: string;
@@ -36,26 +41,27 @@ export interface IDiaryData {
   createdAt: string;
   modifiedAt: string;
   userNickname: string;
-  comment: CommentData[]
+  comments: CommentData[];
   tag: string[];
-  viewcount: number;
+
+  // viewcount: number
 }
 
 export interface CommentData {
-  comment_id: number;
+  commentId: number;
   diaryId: number;
   body: string;
-  createAt: string;
+  createdAt: string;
   modifiedAt: string;
-  userNickname:string;
+  userNickname:string
 }
   
 
 
 function DetailMain() {
-  const [detailData, setDetailData] = useState<IDiaryData[]>([]);
+  const [detailData, setDetailData] = useState<DiaryData>();
   const { diaryId } = useParams();
-
+  // http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}
   const getDetailData = async () => {
     try {
       const res = await axios.get(`http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`);
@@ -65,50 +71,43 @@ function DetailMain() {
     }
   }
 
-
-
   useEffect(() => {
-    getDetailData();
-  }, []);
-
-
-
-
+      getDetailData();
+    }, []);
 
   return (
     <Container>
-      {detailData[0].title}
-      <DetailHeader detail={detailData} getDetailData={getDetailData} />
-      {/* {
-        detailData.map((value) => (
-          <DetailHeader detail={value} getDetailData={getDetailData} key={value.diaryId} />
-        ))
-      } */}
-    {/* <DiaryWrap>
-      <H1>음악과 함께 작성할 다이어리</H1>
-      <div>
-        {detailData.body}
-      </div>
-    </DiaryWrap> */}
-
-
-      <Diary detail={detailData} />
-      {/* {
-        detailData.map((value) => {
-          return <Diary detail={value} key={value.diaryId} />
-        })
-      } */}
+      {/* {detailData && detailData.title} */}
+      { detailData && <DetailHeader detail={detailData} getDetailData={getDetailData} /> }
+      <DiaryWrap>
+        <H1>음악과 함께 작성할 다이어리</H1>
+        <div>
+          {detailData && detailData.body}
+        </div>
+      </DiaryWrap>
       <PlayList />
       <CommentInput />
-      {/* <Comment detail={detailData[0]}/> */}
-      {/* {
-        detailData.map((value) => {
-          return <Comment detail={value} key={value.diaryId} />
-        })
-      } */}
+      <CommentContainer>
+          <h1>댓글</h1>
+          {detailData &&
+            detailData.comments.map((value) => {
+              return <CommentList comment={value} key={value.diaryId} />
+            })
+          }
+      </CommentContainer>
     </Container>
   );
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

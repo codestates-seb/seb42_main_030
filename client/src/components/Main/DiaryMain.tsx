@@ -80,7 +80,7 @@ function DiaryMain() {
 
   const LIMIT_COUNT: number = 20;
   const offset: number = (page - 1) * LIMIT_COUNT; // 각 페이지에서 첫 데이터의 위치(index) 계산
-
+  // http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary
   // 전체 diary 데이터 get 요청
   const getDiaryData = async () => {
     try {

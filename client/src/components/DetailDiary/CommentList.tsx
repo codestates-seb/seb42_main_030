@@ -1,19 +1,20 @@
 import React,{useState} from 'react'
 import styled from 'styled-components'
-import { IDiaryData } from './DetailMain'
+import { DiaryData } from './DetailMain'
 import { CommentData } from './DetailMain'
 const Container = styled.div`
   max-width:1440px;
   padding:2rem;
-  height:100vh;
+  /* height:100vh; */
   /* border:1px solid; */
 `
 
 const CommentWrap = styled.div`
   max-width:1440px;
-  padding:2rem;
+  /* padding:2rem; */
   margin-top:1rem;
   border-top: 1px dotted;
+  /* border-bottom:1px dotted; */
   padding:1rem 0 1rem 1rem;
   display:flex;
   flex-direction:column;
@@ -50,11 +51,11 @@ const DeleteButton = styled.button`
   }
 `
 interface propsType {
-  data: IDiaryData
   comment: CommentData
 }
 
-export default function CommentList({data, comment}: propsType) {
+
+export default function CommentList({comment}: propsType) {
 
   const [click, setClick] = useState(false)
   
@@ -62,23 +63,31 @@ export default function CommentList({data, comment}: propsType) {
     setClick(!click)
     console.log(e)
   }
+  
   return (
     <>
-      <CommentWrap key={data.diaryId}>
-            <h5>{data.userNickname}</h5>
-            {!click && <p>{comment.body}</p>}
-            {click && <input placeholder={comment.body}></input>}
-            <CommentFooter>
-              <h6>{data.createdAt}</h6>
-              <CommentButton>
-                {click && <EditButton onClick={clickHandler}>확인</EditButton>}
-                {!click && <EditButton onClick={clickHandler}>수정</EditButton>}
-                <DeleteButton>삭제</DeleteButton>
-              </CommentButton>
-            </CommentFooter>
-            {/* <h6>{detail.createdAt}</h6> */}
-          </CommentWrap>
+      <CommentWrap key={comment.diaryId}>
+        <h5>{comment.userNickname}</h5>
+        {!click && <p>{comment.body}</p>}
+        {click && <input placeholder={comment.body}></input>}
+        <CommentFooter>
+          <h6>{comment.createdAt}</h6>
+          <CommentButton>
+            {click && <EditButton onClick={clickHandler}>확인</EditButton>}
+            {!click && <EditButton onClick={clickHandler}>수정</EditButton>}
+            <DeleteButton>삭제</DeleteButton>
+          </CommentButton>
+        </CommentFooter>
+      </CommentWrap>
     </>
   )
 }
+
+        
+
+            
+            
+
+            
+
 

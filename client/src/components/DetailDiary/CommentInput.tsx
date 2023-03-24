@@ -35,6 +35,7 @@ const TextArea = styled.textarea`
   padding:1rem;
   width:90%;
   height:8rem;
+  resize:none;
 `
 const Button = styled.button`
   margin-left:2% ;
