@@ -36,11 +36,13 @@ function MyComment({ list }: CommentDataProps) {
 
   return (
     <CommentListContainer>
-      <CommentListWrapper>
-        <div className='name'>{list.userNickname}</div>
-        <div className='content'>{list.body}</div>
-        <div className='date'>{list.createdAt}</div>
-      </CommentListWrapper>
+      {myComment === true ? (
+        <CommentListWrapper>
+          <div className='name'>{list.userNickname}</div>
+          <div className='content'>{list.body}</div>
+          <div className='date'>{list.createdAt}</div>
+        </CommentListWrapper>
+      ) : null}
     </CommentListContainer>
   );
 }

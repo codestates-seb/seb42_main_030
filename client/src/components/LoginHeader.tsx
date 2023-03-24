@@ -131,7 +131,7 @@ function LoginHeader() {
         <div className='buttonArea'>
           <Link to='/NewDiary'>
             <SubmitButton onClick={closeDropdown}>
-              새 플레이리스트 등록
+              새 다이어리 등록
             </SubmitButton>
           </Link>
           <ProfileButton onClick={openDropdown}>

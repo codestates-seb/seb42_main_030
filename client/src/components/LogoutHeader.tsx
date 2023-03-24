@@ -55,7 +55,7 @@ function LogoutHeader() {
         </Link>
         <div className='buttonArea'>
           <Link to='/Login'>
-            <SubmitButton>새 플레이리스트 등록</SubmitButton>
+            <SubmitButton>새 다이어리 등록</SubmitButton>
           </Link>
           <Link to='/Login'>
             <LoginButton>로그인</LoginButton>
