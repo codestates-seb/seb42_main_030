@@ -4,7 +4,7 @@
       "id": 1,
       "nickname": "Donggu(oo)",
       "email": "kdonggoo44&gmail.com",
-      "password": "12345674",
+      "password": "123456741",
       "imageUrl": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
     },
     {
@@ -25,7 +25,10 @@
       "userNickname": "donggu",
       "createdAt": "2023-03-19",
       "modifiedAt": "2023-03-19",
-      "tag": ["#신나는", "#즐거운"],
+      "tag": [
+        "#신나는",
+        "#즐거운"
+      ],
       "comment": [
         {
           "id": 1,
@@ -45,7 +48,10 @@
       "userNickname": "donggu",
       "createdAt": "2023-03-19",
       "modifiedAt": "2023-03-19",
-      "tag": ["#신나는", "#즐거운"],
+      "tag": [
+        "#신나는",
+        "#즐거운"
+      ],
       "comment": [
         {
           "id": 1,

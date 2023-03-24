@@ -105,40 +105,48 @@ const LikeAndComment = styled.div`
   }
 `;
 
-function MyLikeList({ list }: DiaryDataProps) {
+function MyDiary({ list }: DiaryDataProps) {
   const navigate = useNavigate();
+
+  // const isLogin = localStorage.getItem('nickname')
+  // list.nickname === isLogin
+  const myDiary: boolean = list.userNickname === "킵코딩";
 
   const clickHandler = () => {
     navigate(`/DetailDiary/${list.diaryId}`);
   };
 
   return (
-    <DiaryListContainer onClick={clickHandler}>
-      <Thumbnail>썸네일 이미지</Thumbnail>
-      <InfoArea>
-        <div className='infoTitle'>{list.title}</div>
-        <div className='infoDate'>{list.createdAt}</div>
-        {/* <Tag>
+    <>
+      {myDiary === true ? (
+        <DiaryListContainer onClick={clickHandler}>
+          <Thumbnail>썸네일 이미지</Thumbnail>
+          <InfoArea>
+            <div className='infoTitle'>{list.title}</div>
+            <div className='infoDate'>{list.createdAt}</div>
+            {/* <Tag>
           {list.tag.map((value, index) => {
             return <li key={index}>{value}</li>;
           })}
         </Tag> */}
-      </InfoArea>
-      <UserArea>
-        <ByUsername>
-          <Profile />
-          <div className='by'>by</div>
-          {list.userNickname}
-        </ByUsername>
-        <LikeAndComment>
-          <AiFillHeart className='likeIcon' size={16} />
-          {list.likeCount}
-          <FaRegCommentDots className='commentIcon' size={15} />
-          {list.comments.length}
-        </LikeAndComment>
-      </UserArea>
-    </DiaryListContainer>
+          </InfoArea>
+          <UserArea>
+            <ByUsername>
+              <Profile />
+              <div className='by'>by</div>
+              {list.userNickname}
+            </ByUsername>
+            <LikeAndComment>
+              <AiFillHeart className='likeIcon' size={16} />
+              {list.likeCount}
+              <FaRegCommentDots className='commentIcon' size={15} />
+              {list.comments.length}
+            </LikeAndComment>
+          </UserArea>
+        </DiaryListContainer>
+      ) : null}
+    </>
   );
 }
 
-export default MyLikeList;
+export default MyDiary;

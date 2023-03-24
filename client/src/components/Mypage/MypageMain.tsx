@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import MyDiaryList from "./MyDiaryList";
+import MyDiary from "./MyDiary";
 import MypagePagination from "./MypagePagination";
-import MyLikeList from "./MyLikeList";
+import MyLikeDiary from "./MyLikeDiary";
 import { DiaryData } from "../../Type";
-import MyCommentList from "./MyCommentList";
+import MyComment from "./MyComment";
 import { CommentData } from "../../Type";
 import MyInfo from "./MyInfo";
 import { UserData } from "../../Type";
@@ -13,6 +13,7 @@ import { UserData } from "../../Type";
 const ListTab = styled.ul`
   display: flex;
   justify-content: center;
+  position: relative;
   margin: 50px 0 50px 0;
   gap: 10px;
 
@@ -68,6 +69,7 @@ const CommentContainer = styled.ul`
 `;
 
 function MypageMain() {
+  const [userData, setUserData] = useState<UserData[]>([]);
   const [myDiaryData, setMyDiaryData] = useState<DiaryData[]>([]);
   const [myLikeDiaryData, setLikeDiaryData] = useState<DiaryData[]>([]);
   const [myCommentData, setMyCommentData] = useState<CommentData[]>([]);
@@ -77,8 +79,7 @@ function MypageMain() {
   const LIMIT_COUNT: number = 20;
   const offset: number = (page - 1) * LIMIT_COUNT;
 
-  const [userData, setUserData] = useState<UserData[]>([]);
-  // 나의 유저 정보만 불러오는 get 요청
+  // Tab 1(MyInfo) : 나의 유저 정보만 불러오는 get 요청
   const getUserData = async () => {
     try {
       const res = await axios.get("http://localhost:3001/user?id=1");
@@ -91,7 +92,7 @@ function MypageMain() {
     getUserData();
   }, []);
 
-  // Tab 2 : 나의 다이어리 데이터 get 요청
+  // Tab 2(MyDiary) : 나의 다이어리 데이터 get 요청
   const getMyDiaryData = async () => {
     try {
       // const isLogin = localStorage.getItem('nickname')
@@ -109,7 +110,7 @@ function MypageMain() {
     getMyDiaryData();
   }, []);
 
-  // Tab 3 : 내가 좋아요 한 다이어리 데이터 get 요청
+  // Tab 3(MyLikeDiary) : 내가 좋아요 한 다이어리 데이터 get 요청
   const getLikeData = async () => {
     try {
       // const isLogin = localStorage.getItem('nickname')
@@ -124,7 +125,7 @@ function MypageMain() {
     getLikeData();
   }, []);
 
-  // Tab 4 : 내가 작성한 댓글 데이터 get 요청
+  // Tab 4(MyComment) : 내가 작성한 댓글 데이터 get 요청
   const getMyCommentData = async () => {
     try {
       const res = await axios.get(
@@ -139,13 +140,14 @@ function MypageMain() {
     getMyCommentData();
   }, []);
 
+  // 마이 페이지 탭 리스트
   const tabArr = [
     { feel: "내 정보" },
     { feel: "나의 다이어리" },
     { feel: "좋아한 다이어리" },
     { feel: "작성한 댓글" },
   ];
-
+  // 탭 선택 이벤트 핸들러
   const selectTabHandler = (index: number) => {
     setCurrentTab(index);
   };
@@ -177,7 +179,7 @@ function MypageMain() {
         ) : currentTab === 1 ? (
           <DiaryContainer>
             {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
-              return <MyDiaryList list={value} key={value.diaryId} />;
+              return <MyDiary list={value} key={value.diaryId} />;
             })}
           </DiaryContainer>
         ) : currentTab === 2 ? (
@@ -185,13 +187,13 @@ function MypageMain() {
             {myLikeDiaryData
               .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
-                return <MyLikeList list={value} key={value.diaryId} />;
+                return <MyLikeDiary list={value} key={value.diaryId} />;
               })}
           </DiaryContainer>
         ) : (
           <CommentContainer>
-            {myCommentData.map((value) => {
-              return <MyCommentList list={value} key={value.commentId} />;
+            {myCommentData.slice(offset, offset + LIMIT_COUNT).map((value) => {
+              return <MyComment list={value} key={value.commentId} />;
             })}
           </CommentContainer>
         )}
@@ -199,6 +201,7 @@ function MypageMain() {
       <MypagePagination
         myPageLength={myDiaryData.length}
         myLikePageLength={myLikeDiaryData.length}
+        myCommentPageLength={myCommentData.length}
         LIMIT_COUNT={LIMIT_COUNT}
         page={page}
         setPage={setPage}

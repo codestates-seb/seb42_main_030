@@ -21,6 +21,10 @@ const ProfileImg = styled.img`
   height: 150px;
   border-radius: 100%;
   margin: 0 20px 20px 20px;
+
+  &:hover {
+    outline: 5px solid #ffefd5;
+  }
 `;
 
 const ImgInput = styled.input`
@@ -89,19 +93,16 @@ const MySettingContainer = styled.div`
 const PasswordWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
   height: 50px;
 
   > .passwordTitle {
-    width: 220px;
-    margin: 0 20px 0 20px;
-    text-align: center;
+    width: 100px;
+    margin: 0 75px 0 30px;
     font-weight: 700;
   }
 
   > .editPasswordArea {
-    width: 100%;
-    margin-left: 20px;
+    width: 560px;
     color: #21252b;
     border: 1px solid gray;
     border-radius: 4px;
@@ -109,18 +110,14 @@ const PasswordWrapper = styled.div`
   }
 
   > .passwordArea {
-    width: 100%;
-    margin-left: 20px;
+    width: 560px;
   }
 `;
 
 const EditPasswordBtn = styled.button`
-  display: flex;
-  justify-content: center;
   color: #21252b;
   width: 100px;
   border: none;
-  text-align: left;
   background-color: transparent;
   text-decoration: underline;
   font-size: 15px;
@@ -131,34 +128,30 @@ const MyWithdrawalContainer = styled.div`
   width: 100vw;
   max-width: 900px;
   font-size: 15px;
-  margin-top: 30px;
 `;
 
 const MyWithdrawalWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
   height: 50px;
 
   > .withdrawalTitle {
-    width: 150px;
-    margin: 0 20px 0 20px;
-    text-align: center;
+    width: 100px;
+    margin: 0 75px 0 30px;
     font-weight: 700;
   }
 
   > .withdrawalBtn {
     width: 100px;
-    height: 30px;
+    height: 33px;
     border: none;
     border-radius: 4px;
-    background-color: #ec1d36;
+    background-color: #ff6b6c;
     font-weight: 700;
     color: white;
-    margin-left: 20px;
 
     &:hover {
-      background-color: #ff6b6c;
+      background-color: #ec1d36;
     }
   }
 `;
@@ -166,17 +159,22 @@ const MyWithdrawalWrapper = styled.div`
 const WarningText = styled.div`
   font-size: 13px;
   color: gray;
-  margin-left: 70px;
+  padding-bottom: 10px;
+  margin: 0 70px -5px 30px;
+
+  > .pwWarningTexy {
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 15px;
+  }
 `;
 
-// 투두 삭재 부분
-const Delete = styled.div`
+const Withdrawal = styled.div`
   flex: 0.8;
   text-align: center;
   margin: auto;
 `;
 
-const DeleteModalBackdrop = styled.div`
+const WithdrawalModalBack = styled.div`
   position: fixed;
   z-index: 999;
   top: 0;
@@ -188,62 +186,61 @@ const DeleteModalBackdrop = styled.div`
   place-items: center;
 `;
 
-const DeleteModalView = styled.div`
+const WithdrawalModalView = styled.div`
   border-radius: 5px;
   background-color: white;
-  width: 90vw;
-  height: 200px;
-  color: ${(props) => props.theme.text};
-  font-weight: 600;
+  width: 430px;
+  height: 220px;
+  margin-top: 30px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
 
   > .deleteModalTitle {
     font-size: 20px;
-    color: ${(props) => props.theme.title};
-    font-weight: 600;
-    text-align: left;
-    margin: 10px 0px 35px 20px;
+    font-weight: 700;
+    text-align: center;
+    margin: 30px 0 35px 0;
   }
 
   > .warningText {
-    font-size: 17px;
-    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 41.5px;
   }
 
   > button {
-    margin-top: 20px;
     font-weight: 500;
-    width: 70px;
-    height: 27px;
+    width: 215px;
+    height: 50px;
     color: white;
     border: none;
-    border-radius: 7px;
     text-decoration: none;
     &:hover {
       text-decoration: none;
     }
   }
 
-  > .deleteCancelButton + .deleteButton {
-    margin-left: 15px;
-  }
-
   > .deleteCancelButton {
-    background-color: #a0a0a0;
-    &:active {
-      background-color: lightgray;
+    color: #21252b;
+    font-weight: 600;
+    background-color: transparent;
+    border-top: 1px solid #eeeeee;
+    border-right: 0.5px solid #eeeeee;
+    border-bottom-left-radius: 5px;
+    &:hover {
+      background-color: #eeeeee;
     }
   }
 
   > .deleteButton {
-    background-color: #d33031;
-    &:active {
-      background-color: #e68282;
+    color: #ec1d36;
+    font-weight: 600;
+    background-color: transparent;
+    border-top: 1px solid #eeeeee;
+    border-left: 0.5px solid #eeeeee;
+    border-bottom-right-radius: 5px;
+    &:hover {
+      background-color: #eeeeee;
     }
-  }
-
-  @media screen and (min-width: 550px) {
-    width: 550px;
   }
 `;
 
@@ -254,14 +251,11 @@ export interface UserDataProps {
 
 function MyInfo({ list, getUserData }: UserDataProps) {
   const [image, setImage] = useState(list.imageUrl);
-
   const [nickname, setNickname] = useState<string>(list.nickname);
   const [editNickname, setEditNickname] = useState<boolean>(false);
-
   const [password, setPassword] = useState<string>(list.password);
   const [editPassword, setEditPassword] = useState<boolean>(false);
-
-  const [withDrawalModalOpen, setWithdrawalModalOpen] = useState(false); // 회원 탈퇴 모달 오픈
+  const [withDrawalModalOpen, setWithdrawalModalOpen] = useState(false);
 
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -328,7 +322,6 @@ function MyInfo({ list, getUserData }: UserDataProps) {
     };
     const res = await axios.patch(`http://localhost:3001/user/${id}`, newImg);
     setImage(res.data);
-    console.log(res.data);
     window.location.reload();
   };
 
@@ -383,7 +376,7 @@ function MyInfo({ list, getUserData }: UserDataProps) {
               onChange={onChangePasswordInput}
             ></input>
           ) : (
-            <div className='passwordArea'>{list.password}</div>
+            <div className='passwordArea'>********</div>
           )}
           {editPassword ? (
             <EditPasswordBtn onClick={() => changePassword(list.id)}>
@@ -395,7 +388,11 @@ function MyInfo({ list, getUserData }: UserDataProps) {
             </EditPasswordBtn>
           )}
         </PasswordWrapper>
-        <WarningText>로그인 시 사용되는 비밀번호입니다.</WarningText>
+        <WarningText>
+          <div className='pwWarningTexy'>
+            로그인 시 사용되는 비밀번호입니다.
+          </div>
+        </WarningText>
       </MySettingContainer>
       <MyWithdrawalContainer>
         <MyWithdrawalWrapper>
@@ -403,12 +400,18 @@ function MyInfo({ list, getUserData }: UserDataProps) {
           <button className='withdrawalBtn' onClick={openModalHandler}>
             회원 탈퇴
           </button>
-          <Delete>
+          <Withdrawal>
             {withDrawalModalOpen ? (
-              <DeleteModalBackdrop>
-                <DeleteModalView>
-                  <div className='deleteModalTitle'>회원 탈퇴</div>
-                  <div className='warningText'>정말 탈퇴 하시겠습니까?</div>
+              <WithdrawalModalBack>
+                <WithdrawalModalView>
+                  <div className='deleteModalTitle'>
+                    정말 탈퇴 하시겠습니까?
+                  </div>
+                  <div className='warningText'>
+                    탈퇴 시 작성하신 다이어리 및 댓글이 모두 삭제되며
+                    <br />
+                    복구되지 않습니다.
+                  </div>
                   <button
                     className='deleteCancelButton'
                     onClick={openModalHandler}
@@ -416,10 +419,10 @@ function MyInfo({ list, getUserData }: UserDataProps) {
                     취소
                   </button>
                   <button className='deleteButton'>탈퇴</button>
-                </DeleteModalView>
-              </DeleteModalBackdrop>
+                </WithdrawalModalView>
+              </WithdrawalModalBack>
             ) : null}
-          </Delete>
+          </Withdrawal>
         </MyWithdrawalWrapper>
         <WarningText>
           탈퇴 시 작성하신 다이어리 및 댓글이 모두 삭제되며 복구되지 않습니다.
