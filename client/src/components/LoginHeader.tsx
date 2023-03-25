@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { GoTriangleDown } from "react-icons/go";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { UserData } from "../Type";
+import { UserData } from "../util/Type";
 
 const HeaderContainer = styled.header`
   display: flex;

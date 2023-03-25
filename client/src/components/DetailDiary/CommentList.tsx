@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { DiaryData } from "../../Type";
+import { DiaryData } from "../../util/Type";
 // import { CommentType} from './DetailMain'
 // import { CommentData } from './Comment'
 

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { DiaryData } from "../../Type";
+import { DiaryData } from "../../util/Type";
 
 const Container = styled.div`
   padding: 2rem;

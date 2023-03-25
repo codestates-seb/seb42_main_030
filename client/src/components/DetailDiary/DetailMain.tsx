@@ -6,7 +6,7 @@ import PlayList from "./PlayList";
 import styled from "styled-components";
 import axios from "axios";
 import CommentList from "./Comment";
-import { DiaryData } from "../../Type";
+import { DiaryData } from "../../util/Type";
 
 const Container = styled.div`
   width: 100vw;
@@ -23,9 +23,7 @@ function DiaryMain() {
 
   const getDetailData = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:3001/diary?diary_id=${diary_id}`
-      );
+      const res = await axios.get(`http://localhost:3001/diary?diary_id=${diary_id}`);
       setDetailData(res.data);
       // setCommentData(res.data.comment)
     } catch (err) {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import styled from "styled-components";
 import { useState, useRef } from "react";
-import { UserData } from "../../Type";
+import { UserData } from "../../util/Type";
 
 const MyInfoContainer = styled.div`
   display: flex;

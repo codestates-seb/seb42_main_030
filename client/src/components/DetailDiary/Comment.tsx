@@ -4,7 +4,7 @@ import axios from "axios";
 // import Comment from './Comment'
 import Modal from "./Modal";
 import CommentList from "./CommentList";
-import { DiaryData } from "../../Type";
+import { DiaryData } from "../../util/Type";
 
 const Container = styled.div`
   max-width: 1440px;
@@ -93,11 +93,7 @@ export default function Comment({ detail }: propsType) {
           <Modal />
         </InputTitle>
         <Form onSubmit={submitHandler}>
-          <TextArea
-            placeholder='댓글을 남겨주세요~!'
-            value={text}
-            onChange={changeHandler}
-          />
+          <TextArea placeholder='댓글을 남겨주세요~!' value={text} onChange={changeHandler} />
           <Button>등록</Button>
         </Form>
       </CommentInput>

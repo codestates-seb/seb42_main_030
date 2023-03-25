@@ -1,9 +1,9 @@
 import DiaryList from "./DiaryList";
 import Pagination from "./Pagination";
 import styled from "styled-components";
-import axios from "axios";
 import { useState, useEffect } from "react";
-import { DiaryData } from "../../Type";
+import { DiaryData } from "../../util/Type";
+import { BASE_API } from "../../util/API";
 
 const ListTab = styled.ul`
   display: flex;
@@ -72,9 +72,7 @@ function DiaryMain() {
   // 전체 diary 데이터 get 요청
   const getDiaryData = async () => {
     try {
-      const res = await axios.get(
-        "http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary"
-      );
+      const res = await BASE_API.get(`/diary`);
       setDiaryData(res.data);
     } catch (err) {
       console.error(err);

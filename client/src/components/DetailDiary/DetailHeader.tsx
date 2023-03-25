@@ -1,7 +1,7 @@
 // import React from 'react'
 import styled from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
-import { DiaryData } from "../../Type";
+import { DiaryData } from "../../util/Type";
 import axios from "axios";
 
 const Container = styled.div`

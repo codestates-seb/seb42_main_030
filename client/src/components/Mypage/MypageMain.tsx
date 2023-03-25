@@ -6,9 +6,10 @@ import MyInfo from "./MyInfo";
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { DiaryData } from "../../Type";
-import { CommentData } from "../../Type";
-import { UserData } from "../../Type";
+import { DiaryData } from "../../util/Type";
+import { CommentData } from "../../util/Type";
+import { UserData } from "../../util/Type";
+import { BASE_API } from "../../util/API";
 
 const ListTab = styled.ul`
   display: flex;
@@ -98,9 +99,7 @@ function MypageMain() {
       // const isLogin = localStorage.getItem('nickname')
       // nickname=${이 부분을 로그인한 사용자의 닉네임으로 변경}
       // 현재 엔드포인트에 diaryId만 붙을 수 있는데 ?userNickname=light 이런 식으로 붙을 순 없는지?
-      const res = await axios.get(
-        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary`
-      );
+      const res = await BASE_API.get(`/diary`);
       setMyDiaryData(res.data);
     } catch (err) {
       console.error(err);
@@ -128,9 +127,7 @@ function MypageMain() {
   // Tab 4(MyComment) : 내가 작성한 댓글 데이터 get 요청
   const getMyCommentData = async () => {
     try {
-      const res = await axios.get(
-        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/comment`
-      );
+      const res = await BASE_API.get(`/comment`);
       setMyCommentData(res.data);
     } catch (err) {
       console.error(err);
