@@ -1,11 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
-import {
-  BiArrowToLeft,
-  BiArrowToRight,
-  BiLeftArrowAlt,
-  BiRightArrowAlt,
-} from "react-icons/bi";
+import { BiArrowToLeft, BiArrowToRight, BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 
 const PageNum = styled.div`
   margin: 50px 0 40px 0;
@@ -141,18 +136,10 @@ PaginationProps) {
   return (
     <>
       <PageNum>
-        <button
-          className='leftHandle'
-          onClick={firstPageHandler}
-          disabled={page === 1}
-        >
+        <button className='leftHandle' onClick={firstPageHandler} disabled={page === 1}>
           <BiArrowToLeft size={20} />
         </button>
-        <button
-          className='leftHandle'
-          onClick={prevPageHandler}
-          disabled={page === 1}
-        >
+        <button className='leftHandle' onClick={prevPageHandler} disabled={page === 1}>
           <BiLeftArrowAlt size={19} />
         </button>
         {allArr.slice(blockArea, PAGE_COUNT + blockArea).map((n) => (
@@ -161,27 +148,16 @@ PaginationProps) {
             key={n}
             onClick={() => {
               setPage(n);
-              window.scrollTo(
-                0,
-                parseInt(document.body.style.top || "0", 10) * -1
-              );
+              window.scrollTo(0, parseInt(document.body.style.top || "0", 10) * -1);
             }}
           >
             {n}
           </button>
         ))}
-        <button
-          className='rightHandle'
-          onClick={nextPageHandler}
-          disabled={page === numAllPages}
-        >
+        <button className='rightHandle' onClick={nextPageHandler} disabled={page === numAllPages}>
           <BiRightArrowAlt size={19} />
         </button>
-        <button
-          className='rightHandle'
-          onClick={lastPageHandler}
-          disabled={page === numAllPages}
-        >
+        <button className='rightHandle' onClick={lastPageHandler} disabled={page === numAllPages}>
           <BiArrowToRight size={20} />
         </button>
       </PageNum>

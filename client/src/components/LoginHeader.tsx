@@ -129,15 +129,10 @@ function LoginHeader() {
         </Link>
         <div className='buttonArea'>
           <Link to='/NewDiary'>
-            <SubmitButton onClick={closeDropdown}>
-              새 다이어리 등록
-            </SubmitButton>
+            <SubmitButton onClick={closeDropdown}>새 다이어리 등록</SubmitButton>
           </Link>
           <ProfileButton onClick={openDropdown}>
-            <Profile
-              src={imageData && imageData.imageUrl}
-              alt='헤더 프로필 이미지'
-            />
+            <Profile src={imageData && imageData.imageUrl} alt='헤더 프로필 이미지' />
             <GoTriangleDown className='triangleDown' size={14} />
           </ProfileButton>
           {isOpen ? (

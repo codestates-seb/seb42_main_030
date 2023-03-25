@@ -255,32 +255,46 @@ function MyInfo({ list, getUserData }: UserDataProps) {
   const [editNickname, setEditNickname] = useState<boolean>(false);
   const [password, setPassword] = useState<string>(list.password);
   const [editPassword, setEditPassword] = useState<boolean>(false);
-  const [withDrawalModalOpen, setWithdrawalModalOpen] = useState(false);
+  const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
 
   const fileInput = useRef<HTMLInputElement>(null);
 
+  // 프로필 이미지 클릭 시 input으로 연결되는 이벤트
+  const clickProfile = () => {
+    fileInput.current?.click();
+  };
+
+  // 선택한 이미지 미리보기 이벤트
+  const saveImage = (e: any) => {
+    setImage(URL.createObjectURL(e.target.files[0]));
+  };
+
+  // 선택한 이미지 patch 요청
+  const changeImage = async () => {
+    const newImg = {
+      imageUrl: image,
+    };
+    const res = await axios.patch(`http://localhost:3001/user/${list.id}`, newImg);
+    setImage(res.data);
+    window.location.reload();
+  };
+
   // 유저 닉네임 patch 요청
-  const changeNickname = async (id: number) => {
+  const changeNickname = async () => {
     const newNickname = {
       nickname: nickname,
     };
-    const res = await axios.patch(
-      `http://localhost:3001/user/${id}`,
-      newNickname
-    );
+    const res = await axios.patch(`http://localhost:3001/user/${list.id}`, newNickname);
     getUserData(res.data);
     setEditNickname(false);
   };
 
   // 유저 패스워드 patch 요청
-  const changePassword = async (id: number) => {
+  const changePassword = async () => {
     const newPassword = {
       password: password,
     };
-    const res = await axios.patch(
-      `http://localhost:3001/user/${id}`,
-      newPassword
-    );
+    const res = await axios.patch(`http://localhost:3001/user/${list.id}`, newPassword);
     getUserData(res.data);
     setEditPassword(false);
   };
@@ -305,26 +319,6 @@ function MyInfo({ list, getUserData }: UserDataProps) {
     setPassword(e.target.value);
   };
 
-  // 프로필 이미지 클릭 시 input으로 연결되는 이벤트
-  const clickProfile = () => {
-    fileInput.current?.click();
-  };
-
-  // 선택한 이미지 미리보기 이벤트
-  const saveImage = (e: any) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-  };
-
-  // 선택한 이미지 patch 요청
-  const changeImage = async (id: number) => {
-    const newImg = {
-      imageUrl: image,
-    };
-    const res = await axios.patch(`http://localhost:3001/user/${id}`, newImg);
-    setImage(res.data);
-    window.location.reload();
-  };
-
   // 회원 탈퇴 모달 오픈 이벤트 핸들러
   const openModalHandler = () => {
     setWithdrawalModalOpen(!withDrawalModalOpen);
@@ -335,15 +329,8 @@ function MyInfo({ list, getUserData }: UserDataProps) {
       <MyInfoContainer>
         <ProfileImgWrapper>
           <ProfileImg src={image} alt='프로필 이미지' onClick={clickProfile} />
-          <ImgInput
-            type='file'
-            accept='image/*'
-            onChange={saveImage}
-            ref={fileInput}
-          />
-          <ImgSubmitBtn onClick={() => changeImage(list.id)}>
-            프로필 이미지 저장
-          </ImgSubmitBtn>
+          <ImgInput type='file' accept='image/*' onChange={saveImage} ref={fileInput} />
+          <ImgSubmitBtn onClick={changeImage}>프로필 이미지 저장</ImgSubmitBtn>
         </ProfileImgWrapper>
         <NickNameWrapper>
           {editNickname ? (
@@ -357,9 +344,7 @@ function MyInfo({ list, getUserData }: UserDataProps) {
             <div className='nicknameArea'>{list.nickname}</div>
           )}
           {editNickname ? (
-            <EditNicknameBtn onClick={() => changeNickname(list.id)}>
-              저장
-            </EditNicknameBtn>
+            <EditNicknameBtn onClick={changeNickname}>저장</EditNicknameBtn>
           ) : (
             <EditNicknameBtn onClick={onClickEditButton}>수정</EditNicknameBtn>
           )}
@@ -379,19 +364,13 @@ function MyInfo({ list, getUserData }: UserDataProps) {
             <div className='passwordArea'>********</div>
           )}
           {editPassword ? (
-            <EditPasswordBtn onClick={() => changePassword(list.id)}>
-              저장
-            </EditPasswordBtn>
+            <EditPasswordBtn onClick={changePassword}>저장</EditPasswordBtn>
           ) : (
-            <EditPasswordBtn onClick={onClickPasswordButton}>
-              수정
-            </EditPasswordBtn>
+            <EditPasswordBtn onClick={onClickPasswordButton}>수정</EditPasswordBtn>
           )}
         </PasswordWrapper>
         <WarningText>
-          <div className='pwWarningTexy'>
-            로그인 시 사용되는 비밀번호입니다.
-          </div>
+          <div className='pwWarningTexy'>로그인 시 사용되는 비밀번호입니다.</div>
         </WarningText>
       </MySettingContainer>
       <MyWithdrawalContainer>
@@ -404,18 +383,13 @@ function MyInfo({ list, getUserData }: UserDataProps) {
             {withDrawalModalOpen ? (
               <WithdrawalModalBack>
                 <WithdrawalModalView>
-                  <div className='deleteModalTitle'>
-                    정말 탈퇴 하시겠습니까?
-                  </div>
+                  <div className='deleteModalTitle'>정말 탈퇴 하시겠습니까?</div>
                   <div className='warningText'>
                     탈퇴 시 작성하신 다이어리 및 댓글이 모두 삭제되며
                     <br />
                     복구되지 않습니다.
                   </div>
-                  <button
-                    className='deleteCancelButton'
-                    onClick={openModalHandler}
-                  >
+                  <button className='deleteCancelButton' onClick={openModalHandler}>
                     취소
                   </button>
                   <button className='deleteButton'>탈퇴</button>

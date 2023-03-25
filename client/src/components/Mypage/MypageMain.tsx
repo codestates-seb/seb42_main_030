@@ -171,9 +171,7 @@ function MypageMain() {
         {currentTab === 0 ? (
           <InfoContainer>
             {userData.map((value) => {
-              return (
-                <MyInfo list={value} key={value.id} getUserData={getUserData} />
-              );
+              return <MyInfo list={value} key={value.id} getUserData={getUserData} />;
             })}
           </InfoContainer>
         ) : currentTab === 1 ? (
@@ -184,11 +182,9 @@ function MypageMain() {
           </DiaryContainer>
         ) : currentTab === 2 ? (
           <DiaryContainer>
-            {myLikeDiaryData
-              .slice(offset, offset + LIMIT_COUNT)
-              .map((value) => {
-                return <MyLikeDiary list={value} key={value.diaryId} />;
-              })}
+            {myLikeDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
+              return <MyLikeDiary list={value} key={value.diaryId} />;
+            })}
           </DiaryContainer>
         ) : (
           <CommentContainer>
