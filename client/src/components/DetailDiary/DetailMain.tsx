@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
@@ -67,9 +67,9 @@ export default function DetailMain() {
       const res = await axios.get(`http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`);
       setDetailData(res.data);
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
-  }
+  };
 
   useEffect(() => {
       getDetailData();
@@ -98,8 +98,6 @@ export default function DetailMain() {
     </Container>
   );
 }
-
-
 
 
 

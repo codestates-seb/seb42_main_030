@@ -3,11 +3,7 @@ import Pagination from "./Pagination";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-const DiaryMainContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+import { DiaryData } from "../../Type";
 
 const ListTab = styled.ul`
   display: flex;
@@ -50,6 +46,11 @@ const ListTab = styled.ul`
   }
 `;
 
+const DiaryMainContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 const DiaryMainWrapper = styled.ul`
   width: 100vw;
   max-width: 1440px;
@@ -74,7 +75,7 @@ export interface IDiaryData {
 }
 
 function DiaryMain() {
-  const [diaryData, setDiaryData] = useState<IDiaryData[]>([]); // 전체 diary 데이터
+  const [diaryData, setDiaryData] = useState<DiaryData[]>([]); // 전체 diary 데이터
   const [currentTab, setCurrentTab] = useState<number>(0); // 탭 이동 상태
   const [page, setPage] = useState<number>(1); // 현재 페이지 번호 (기본값: 1페이지부터 노출)
 
@@ -128,7 +129,12 @@ function DiaryMain() {
       </ListTab>
       {/* {diaryData[0].title} */}
       <DiaryMainContainer>
-        {currentTab === 0 ? (
+        <DiaryMainWrapper>
+          {diaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
+            return <DiaryList list={value} key={value.diaryId} />;
+          })}
+        </DiaryMainWrapper>
+        {/* {currentTab === 0 ? (
           <DiaryMainWrapper>
             {diaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
               return <DiaryList list={value} key={value.diaryId} />;
@@ -206,34 +212,34 @@ function DiaryMain() {
                 return <DiaryList list={value} key={value.diaryId} />;
               })}
           </DiaryMainWrapper>
-        )}
+        )} */}
       </DiaryMainContainer>
       {/* <Pagination
         allPageLength={diaryData.length}
-        tagOnePageLength={
-          diaryData.filter((value) => value.tag.includes(tagArr[1].feel)).length
-        }
-        tagTwoPageLength={
-          diaryData.filter((value) => value.tag.includes(tagArr[2].feel)).length
-        }
-        tagThreePageLength={
-          diaryData.filter((value) => value.tag.includes(tagArr[3].feel)).length
-        }
-        tagFourPageLength={
-          diaryData.filter((value) => value.tag.includes(tagArr[4].feel)).length
-        }
-        tagFivePageLength={
-          diaryData.filter((value) => value.tag.includes(tagArr[5].feel)).length
-        }
-        tagSixPageLength={
-          diaryData.filter((value) => value.tag.includes(tagArr[6].feel)).length
-        }
-        tagSevenPageLength={
-          diaryData.filter((value) => value.tag.includes(tagArr[7].feel)).length
-        }
-        tagEightPageLength={
-          diaryData.filter((value) => value.tag.includes(tagArr[8].feel)).length
-        }
+        // tagOnePageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[1].feel)).length
+        // }
+        // tagTwoPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[2].feel)).length
+        // }
+        // tagThreePageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[3].feel)).length
+        // }
+        // tagFourPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[4].feel)).length
+        // }
+        // tagFivePageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[5].feel)).length
+        // }
+        // tagSixPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[6].feel)).length
+        // }
+        // tagSevenPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[7].feel)).length
+        // }
+        // tagEightPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[8].feel)).length
+        // }
         LIMIT_COUNT={LIMIT_COUNT}
         page={page}
         setPage={setPage}

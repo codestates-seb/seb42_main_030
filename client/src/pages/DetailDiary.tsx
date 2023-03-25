@@ -1,3 +1,4 @@
+import DetailDiaryMain from "../components/DetailDiary/DetailDiaryMain";
 
 import DetailMain from '../components/DetailDiary/DetailMain'
 // import EditHeader from '../components/DetailDiary/EditHeader'

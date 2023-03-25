@@ -20,11 +20,11 @@ const TitleWrap = styled.div`
 
 
 const TitleLeft = styled.div`
-  display:flex;
-`
+  display: flex;
+`;
 const TitleRight = styled.div`
-  display:flex;
-`
+  display: flex;
+`;
 
 const Title = styled.h1`
   font-weight: bold;
@@ -58,8 +58,8 @@ const UnlikeIcon = styled.span`
 const Edit = styled.a`
   margin-left: 2rem;
   text-decoration: underline;
-  min-width:2rem;
-`
+  min-width: 2rem;
+`;
 const Delete = styled.a`
   margin-left:1rem;
   text-decoration:underline;
@@ -77,19 +77,19 @@ const ImgWrap = styled.div`
 const Img = styled.img`
   width: 200px;
   height: 200px;
-`
+`;
 const Info = styled.div`
-  display:flex;
-  flex-direction:column;
-  width:100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   height: 200px;
   margin-left: 2rem;
 `
 
 const Writer = styled.div`
-  display:flex;
-  gap:1rem;
-`
+  display: flex;
+  gap: 1rem;
+`;
 const H3 = styled.h3`
   margin-left:1rem;
   margin-bottom: 1rem;
@@ -102,12 +102,12 @@ const H4 = styled.h4`
   font-weight:normal;
 `
 const Tag = styled.ul`
-  display:flex;
-  gap:0.5rem;
-  position:absolute;
-  top:11rem;
-  margin-left:1rem;
-  list-style:none;
+  display: flex;
+  gap: 0.5rem;
+  position: absolute;
+  top: 11rem;
+  margin-left: 1rem;
+  list-style: none;
 
   > li {
     margin-right: 5px;
@@ -115,7 +115,7 @@ const Tag = styled.ul`
     border: 1px solid #d1d1d1;
     border-radius: 50px;
   }
-`
+`;
 
 
 
@@ -215,6 +215,7 @@ export default function DetailHeader({ detail, getDetailData }: propsType) {
           <Writer>
             <H3>뮤직 pd</H3>
             <H4>{detail.userNickname}</H4>
+            <H4>{detail.userNickname}</H4>
           </Writer>
           <Writer>
             <H3>등록일</H3>
@@ -228,7 +229,7 @@ export default function DetailHeader({ detail, getDetailData }: propsType) {
         </Info>
       </ImgWrap>
     </Container>
-  )
+  );
 }
 
 
