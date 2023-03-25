@@ -92,7 +92,6 @@ const Profile = styled.img`
   height: 40px;
   margin: 0 10px 0 20px;
   border-radius: 50%;
-  position: relative;
 `;
 
 function LoginHeader() {
@@ -142,11 +141,11 @@ function LoginHeader() {
             <GoTriangleDown className='triangleDown' size={14} />
           </ProfileButton>
           {isOpen ? (
-            <ul className='dropdown'>
+            <ul className='dropdown' onClick={closeDropdown}>
               <Link to='/Mypage'>
-                <li onClick={closeDropdown}>마이페이지</li>
+                <li>마이페이지</li>
               </Link>
-              <li onClick={closeDropdown}>로그아웃</li>
+              <li>로그아웃</li>
             </ul>
           ) : null}
         </div>

@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import axios from "axios";
 import MyDiary from "./MyDiary";
 import MypagePagination from "./MypagePagination";
 import MyLikeDiary from "./MyLikeDiary";
-import { DiaryData } from "../../Type";
 import MyComment from "./MyComment";
-import { CommentData } from "../../Type";
 import MyInfo from "./MyInfo";
+import styled from "styled-components";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { DiaryData } from "../../Type";
+import { CommentData } from "../../Type";
 import { UserData } from "../../Type";
 
 const ListTab = styled.ul`

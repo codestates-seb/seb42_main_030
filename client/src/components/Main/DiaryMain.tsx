@@ -1,8 +1,8 @@
 import DiaryList from "./DiaryList";
 import Pagination from "./Pagination";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
 import { DiaryData } from "../../Type";
 
 const ListTab = styled.ul`

@@ -35,15 +35,17 @@ function MyComment({ list }: CommentDataProps) {
   const myComment: boolean = list.userNickname === "킵코딩";
 
   return (
-    <CommentListContainer>
+    <>
       {myComment === true ? (
-        <CommentListWrapper>
-          <div className='name'>{list.userNickname}</div>
-          <div className='content'>{list.body}</div>
-          <div className='date'>{list.createdAt}</div>
-        </CommentListWrapper>
+        <CommentListContainer>
+          <CommentListWrapper>
+            <div className='name'>{list.userNickname}</div>
+            <div className='content'>{list.body}</div>
+            <div className='date'>{list.createdAt}</div>
+          </CommentListWrapper>
+        </CommentListContainer>
       ) : null}
-    </CommentListContainer>
+    </>
   );
 }
 
