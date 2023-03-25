@@ -85,6 +85,82 @@ const ButtonArea = styled.div`
   }
 `;
 
+const Withdrawal = styled.div`
+  flex: 0.8;
+  text-align: center;
+  margin: auto;
+`;
+
+const DeleteModalBack = styled.div`
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: grid;
+  place-items: center;
+`;
+
+const DeleteModalView = styled.div`
+  border-radius: 5px;
+  background-color: white;
+  width: 430px;
+  height: 220px;
+  margin-top: 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
+
+  > .deleteModalTitle {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin: 30px 0 45px 0;
+  }
+
+  > .warningText {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 50.5px;
+  }
+
+  > button {
+    font-weight: 500;
+    width: 215px;
+    height: 50px;
+    color: white;
+    border: none;
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  > .deleteCancelButton {
+    color: #21252b;
+    font-weight: 600;
+    background-color: transparent;
+    border-top: 1px solid #eeeeee;
+    border-right: 0.5px solid #eeeeee;
+    border-bottom-left-radius: 5px;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
+
+  > .deleteButton {
+    color: #ec1d36;
+    font-weight: 600;
+    background-color: transparent;
+    border-top: 1px solid #eeeeee;
+    border-left: 0.5px solid #eeeeee;
+    border-bottom-right-radius: 5px;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
+`;
+
 const AlbumCoverArea = styled.div`
   display: flex;
   margin: 30px 0 30px 0;
@@ -100,11 +176,9 @@ const AlbumCoverArea = styled.div`
 const InfoArea = styled.div`
   width: 400px;
   margin-top: 5px;
-  /* border: 1px solid red; */
 `;
 
 const UserInfo = styled.div`
-  /* border: 1px solid blue; */
   margin-bottom: 15px;
   font-size: 14px;
 
@@ -115,7 +189,6 @@ const UserInfo = styled.div`
 `;
 
 const AlbumInfoArea = styled.div`
-  /* border: 1px solid blue; */
   padding: 30px 10px 30px 10px;
   border-top: 1px solid #d9d9d9;
   border-bottom: 1px solid #d9d9d9;
@@ -124,12 +197,10 @@ const AlbumInfoArea = styled.div`
     font-size: 19px;
     font-weight: 500;
     margin-bottom: 20px;
-    /* border: 1px solid red; */
   }
 
   > .playContent {
     font-size: 14px;
-    /* border: 1px solid red; */
   }
 `;
 
@@ -139,7 +210,6 @@ const CommentInputArea = styled.div`
   margin-bottom: 20px;
   border-top: 1px solid #d9d9d9;
   padding: 30px 10px 30px 10px;
-  /* border: 1px solid red; */
 
   > .commentTitle {
     display: flex;
@@ -191,6 +261,7 @@ interface DiaryDataProps {
 function DetailList({ list, getDetailData }: DiaryDataProps) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
+  const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
 
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
   const { diaryId } = useParams();
@@ -215,18 +286,17 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     }
   };
 
+  // 회원 탈퇴 모달 오픈 이벤트 핸들러
+  const openModalHandler = () => {
+    setWithdrawalModalOpen(!withDrawalModalOpen);
+  };
+
   // 선택한 다이어리 delete 요청
   const postDelete = async () => {
-    const deleteDiary = window.confirm("정말 게시글을 삭제하시겠습니까?");
-    if (deleteDiary === true) {
-      const res = await BASE_API.delete(`/diary/${diaryId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      getDetailData(res.data);
-      alert("삭제되었습니다.");
-    } else {
-      return;
-    }
+    const res = await BASE_API.delete(`/diary/${diaryId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    getDetailData(res.data);
   };
 
   // 댓글 post 요청
@@ -253,9 +323,25 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
             <button className='edit'>수정</button>
-            <button className='delete' onClick={postDelete}>
+            <button className='delete' onClick={openModalHandler}>
               삭제
             </button>
+            <Withdrawal>
+              {withDrawalModalOpen ? (
+                <DeleteModalBack>
+                  <DeleteModalView>
+                    <div className='deleteModalTitle'>정말 삭제 하시겠습니까?</div>
+                    <div className='warningText'>삭제한 다이어리는 복구되지 않습니다.</div>
+                    <button className='deleteCancelButton' onClick={openModalHandler}>
+                      취소
+                    </button>
+                    <button className='deleteButton' onClick={postDelete}>
+                      삭제
+                    </button>
+                  </DeleteModalView>
+                </DeleteModalBack>
+              ) : null}
+            </Withdrawal>
             <button className='like' onClick={plusLikeCount}>
               {checkLike === true ? (
                 <AiFillHeart className='likeIcon' />
