@@ -3,21 +3,19 @@ import styled from "styled-components";
 import axios from "axios";
 // import Comment from './Comment'
 import Modal from "./Modal";
-import CommentList from "./CommentList";
+import { useParams } from "react-router-dom";
+// import CommentList from './CommentList'
 import { DiaryData } from "../../util/Type";
 
 const Container = styled.div`
   max-width: 1440px;
-  height: 100vh;
+  /* height:100vh; */
   padding: 2rem;
-  /* border:1px solid; */
-  /* display:flex;
-  flex-direction:column; */
 `;
-const CommentInput = styled.div`
+const Input = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 5rem;
+  margin-bottom: 1rem;
 `;
 const InputTitle = styled.div`
   display: flex;
@@ -35,59 +33,51 @@ const TextArea = styled.textarea`
   padding: 1rem;
   width: 90%;
   height: 8rem;
+  resize: none;
 `;
 const Button = styled.button`
   margin-left: 2%;
   width: 8%;
   height: 8rem;
+  background-color: transparent;
 `;
 
-// export interface CommentData {
-//   commentId: number;
-//   nickname: string;
-//   body: string;
-//   createdAt: string;
-//   modifiedAt: string;
-// }
 interface propsType {
   detail: DiaryData;
+  getDetailData: any;
 }
-export default function Comment({ detail }: propsType) {
+
+export default function CommentInput({ detail, getDetailData }: propsType) {
   const [text, setText] = useState("");
-  // const [commentData, setCommentData] = useState<CommentData[]>([])
+  const { diaryId } = useParams();
 
   const changeHandler = (e: any) => {
     setText(e.target.value);
   };
+  const date = new Date();
 
   const submitHandler = async (e: any) => {
-    e.prevendDefault();
+    e.preventDefault();
+    const newComment = {
+      // commentId: detail.comments.length + 1,
+      diaryId: detail.diaryId,
+      // body:text,
+      // createAt: date,
+      // modifedAt: date,
+      // userNickname: detail.userNickname
+    };
 
-    axios
-      .post(`http://localhost:3001/comment`, {
-        commentId: 2,
-        nickname: "hdh",
-        body: "잘 보고 갑니다",
-        createdAt: "2023-03-18",
-        modifiedAt: "2023-03-18",
-      })
-      .then((response) => {
-        console.log(response);
-      });
+    const res = await axios.post(
+      `http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/comment`,
+      newComment
+    );
+    console.log(res);
+    getDetailData(res.data);
   };
-
-  // const getCommentData = async () => {
-  //   const comment = await axios.get(`http://localhost:3001/diary`)
-  //   setCommentData(comment.data)
-  // };
-
-  // useEffect(() => {
-  //   getCommentData();
-  // },[]);
 
   return (
     <Container>
-      <CommentInput>
+      <Input>
         <InputTitle>
           <h1>댓글 달기</h1>
           <Modal />
@@ -96,15 +86,9 @@ export default function Comment({ detail }: propsType) {
           <TextArea placeholder='댓글을 남겨주세요~!' value={text} onChange={changeHandler} />
           <Button>등록</Button>
         </Form>
-      </CommentInput>
+      </Input>
 
-      <h1>댓글</h1>
-      {/* <CommentList /> */}
-      {/* {
-        commentData.map((value) => {
-          return <CommentList comment={value} key={value.commentId} />
-        })
-      } */}
+      {/* <h1>댓글</h1> */}
     </Container>
   );
 }

@@ -1,45 +1,48 @@
-import React, { useState } from "react";
 import styled from "styled-components";
-import { DiaryData } from "../../util/Type";
-// import { CommentType} from './DetailMain'
-// import { CommentData } from './Comment'
+import { CommentDataProps } from "../../util/Type";
 
-const Container = styled.div`
-  max-width: 1440px;
-  padding: 2rem;
-  border: 1px solid;
-  /* height: 100%; */
-`;
-const CommentWrap = styled.div`
-  max-width: 1440px;
-  padding: 2rem;
-
-  margin-top: 1rem;
-  border-top: 1px dotted;
-  /* border-bottom: 1px dotted; */
-  padding: 1rem 0 1rem 1rem;
+const CommentListContainer = styled.li`
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 100%;
-  height: 20%;
+  justify-content: center;
 `;
 
-interface propsType {
-  comment: DiaryData;
-}
+const CommentListWrapper = styled.div`
+  width: 100vw;
+  max-width: 1440px;
+  min-width: 300px;
+  border: none;
+  border-bottom: 1px solid lightgray;
 
-export default function CommentList({ comment }: propsType) {
-  // const [comment,setComment] = useState<commentType[]>([])
+  > .name {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 15px 0 15px 0;
+  }
+  > .content {
+    font-size: 13px;
+    color: #323232;
+    font-weight: 500;
+  }
 
+  > .date {
+    font-size: 12px;
+    color: #848180;
+    margin: 10px 0 15px 0;
+  }
+`;
+
+function CommentList({ list }: CommentDataProps) {
   return (
-    <CommentWrap>
-      {/* {comment.comment.map((value) => {
-        return <h5></h5>;
-      })} */}
-      {/* <h5>{detail.comment.nickname}</h5>
-        <p>{comment.body}</p>
-        <h6>{comment.createdAt}</h6> */}
-    </CommentWrap>
+    <>
+      <CommentListContainer>
+        <CommentListWrapper>
+          <div className='name'>{list.userNickname}</div>
+          <div className='content'>{list.body}</div>
+          <div className='date'>{list.createdAt.substring(0, 10)}</div>
+        </CommentListWrapper>
+      </CommentListContainer>
+    </>
   );
 }
+
+export default CommentList;

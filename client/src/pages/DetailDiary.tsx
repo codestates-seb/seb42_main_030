@@ -1,10 +1,10 @@
-import DetailDiaryMain from "../components/DetailDiary/DetailDiaryMain";
+import DetailMain from "../components/DetailDiary/DetailMain";
 
 function DetailDiary() {
   return (
-    <>
-      <DetailDiaryMain />
-    </>
+    <div>
+      <DetailMain />
+    </div>
   );
 }
 

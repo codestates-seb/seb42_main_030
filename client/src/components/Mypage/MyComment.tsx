@@ -9,21 +9,23 @@ const CommentListContainer = styled.li`
 const CommentListWrapper = styled.div`
   width: 100vw;
   max-width: 900px;
+  min-width: 300px;
   border: none;
   border-bottom: 1px solid lightgray;
-  font-size: 15px;
 
   > .name {
+    font-size: 14px;
     font-weight: 500;
-    margin: 10px 0 25px 0;
+    margin: 15px 0 15px 0;
   }
   > .content {
+    font-size: 13px;
     color: #323232;
     font-weight: 500;
   }
 
   > .date {
-    font-size: 13px;
+    font-size: 12px;
     color: #848180;
     margin: 10px 0 15px 0;
   }
