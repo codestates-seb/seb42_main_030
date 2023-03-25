@@ -17,22 +17,34 @@
   ],
   "diary": [
     {
-      "id": 1,
-      "title": "첫번째 다이어리 제목",
-      "body": "첫번째 다이어리 본문 내용",
-      "viewCount": 0,
-      "likeCount": 27,
-      "userNickname": "donggu",
+      "diaryId": 1,
+      "title": "커피 마시면서 보내는 감성적인 오후",
+      "body": "자주 듣던 음악을 공유합니다",
+      "viewcount": 0,
+      "lickCount": 0,
       "createdAt": "2023-03-19",
       "modifiedAt": "2023-03-19",
-      "tag": ["#신나는", "#즐거운"],
+      "userNickname": "한대희",
+      "tag": [
+        "#신나는",
+        "#즐거운"
+      ],
       "comment": [
         {
-          "id": 1,
-          "body": "donggu가 쓴 첫번째 댓글",
+          "comment_id": 1,
+          "diaryId": 1,
+          "body": "좋은 음악 추천 감사합니다",
           "createdAt": "2023-03-19",
           "modifiedAt": "2023-03-19",
-          "nickname": "donggu"
+          "userNickname": "한대희"
+        },
+        {
+          "comment_id": 2,
+          "diaryId": 2,
+          "body": "두번째 댓글 내용",
+          "createdAt": "2023-03-19",
+          "modifiedAt": "2023-03-19",
+          "userNickname": "한대희"
         }
       ]
     }

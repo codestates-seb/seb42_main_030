@@ -3,73 +3,75 @@ import styled from 'styled-components'
 import {CgDanger} from 'react-icons/cg'
 import {MdOutlineDangerous} from 'react-icons/md'
 
-export default function Modal() {
+const Button = styled.button`
+display:flex;
+align-items:center;
+gap:0.5rem;
+padding: 1rem 0 0 1rem;
+background-color:transparent;
+border:none;
+&:hover{
+  cursor: pointer;
+}
+`
+const Modal = styled.div`
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+
+`
+const Overlay = styled.div`
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  background: rgba(49,49,49,0.8);
+`
+const ModalContent = styled.div`
+position: absolute;
+top: 40%;
+left: 50%;
+transform: translate(-50%, -50%);
+line-height: 2rem;
+background: #f1f1f1;
+padding: 2rem 2rem 2rem 2rem;
+max-width: 600px;
+min-width: 300px;
+border-radius:2rem;
+`
+const ModalHeader = styled.div`
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding-bottom:1rem;
+margin-bottom:1rem;
+border-bottom: 1px solid gray;
+`
+
+
+const CloseModal = styled.button`
+font-size:2rem;
+background-color:transparent;
+border:none;
+&:hover {
+  cursor:pointer
+}
+`
+
+export default function CommentModal() {
   const [modal, setModal] = useState(false)
   const toggleModal = () => {
     setModal(!modal)
   }
 
-  const Button = styled.button`
-  display:flex;
-  align-items:center;
-  gap:0.5rem;
-  padding: 1rem 0 0 1rem;
-  background-color:transparent;
-  border:none;
-  &:hover{
-    cursor: pointer;
-  }
-  `
-  const Modal = styled.div`
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
 
-  `
-  const Overlay = styled.div`
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
-    background: rgba(49,49,49,0.8);
-`
-const ModalContent = styled.div`
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  line-height: 2rem;
-  background: #f1f1f1;
-  padding: 2rem 2rem 2rem 2rem;
-  max-width: 600px;
-  min-width: 300px;
-  border-radius:2rem;
-`
-const ModalHeader = styled.div`
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding-bottom:1rem;
-  margin-bottom:1rem;
-  border-bottom: 1px solid gray;
-`
-
-
-const CloseModal = styled.button`
-  font-size:2rem;
-  background-color:transparent;
-  border:none;
-  &:hover {
-    cursor:pointer
-  }
-`
 
 
 
