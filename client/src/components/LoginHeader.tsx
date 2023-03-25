@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { GoTriangleDown } from "react-icons/go";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { UserData } from "../util/Type";
+import { BASE_API } from "../util/API";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -106,7 +106,7 @@ const Profile = styled.img`
 `;
 
 function LoginHeader() {
-  const [imageData, setImageData] = useState<UserData>();
+  const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   // 내 유저 정보 get 요청
@@ -114,7 +114,7 @@ function LoginHeader() {
     // const isLogin = localStorage.getItem('usernickname')
     // URI -> `http://localhost:3001/user/${isLogin}`으로 변경
     try {
-      const res = await axios.get(`http://localhost:3001/user/1`);
+      const res = await BASE_API.get(`/users/1`);
       setImageData(res.data);
     } catch (err) {
       console.error(err);
@@ -143,7 +143,7 @@ function LoginHeader() {
             <Link to='/NewDiary'>새 다이어리 등록</Link>
           </SubmitButton>
           <ProfileButton onClick={openDropdown}>
-            <Profile src={imageData && imageData.imageUrl} alt='헤더 프로필 이미지' />
+            <Profile src={imageData.data && imageData.data.imageUrl} alt='헤더 프로필 이미지' />
             <GoTriangleDown className='triangleDown' size={14} />
           </ProfileButton>
           {isOpen ? (

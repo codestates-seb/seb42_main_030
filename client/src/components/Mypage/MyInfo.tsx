@@ -1,7 +1,7 @@
-import axios from "axios";
 import styled from "styled-components";
 import { useState, useRef } from "react";
 import { UserData } from "../../util/Type";
+import { BASE_API } from "../../util/API";
 
 const MyInfoContainer = styled.div`
   display: flex;
@@ -21,7 +21,6 @@ const ProfileImg = styled.img`
   height: 150px;
   border-radius: 100%;
   margin: 0 20px 20px 20px;
-  box-shadow: rgba(0, 0, 0, 0.086) 0px 0px 8px;
 
   &:hover {
     outline: 5px solid #ffefd5;
@@ -259,6 +258,7 @@ function MyInfo({ list, getUserData }: UserDataProps) {
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
 
   const fileInput = useRef<HTMLInputElement>(null);
+  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5NzI2NTU2LCJleHAiOjE2ODAzMjY1NTZ9.y2-PjQUPjcGsD5YQtU8ezxrh_bPEPGXe3YzJiXo-P_sNzDsS6w5IfVLaVjWyWw7ekubLVLchJIv6623bheoybQ`;
 
   // 프로필 이미지 클릭 시 input으로 연결되는 이벤트
   const clickProfile = () => {
@@ -274,8 +274,12 @@ function MyInfo({ list, getUserData }: UserDataProps) {
   const changeImage = async () => {
     const newImg = {
       imageUrl: image,
+      nickname: list.nickname,
+      password: list.password,
     };
-    const res = await axios.patch(`http://localhost:3001/user/${list.id}`, newImg);
+    const res = await BASE_API.patch(`/users/${list.userId}`, newImg, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     setImage(res.data);
     window.location.reload();
   };
@@ -283,9 +287,13 @@ function MyInfo({ list, getUserData }: UserDataProps) {
   // 유저 닉네임 patch 요청
   const changeNickname = async () => {
     const newNickname = {
+      userId: list.userId,
       nickname: nickname,
+      password: list.password,
     };
-    const res = await axios.patch(`http://localhost:3001/user/${list.id}`, newNickname);
+    const res = await BASE_API.patch(`/users/${list.userId}`, newNickname, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     getUserData(res.data);
     setEditNickname(false);
   };
@@ -293,9 +301,13 @@ function MyInfo({ list, getUserData }: UserDataProps) {
   // 유저 패스워드 patch 요청
   const changePassword = async () => {
     const newPassword = {
+      userId: list.userId,
+      nickname: list.nickname,
       password: password,
     };
-    const res = await axios.patch(`http://localhost:3001/user/${list.id}`, newPassword);
+    const res = await BASE_API.patch(`/users/${list.userId}`, newPassword, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     getUserData(res.data);
     setEditPassword(false);
   };

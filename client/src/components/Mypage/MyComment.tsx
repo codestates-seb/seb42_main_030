@@ -32,7 +32,7 @@ const CommentListWrapper = styled.div`
 function MyComment({ list }: CommentDataProps) {
   // const isLogin = localStorage.getItem('nickname')
   // list.userNickname === {이 부분을 로그인한 사용자의 닉네임으로 변경}
-  const myComment: boolean = list.userNickname === "킵코딩";
+  const myComment: boolean = list.userNickname === "kevin";
 
   return (
     <>
@@ -41,7 +41,7 @@ function MyComment({ list }: CommentDataProps) {
           <CommentListWrapper>
             <div className='name'>{list.userNickname}</div>
             <div className='content'>{list.body}</div>
-            <div className='date'>{list.createdAt}</div>
+            <div className='date'>{list.createdAt.substring(0, 10)}</div>
           </CommentListWrapper>
         </CommentListContainer>
       ) : null}

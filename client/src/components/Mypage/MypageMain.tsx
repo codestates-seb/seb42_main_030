@@ -83,7 +83,7 @@ function MypageMain() {
   // Tab 1(MyInfo) : 나의 유저 정보만 불러오는 get 요청
   const getUserData = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/user?id=1");
+      const res = await BASE_API.get(`/users/1`);
       setUserData(res.data);
     } catch (err) {
       console.error(err);
@@ -168,8 +168,8 @@ function MypageMain() {
       <MypageContainer>
         {currentTab === 0 ? (
           <InfoContainer>
-            {userData.map((value) => {
-              return <MyInfo list={value} key={value.id} getUserData={getUserData} />;
+            {Object.values(userData).map((value: any) => {
+              return <MyInfo list={value} key={value.userId} getUserData={getUserData} />;
             })}
           </InfoContainer>
         ) : currentTab === 1 ? (

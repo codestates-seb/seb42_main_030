@@ -94,6 +94,7 @@ function DiaryMain() {
     { feel: "#어쿠스틱한" },
     { feel: "#청량한" },
   ];
+
   // 태그 선택 이벤트 핸들러
   const selectTagHandler = (index: number) => {
     setCurrentTab(index);

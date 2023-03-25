@@ -29,7 +29,7 @@ export interface CommentDataProps {
 }
 
 export interface UserData {
-  id: number;
+  userId: number;
   nickname: string;
   email: string;
   password: string;

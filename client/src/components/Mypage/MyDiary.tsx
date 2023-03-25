@@ -110,7 +110,7 @@ function MyDiary({ list }: DiaryDataProps) {
 
   // const isLogin = localStorage.getItem('nickname')
   // list.nickname === isLogin
-  const myDiary: boolean = list.userNickname === "킵코딩";
+  const myDiary: boolean = list.userNickname === "kevin";
 
   const clickHandler = () => {
     navigate(`/DetailDiary/${list.diaryId}`);
