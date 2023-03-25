@@ -147,6 +147,7 @@ function MypageMain() {
     { feel: "좋아한 다이어리" },
     { feel: "작성한 댓글" },
   ];
+
   // 탭 선택 이벤트 핸들러
   const selectTabHandler = (index: number) => {
     setCurrentTab(index);

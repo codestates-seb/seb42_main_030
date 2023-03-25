@@ -25,6 +25,11 @@ const HeaderWrapper = styled.div`
 const Logo = styled.div`
   font-weight: 700;
   font-size: 20px;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -33,6 +38,11 @@ const SubmitButton = styled.button`
   background-color: transparent;
   font-weight: 700;
   font-size: 15px;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const LoginButton = styled.button`
@@ -44,22 +54,27 @@ const LoginButton = styled.button`
   border-radius: 50px;
   border: 2px solid black;
   margin-left: 20px;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 function LogoutHeader() {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Link to='/'>
-          <Logo>나만의 작은 음악 다이어리</Logo>
-        </Link>
+        <Logo>
+          <Link to='/'>나만의 작은 음악 다이어리</Link>
+        </Logo>
         <div className='buttonArea'>
-          <Link to='/Login'>
-            <SubmitButton>새 다이어리 등록</SubmitButton>
-          </Link>
-          <Link to='/Login'>
-            <LoginButton>로그인</LoginButton>
-          </Link>
+          <SubmitButton>
+            <Link to='/Login'>새 다이어리 등록</Link>
+          </SubmitButton>
+          <LoginButton>
+            <Link to='/Login'>로그인</Link>
+          </LoginButton>
         </div>
       </HeaderWrapper>
     </HeaderContainer>

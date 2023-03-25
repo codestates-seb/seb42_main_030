@@ -68,6 +68,11 @@ const HeaderWrapper = styled.div`
 const Logo = styled.div`
   font-weight: 700;
   font-size: 20px;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -76,6 +81,11 @@ const SubmitButton = styled.button`
   background-color: transparent;
   font-weight: 700;
   font-size: 15px;
+
+  a {
+    color: black;
+    text-decoration: none;
+  }
 `;
 
 const ProfileButton = styled.div`
@@ -92,6 +102,7 @@ const Profile = styled.img`
   height: 40px;
   margin: 0 10px 0 20px;
   border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.086) 0px 0px 8px;
 `;
 
 function LoginHeader() {
@@ -124,13 +135,13 @@ function LoginHeader() {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Link to='/'>
-          <Logo onClick={closeDropdown}>나만의 작은 음악 다이어리</Logo>
-        </Link>
+        <Logo onClick={closeDropdown}>
+          <Link to='/'>나만의 작은 음악 다이어리</Link>
+        </Logo>
         <div className='buttonArea'>
-          <Link to='/NewDiary'>
-            <SubmitButton onClick={closeDropdown}>새 다이어리 등록</SubmitButton>
-          </Link>
+          <SubmitButton onClick={closeDropdown}>
+            <Link to='/NewDiary'>새 다이어리 등록</Link>
+          </SubmitButton>
           <ProfileButton onClick={openDropdown}>
             <Profile src={imageData && imageData.imageUrl} alt='헤더 프로필 이미지' />
             <GoTriangleDown className='triangleDown' size={14} />
