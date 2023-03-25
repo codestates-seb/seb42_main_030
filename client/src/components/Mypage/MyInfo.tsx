@@ -21,6 +21,7 @@ const ProfileImg = styled.img`
   height: 150px;
   border-radius: 100%;
   margin: 0 20px 20px 20px;
+  box-shadow: rgba(0, 0, 0, 0.086) 0px 0px 8px;
 
   &:hover {
     outline: 5px solid #ffefd5;

@@ -116,7 +116,7 @@ function DiaryList({ list }: DiaryDataProps) {
       <Thumbnail>썸네일 이미지</Thumbnail>
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>
-        <div className='infoDate'>{list.createdAt}</div>
+        <div className='infoDate'>{list.createdAt.substring(0, 10)}</div>
         {/* <Tag>
           {list.tag.map((value: string, index: number) => {
             return <li key={index}>{value}</li>;

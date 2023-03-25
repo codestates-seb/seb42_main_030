@@ -5,7 +5,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
 const DiaryListContainer = styled.li`
-  box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
   width: 310px;
   height: 339px;
   list-style: none;
@@ -123,7 +123,7 @@ function MyDiary({ list }: DiaryDataProps) {
           <Thumbnail>썸네일 이미지</Thumbnail>
           <InfoArea>
             <div className='infoTitle'>{list.title}</div>
-            <div className='infoDate'>{list.createdAt}</div>
+            <div className='infoDate'>{list.createdAt.substring(0, 10)}</div>
             {/* <Tag>
           {list.tag.map((value, index) => {
             return <li key={index}>{value}</li>;
