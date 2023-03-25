@@ -84,7 +84,7 @@ function DiaryMain() {
   // 전체 diary 데이터 get 요청
   const getDiaryData = async () => {
     try {
-      const res = await axios.get("http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary");
+      const res = await axios.get("http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/diary");
       setDiaryData(res.data);
     } catch (err) {
       console.error(err);

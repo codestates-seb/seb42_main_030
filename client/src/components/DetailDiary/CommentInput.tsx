@@ -5,7 +5,7 @@ import axios from 'axios'
 import Modal from './Modal'
 import { useParams } from 'react-router-dom'
 // import CommentList from './CommentList'
-// import { IDiaryData } from './DetailMain'
+import { DiaryData } from './DetailMain'
 
 
 const Container = styled.div`
@@ -41,44 +41,57 @@ const Button = styled.button`
   margin-left:2% ;
   width:8%;
   height:8rem;
-
+  background-color:transparent;
 `
 
+interface propsType {
+  detail: DiaryData
+  getDetailData:any
+}
 
-export default function CommentInput() {
+
+export default function CommentInput({detail, getDetailData}:propsType) {
   const [text, setText] = useState('')
-  const{diary_id} = useParams()
+  const{diaryId} = useParams()
 
-  const changeHandler = (e: any) => {
+  const changeHandler = (e:any) => {
     setText(e.target.value)
   }
-  
-  const submitHandler = async () => {
+  const date = new Date()
+
+  const submitHandler = async (e:any) => {
+    e.preventDefault();
     const newComment = {
-      comment: [{
-        
-        body:text,
-        createAt: "2023-3-19",
-        modifedAt: "2023-03-19"
-      }]
+      // commentId: detail.comments.length + 1,
+      diaryId: detail.diaryId,
+      // body:text,
+      // createAt: date,
+      // modifedAt: date,
+      // userNickname: detail.userNickname
     }
-    await axios.patch(`http://localhost:3001/diary?diary_id=${diary_id}`, newComment);
+      
+    const res = await axios.post(`http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/comment`, newComment);
+    console.log(res)
+    getDetailData(res.data)
   }
+      
 
   return (
     <Container>
+      
       <Input>
         <InputTitle>
+          
           <h1>댓글 달기</h1>
           <Modal />
         </InputTitle>
-        <Form >
+        <Form onSubmit={submitHandler}>
           <TextArea 
             placeholder='댓글을 남겨주세요~!'
             value={text}
             onChange={changeHandler}
           />
-          <Button onClick={submitHandler}>등록</Button>
+          <Button >등록</Button>
         </Form>
       </Input>
 

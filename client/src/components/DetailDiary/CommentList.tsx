@@ -22,6 +22,11 @@ const CommentWrap = styled.div`
   width:100%;
   height: 20%;
 `
+const CommentTextarea = styled.textarea`
+  resize:none;
+  height:3rem;
+  width: 45rem;
+`
 const CommentFooter = styled.div`
   display:flex;
   justify-content:space-between;
@@ -69,7 +74,7 @@ export default function CommentList({comment}: propsType) {
       <CommentWrap key={comment.diaryId}>
         <h5>{comment.userNickname}</h5>
         {!click && <p>{comment.body}</p>}
-        {click && <input placeholder={comment.body}></input>}
+        {click && <CommentTextarea placeholder={comment.body}></CommentTextarea>}
         <CommentFooter>
           <h6>{comment.createdAt}</h6>
           <CommentButton>

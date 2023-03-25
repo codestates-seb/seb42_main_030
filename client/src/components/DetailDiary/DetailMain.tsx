@@ -16,7 +16,7 @@ const Container = styled.div`
     width: 100vw;
     max-width: 1440px;
     min-width: 300px;
-    padding: 0 10rem;
+    padding: 0 5rem;
     margin:0 auto;
 `
 
@@ -58,13 +58,13 @@ export interface CommentData {
   
 
 
-function DetailMain() {
+export default function DetailMain() {
   const [detailData, setDetailData] = useState<DiaryData>();
   const { diaryId } = useParams();
   // http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}
   const getDetailData = async () => {
     try {
-      const res = await axios.get(`http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`);
+      const res = await axios.get(`http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`);
       setDetailData(res.data);
     } catch (err) {
       console.error(err)
@@ -86,7 +86,7 @@ function DetailMain() {
         </div>
       </DiaryWrap>
       <PlayList />
-      <CommentInput />
+      {detailData && <CommentInput detail={detailData} getDetailData={getDetailData}/> }
       <CommentContainer>
           <h1>댓글</h1>
           {detailData &&
@@ -111,7 +111,7 @@ function DetailMain() {
 
 
 
-export default DetailMain;
+
 
 
 

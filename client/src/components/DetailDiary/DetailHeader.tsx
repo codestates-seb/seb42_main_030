@@ -101,10 +101,6 @@ const H4 = styled.h4`
   margin-left: 2rem;
   font-weight:normal;
 `
-
-
-
-
 const Tag = styled.ul`
   display:flex;
   gap:0.5rem;
@@ -121,12 +117,18 @@ const Tag = styled.ul`
   }
 `
 
+
+
+
+
 interface propsType {
   detail: DiaryData
+  // diaryId: DiaryData
   getDetailData: any
 }
 
-export default function DetailHeader({detail,getDetailData}: propsType) {
+export default function DetailHeader({ detail, getDetailData }: propsType) {
+  
   const [checkLike, setCheckLike] = useState<boolean>(false);
 
 
@@ -136,7 +138,7 @@ export default function DetailHeader({detail,getDetailData}: propsType) {
         likeCount: detail.likeCount + 1,
       };
       const res = await axios.patch(
-        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`,
+        `http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/diary/${detail.diaryId}`,
         like
       );
       getDetailData(res.data);
@@ -145,7 +147,7 @@ export default function DetailHeader({detail,getDetailData}: propsType) {
         likeCount: detail.likeCount - 1,
       };
       const res = await axios.patch(
-        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`,
+        `http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/diary/${detail.diaryId}`,
         like
       );
       getDetailData(res.data);
@@ -156,18 +158,16 @@ export default function DetailHeader({detail,getDetailData}: propsType) {
     setCheckLike(!checkLike);
   };
 
-  const postDelete= async (diaryId: number) => {
+  const postDelete= async () => {
     const deleteDiary = window.confirm('정말 게시글을 삭제하시겠습니까?')
     if(deleteDiary === true) {
-      const res = await axios.delete(`http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary/${diaryId}`)
+      const res = await axios.delete(`http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/diary/${detail.diaryId}`)
       getDetailData(res.data)
       alert('삭제되었습니다.')
     } else {
       return;
     }
   }
-
-
 
 
 
@@ -204,9 +204,9 @@ export default function DetailHeader({detail,getDetailData}: propsType) {
         </TitleLeft>
         <TitleRight>
           <Edit href='#'>수정</Edit>
-          <Delete onClick={() => {
-            postDelete(detail.diaryId)
-          }}>삭제</Delete>
+          <Delete onClick={postDelete}>
+            삭제
+          </Delete>
         </TitleRight>
       </TitleWrap>
       <ImgWrap>
@@ -230,12 +230,10 @@ export default function DetailHeader({detail,getDetailData}: propsType) {
     </Container>
   )
 }
-      
 
 
 
 
-        
 
-        
+
 
