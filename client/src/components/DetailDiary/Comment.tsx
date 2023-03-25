@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 // import Comment from './Comment'
 import Modal from "./Modal";
-import CommentList from "./CommentList";
+// import CommentList from "./CommentList";
 import { DiaryData } from "../../Type";
 
 const Container = styled.div`
