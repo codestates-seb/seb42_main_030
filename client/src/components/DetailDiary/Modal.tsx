@@ -63,7 +63,7 @@ const CloseModal = styled.button`
   }
 `;
 
-export default function CommentModal() {
+function CommentModal() {
   const [modal, setModal] = useState(false);
 
   const toggleModal = () => {
@@ -108,3 +108,5 @@ export default function CommentModal() {
     </>
   );
 }
+
+export default CommentModal;

@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import CommentList from "./CommentList";
 import PlayList from "./PlayList";
+import CommentModal from "./Modal";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { RiErrorWarningLine } from "react-icons/ri";
 
 const DetailMainContainer = styled.div`
   display: flex;
@@ -169,6 +171,7 @@ const AlbumCoverArea = styled.div`
     width: 190px;
     height: 180px;
     margin-right: 30px;
+    border-radius: 4px;
     background-color: lightgray;
   }
 `;
@@ -205,8 +208,6 @@ const AlbumInfoArea = styled.div`
 `;
 
 const CommentInputArea = styled.div`
-  font-size: 19px;
-  font-weight: 500;
   margin-bottom: 20px;
   border-top: 1px solid #d9d9d9;
   padding: 30px 10px 30px 10px;
@@ -214,13 +215,24 @@ const CommentInputArea = styled.div`
   > .commentTitle {
     display: flex;
     align-items: center;
-    font-size: 19px;
-    font-weight: 500;
+    justify-content: space-between;
     margin-bottom: 20px;
 
     > .commentCount {
+      font-size: 19px;
       margin-left: 5px;
-      font-size: 15px;
+      font-weight: 500;
+    }
+
+    > .commentRule {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      margin-right: 5px;
+
+      > .ruleIcon {
+        margin-right: 5px;
+      }
     }
   }
 `;
@@ -246,10 +258,14 @@ const TextArea = styled.div`
     width: 90px;
     min-width: 90px;
     height: 70px;
-    border: 1px solid #d1d1d1;
+    border: none;
     color: #21252b;
     border-radius: 4px;
-    background-color: transparent;
+    background-color: #ffefd5;
+
+    &:hover {
+      background-color: #ffdeb7;
+    }
   }
 `;
 
@@ -262,6 +278,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
+  const [ruleModal, setRuleModal] = useState<boolean>(false);
 
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
   const { diaryId } = useParams();
@@ -286,9 +303,22 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     }
   };
 
-  // 회원 탈퇴 모달 오픈 이벤트 핸들러
+  // 다이어리 삭제 모달 오픈 이벤트 핸들러
   const openModalHandler = () => {
     setWithdrawalModalOpen(!withDrawalModalOpen);
+    document.body.style.cssText = `
+    position: fixed;
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
+  };
+
+  // 다이어리 삭제 모달 클로즈 이벤트 핸들러
+  const closeModalHandler = () => {
+    setWithdrawalModalOpen(!withDrawalModalOpen);
+    const scrollY = document.body.style.top;
+    document.body.style.cssText = "";
+    window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
   };
 
   // 선택한 다이어리 delete 요청
@@ -297,6 +327,9 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
       headers: { Authorization: `Bearer ${token}` },
     });
     getDetailData(res.data);
+    const scrollY = document.body.style.top;
+    document.body.style.cssText = "";
+    window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
   };
 
   // 댓글 post 요청
@@ -316,6 +349,11 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     setText(e.target.value);
   };
 
+  // 댓글 운영 원칙 모달 오픈 이벤트
+  const toggleModal = () => {
+    setRuleModal(!ruleModal);
+  };
+
   return (
     <DetailMainContainer>
       <DetailMainWrapper>
@@ -332,10 +370,16 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
                   <DeleteModalView>
                     <div className='deleteModalTitle'>정말 삭제 하시겠습니까?</div>
                     <div className='warningText'>삭제한 다이어리는 복구되지 않습니다.</div>
-                    <button className='deleteCancelButton' onClick={openModalHandler}>
+                    <button className='deleteCancelButton' onClick={closeModalHandler}>
                       취소
                     </button>
-                    <button className='deleteButton' onClick={postDelete}>
+                    <button
+                      className='deleteButton'
+                      onClick={() => {
+                        postDelete();
+                        closeModalHandler();
+                      }}
+                    >
                       삭제
                     </button>
                   </DeleteModalView>
@@ -344,9 +388,9 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
             </Withdrawal>
             <button className='like' onClick={plusLikeCount}>
               {checkLike === true ? (
-                <AiFillHeart className='likeIcon' />
+                <AiFillHeart className='likeIcon' size={16} />
               ) : (
-                <AiOutlineHeart className='likeIcon' />
+                <AiOutlineHeart className='likeIcon' size={16} />
               )}
               좋아요
               <span className='likeCount'>{list.likeCount}</span>
@@ -373,8 +417,12 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         <PlayList />
         <CommentInputArea>
           <div className='commentTitle'>
-            댓글
-            <span className='commentCount'>({commentData?.length})</span>
+            <span className='commentCount'>댓글 ({commentData.length})</span>
+            <div className='commentRule' onClick={toggleModal}>
+              <RiErrorWarningLine className='ruleIcon' size={16} />
+              댓글 운영 원칙
+            </div>
+            {/* {ruleModal === true ? <CommentModal /> : null} */}
           </div>
           <TextArea>
             <textarea className='textArea' onChange={changeHandler} />

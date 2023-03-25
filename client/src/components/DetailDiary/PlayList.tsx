@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const PlayListContainer = styled.div`
   display: flex;
@@ -56,6 +57,11 @@ const ListHeader = styled.div`
   > .time {
     flex: 2;
   }
+
+  > .setting {
+    flex: 0.5;
+    padding-right: 10px;
+  }
 `;
 
 const Lists = styled.li`
@@ -86,6 +92,11 @@ const Lists = styled.li`
 
   > .listTime {
     flex: 2;
+  }
+
+  > .test {
+    flex: 0.5;
+    padding-right: 10px;
   }
 
   &:hover {
@@ -122,7 +133,7 @@ function PlayList() {
     <PlayListContainer>
       <PlayListWrapper>
         <TitleArea>
-          <div className='playListTitle'>플레이리스트</div>
+          <div className='playListTitle'>다이어리 수록곡</div>
           <ListContainer>
             <ListHeader>
               <div className='empty'></div>
@@ -130,6 +141,7 @@ function PlayList() {
               <div className='artist'>아티스트</div>
               <div className='album'>앨범</div>
               <div className='time'>시간</div>
+              <div className='setting'></div>
             </ListHeader>
             {arr.list.map((list, idx) => (
               <Lists key={idx}>
@@ -138,6 +150,7 @@ function PlayList() {
                 <div className='listArtist'>{list.artist}</div>
                 <div className='listAlbum'>{list.album}</div>
                 <div className='listTime'>3:42</div>
+                <BsThreeDotsVertical className='test' />
               </Lists>
             ))}
           </ListContainer>
