@@ -14,8 +14,8 @@ spring:
       client:
         registration:
           spotify:
-            clientId: a74acd41a54442fba564ef852d9a43b0
-            clientSecret: 3ef5274217594784b2fb16e14f3ddf62
+            clientId: ${SPOTIFY_CLIENT_ID}
+            clientSecret: ${SPOTIFY_CLIENT_SECRET}
             authorization-grant-type: authorization_code  #OAuth종류
             redirect-uri: http://localhost:8080/callback/login  #로그인 후 이동할 URI
             scope: user-read-email, user-read-private, playlist-read-private, playlist-modify-private, playlist-modify-public, user-read-currently-playing, user-read-playback-state, user-modify-playback-state, streaming #가져올 수 있는 정보의 범위 지정
