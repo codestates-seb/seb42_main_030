@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import CommentList from "./CommentList";
 import PlayList from "./PlayList";
-import CommentModal from "./Modal";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
@@ -16,7 +15,7 @@ const DetailMainContainer = styled.div`
 
 const DetailMainWrapper = styled.div`
   width: 100vw;
-  max-width: 1300px;
+  max-width: 900px;
   min-width: 300px;
   padding: 10px 20px 10px 20px;
 `;
@@ -87,12 +86,6 @@ const ButtonArea = styled.div`
   }
 `;
 
-const Withdrawal = styled.div`
-  flex: 0.8;
-  text-align: center;
-  margin: auto;
-`;
-
 const DeleteModalBack = styled.div`
   position: fixed;
   z-index: 999;
@@ -106,11 +99,11 @@ const DeleteModalBack = styled.div`
 `;
 
 const DeleteModalView = styled.div`
+  text-align: center;
   border-radius: 5px;
   background-color: white;
   width: 430px;
   height: 220px;
-  margin-top: 30px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
 
   > .deleteModalTitle {
@@ -157,6 +150,55 @@ const DeleteModalView = styled.div`
     border-top: 1px solid #eeeeee;
     border-left: 0.5px solid #eeeeee;
     border-bottom-right-radius: 5px;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
+`;
+
+const RuleModalView = styled.div`
+  text-align: center;
+  border-radius: 5px;
+  background-color: white;
+  width: 550px;
+  height: 420px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
+
+  > .ruleModalTitle {
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin: 30px 0 45px 0;
+  }
+
+  > .warningText {
+    line-height: 30px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 25px 0 25px;
+    margin-bottom: 59px;
+  }
+
+  > button {
+    font-weight: 500;
+    width: 550px;
+    height: 50px;
+    color: white;
+    border: none;
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  > .confirmButton {
+    color: #21252b;
+    font-weight: 600;
+    background-color: transparent;
+    border-top: 1px solid #eeeeee;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
     &:hover {
       background-color: #eeeeee;
     }
@@ -247,10 +289,11 @@ const TextArea = styled.div`
     margin: 0 10px 30px 0;
     border: 1px solid #d1d1d1;
     border-radius: 4px;
+    padding: 10px 8px 10px 8px;
 
     &:focus {
       outline: 0.5px solid gray;
-      padding: 5px;
+      padding: 10px 8px 10px 8px;
     }
   }
 
@@ -349,9 +392,22 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     setText(e.target.value);
   };
 
-  // 댓글 운영 원칙 모달 오픈 이벤트
-  const toggleModal = () => {
+  // 댓글 운영 원칙 오픈 모달 오픈 이벤트 핸들러
+  const openRuleModalHandler = () => {
     setRuleModal(!ruleModal);
+    document.body.style.cssText = `
+    position: fixed;
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
+  };
+
+  // 댓글 운영 원칙 모달 클로즈 이벤트 핸들러
+  const closeRuleModalHandler = () => {
+    setRuleModal(!ruleModal);
+    const scrollY = document.body.style.top;
+    document.body.style.cssText = "";
+    window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
   };
 
   return (
@@ -364,28 +420,26 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
             <button className='delete' onClick={openModalHandler}>
               삭제
             </button>
-            <Withdrawal>
-              {withDrawalModalOpen ? (
-                <DeleteModalBack>
-                  <DeleteModalView>
-                    <div className='deleteModalTitle'>정말 삭제 하시겠습니까?</div>
-                    <div className='warningText'>삭제한 다이어리는 복구되지 않습니다.</div>
-                    <button className='deleteCancelButton' onClick={closeModalHandler}>
-                      취소
-                    </button>
-                    <button
-                      className='deleteButton'
-                      onClick={() => {
-                        postDelete();
-                        closeModalHandler();
-                      }}
-                    >
-                      삭제
-                    </button>
-                  </DeleteModalView>
-                </DeleteModalBack>
-              ) : null}
-            </Withdrawal>
+            {withDrawalModalOpen ? (
+              <DeleteModalBack>
+                <DeleteModalView>
+                  <div className='deleteModalTitle'>정말 삭제 하시겠습니까?</div>
+                  <div className='warningText'>삭제한 다이어리는 복구되지 않습니다.</div>
+                  <button className='deleteCancelButton' onClick={closeModalHandler}>
+                    취소
+                  </button>
+                  <button
+                    className='deleteButton'
+                    onClick={() => {
+                      postDelete();
+                      closeModalHandler();
+                    }}
+                  >
+                    삭제
+                  </button>
+                </DeleteModalView>
+              </DeleteModalBack>
+            ) : null}
             <button className='like' onClick={plusLikeCount}>
               {checkLike === true ? (
                 <AiFillHeart className='likeIcon' size={16} />
@@ -418,20 +472,45 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         <CommentInputArea>
           <div className='commentTitle'>
             <span className='commentCount'>댓글 ({commentData.length})</span>
-            <div className='commentRule' onClick={toggleModal}>
+            <div className='commentRule' onClick={openRuleModalHandler}>
               <RiErrorWarningLine className='ruleIcon' size={16} />
               댓글 운영 원칙
             </div>
-            {/* {ruleModal === true ? <CommentModal /> : null} */}
+            {ruleModal ? (
+              <DeleteModalBack>
+                <RuleModalView>
+                  <div className='ruleModalTitle'>나만의 작은 음악 다이어리 댓글 운영 원칙</div>
+                  <div className='warningText'>
+                    <div>1. 욕설 및 비방 글을 등록하지 말아 주세요</div>
+                    <div>
+                      2. 한 페이지 내에서 동일한 내용의 글을 반복적으로 3회 이상 등록하지 말아
+                      주세요.
+                    </div>
+                    <div>3. 홍보 및 상업성 글을 등록 하기 말아주세요.</div>
+                    <div>4. 음란성 글을 등록 하지 말아주세요.</div>
+                    <div>5. 악성코드를 유포 하지 말아주세요.</div>
+                    <div>6. 본인 및 타인의 개인 정보를 유출 하지 말아 주세요.</div>
+                    <div>7. 반사회성 글을 등록 하지 말아주세요.</div>
+                  </div>
+                  <button className='confirmButton' onClick={closeRuleModalHandler}>
+                    확인
+                  </button>
+                </RuleModalView>
+              </DeleteModalBack>
+            ) : null}
           </div>
           <TextArea>
-            <textarea className='textArea' onChange={changeHandler} />
+            <textarea
+              className='textArea'
+              placeholder='댓글을 작성하세요'
+              onChange={changeHandler}
+            />
             <button className='sumbit' onClick={submitHandler}>
               등록
             </button>
           </TextArea>
           {commentData?.map((value) => {
-            return <CommentList list={value} key={value.commentId} />;
+            return <CommentList list={value} key={value.commentId} getDetailData={getDetailData} />;
           })}
         </CommentInputArea>
       </DetailMainWrapper>

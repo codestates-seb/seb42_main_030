@@ -168,12 +168,6 @@ const WarningText = styled.div`
   }
 `;
 
-const Withdrawal = styled.div`
-  flex: 0.8;
-  text-align: center;
-  margin: auto;
-`;
-
 const WithdrawalModalBack = styled.div`
   position: fixed;
   z-index: 999;
@@ -187,11 +181,11 @@ const WithdrawalModalBack = styled.div`
 `;
 
 const WithdrawalModalView = styled.div`
+  text-align: center;
   border-radius: 5px;
   background-color: white;
   width: 430px;
   height: 220px;
-  margin-top: 30px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
 
   > .deleteModalTitle {
@@ -392,24 +386,22 @@ function MyInfo({ list, getUserData }: UserDataProps) {
           <button className='withdrawalBtn' onClick={openModalHandler}>
             회원 탈퇴
           </button>
-          <Withdrawal>
-            {withDrawalModalOpen ? (
-              <WithdrawalModalBack>
-                <WithdrawalModalView>
-                  <div className='deleteModalTitle'>정말 탈퇴 하시겠습니까?</div>
-                  <div className='warningText'>
-                    탈퇴 시 작성하신 다이어리 및 댓글이 모두 삭제되며
-                    <br />
-                    복구되지 않습니다.
-                  </div>
-                  <button className='deleteCancelButton' onClick={openModalHandler}>
-                    취소
-                  </button>
-                  <button className='deleteButton'>탈퇴</button>
-                </WithdrawalModalView>
-              </WithdrawalModalBack>
-            ) : null}
-          </Withdrawal>
+          {withDrawalModalOpen ? (
+            <WithdrawalModalBack>
+              <WithdrawalModalView>
+                <div className='deleteModalTitle'>정말 탈퇴 하시겠습니까?</div>
+                <div className='warningText'>
+                  탈퇴 시 작성하신 다이어리 및 댓글이 모두 삭제되며
+                  <br />
+                  복구되지 않습니다.
+                </div>
+                <button className='deleteCancelButton' onClick={openModalHandler}>
+                  취소
+                </button>
+                <button className='deleteButton'>탈퇴</button>
+              </WithdrawalModalView>
+            </WithdrawalModalBack>
+          ) : null}
         </MyWithdrawalWrapper>
         <WarningText>
           탈퇴 시 작성하신 다이어리 및 댓글이 모두 삭제되며 복구되지 않습니다.
