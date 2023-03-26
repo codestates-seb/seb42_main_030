@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { DiaryDataProps } from "../../../Type";
+import { useNavigate } from "react-router-dom";
+import { DiaryDataProps } from "../../util/Type";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
 const DiaryListContainer = styled.li`
-  box-shadow: rgb(0 0 0 / 15%) 0px 4px 16px 0px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
   width: 310px;
   height: 339px;
   list-style: none;
@@ -105,48 +105,40 @@ const LikeAndComment = styled.div`
   }
 `;
 
-function MyDiaryList({ list }: DiaryDataProps) {
+function MyLikeDiary({ list }: DiaryDataProps) {
   const navigate = useNavigate();
-
-  // const isLogin = localStorage.getItem('nickname')
-  // list.nickname === {이 부분을 로그인한 사용자의 닉네임으로 변경}
-  const myDiary: boolean = list.userNickname === "light";
 
   const clickHandler = () => {
     navigate(`/DetailDiary/${list.diaryId}`);
   };
 
   return (
-    <>
-      {myDiary === true ? (
-        <DiaryListContainer onClick={clickHandler}>
-          <Thumbnail>썸네일 이미지</Thumbnail>
-          <InfoArea>
-            <div className='infoTitle'>{list.title}</div>
-            <div className='infoDate'>{list.createdAt}</div>
-            {/* <Tag>
+    <DiaryListContainer onClick={clickHandler}>
+      <Thumbnail>썸네일 이미지</Thumbnail>
+      <InfoArea>
+        <div className='infoTitle'>{list.title}</div>
+        <div className='infoDate'>{list.createdAt.substring(0, 10)}</div>
+        {/* <Tag>
           {list.tag.map((value, index) => {
             return <li key={index}>{value}</li>;
           })}
         </Tag> */}
-          </InfoArea>
-          <UserArea>
-            <ByUsername>
-              <Profile />
-              <div className='by'>by</div>
-              {list.userNickname}
-            </ByUsername>
-            <LikeAndComment>
-              <AiFillHeart className='likeIcon' size={16} />
-              {list.likeCount}
-              <FaRegCommentDots className='commentIcon' size={15} />
-              {list.comments.length}
-            </LikeAndComment>
-          </UserArea>
-        </DiaryListContainer>
-      ) : null}
-    </>
+      </InfoArea>
+      <UserArea>
+        <ByUsername>
+          <Profile />
+          <div className='by'>by</div>
+          {list.userNickname}
+        </ByUsername>
+        <LikeAndComment>
+          <AiFillHeart className='likeIcon' size={16} />
+          {list.likeCount}
+          <FaRegCommentDots className='commentIcon' size={15} />
+          {list.comments.length}
+        </LikeAndComment>
+      </UserArea>
+    </DiaryListContainer>
   );
 }
 
-export default MyDiaryList;
+export default MyLikeDiary;

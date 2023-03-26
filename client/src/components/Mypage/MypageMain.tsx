@@ -1,17 +1,20 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import MyDiaryList from "./MyDiary/MyDiaryList";
+import MyDiary from "./MyDiary";
 import MypagePagination from "./MypagePagination";
-import MyInfo from "./MyInfo/MyInfo";
-import MyLikeList from "./MyLikeDiary/MyLikeList";
-import { DiaryData } from "../../Type";
-import MyCommentList from "./MyComment/MyCommentList";
-import { CommentData } from "../../Type";
+import MyLikeDiary from "./MyLikeDiary";
+import MyComment from "./MyComment";
+import MyInfo from "./MyInfo";
+import styled from "styled-components";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { DiaryData } from "../../util/Type";
+import { CommentData } from "../../util/Type";
+import { UserData } from "../../util/Type";
+import { BASE_API } from "../../util/API";
 
 const ListTab = styled.ul`
   display: flex;
   justify-content: center;
+  position: relative;
   margin: 50px 0 50px 0;
   gap: 10px;
 
@@ -39,12 +42,18 @@ const ListTab = styled.ul`
   }
 `;
 
-const MypageMainContainer = styled.div`
+const MypageContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const DiaryMainWrapper = styled.ul`
+const InfoContainer = styled.div`
+  width: 100vw;
+  max-width: 900px;
+  font-size: 15px;
+`;
+
+const DiaryContainer = styled.ul`
   width: 100vw;
   max-width: 1440px;
   min-width: 300px;
@@ -54,13 +63,14 @@ const DiaryMainWrapper = styled.ul`
   gap: 56.6px;
 `;
 
-const DiaryCommentWrapper = styled.ul`
+const CommentContainer = styled.ul`
   width: 100vw;
   max-width: 1440px;
   min-width: 300px;
 `;
 
 function MypageMain() {
+  const [userData, setUserData] = useState<UserData[]>([]);
   const [myDiaryData, setMyDiaryData] = useState<DiaryData[]>([]);
   const [myLikeDiaryData, setLikeDiaryData] = useState<DiaryData[]>([]);
   const [myCommentData, setMyCommentData] = useState<CommentData[]>([]);
@@ -70,14 +80,26 @@ function MypageMain() {
   const LIMIT_COUNT: number = 20;
   const offset: number = (page - 1) * LIMIT_COUNT;
 
-  // 나의 다이어리 데이터 get 요청
+  // Tab 1(MyInfo) : 나의 유저 정보만 불러오는 get 요청
+  const getUserData = async () => {
+    try {
+      const res = await BASE_API.get(`/users/1`);
+      setUserData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  // Tab 2(MyDiary) : 나의 다이어리 데이터 get 요청
   const getMyDiaryData = async () => {
     try {
       // const isLogin = localStorage.getItem('nickname')
       // nickname=${이 부분을 로그인한 사용자의 닉네임으로 변경}
-      const res = await axios.get(
-        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/diary`
-      );
+      // 현재 엔드포인트에 diaryId만 붙을 수 있는데 ?userNickname=light 이런 식으로 붙을 순 없는지?
+      const res = await BASE_API.get(`/diary`);
       setMyDiaryData(res.data);
     } catch (err) {
       console.error(err);
@@ -87,7 +109,7 @@ function MypageMain() {
     getMyDiaryData();
   }, []);
 
-  // 내가 좋아요 한 다이어리 데이터 get 요청
+  // Tab 3(MyLikeDiary) : 내가 좋아요 한 다이어리 데이터 get 요청
   const getLikeData = async () => {
     try {
       // const isLogin = localStorage.getItem('nickname')
@@ -102,12 +124,10 @@ function MypageMain() {
     getLikeData();
   }, []);
 
-  // 내가 작성한 댓글 데이터 get 요청
+  // Tab 4(MyComment) : 내가 작성한 댓글 데이터 get 요청
   const getMyCommentData = async () => {
     try {
-      const res = await axios.get(
-        `http://ec2-43-201-65-82.ap-northeast-2.compute.amazonaws.com:8080/comment`
-      );
+      const res = await BASE_API.get(`/comment`);
       setMyCommentData(res.data);
     } catch (err) {
       console.error(err);
@@ -117,6 +137,7 @@ function MypageMain() {
     getMyCommentData();
   }, []);
 
+  // 마이 페이지 탭 리스트
   const tabArr = [
     { feel: "내 정보" },
     { feel: "나의 다이어리" },
@@ -124,6 +145,7 @@ function MypageMain() {
     { feel: "작성한 댓글" },
   ];
 
+  // 탭 선택 이벤트 핸들러
   const selectTabHandler = (index: number) => {
     setCurrentTab(index);
   };
@@ -143,34 +165,37 @@ function MypageMain() {
           );
         })}
       </ListTab>
-      <MypageMainContainer>
+      <MypageContainer>
         {currentTab === 0 ? (
-          <MyInfo />
+          <InfoContainer>
+            {Object.values(userData).map((value: any) => {
+              return <MyInfo list={value} key={value.userId} getUserData={getUserData} />;
+            })}
+          </InfoContainer>
         ) : currentTab === 1 ? (
-          <DiaryMainWrapper>
+          <DiaryContainer>
             {myDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
-              return <MyDiaryList list={value} key={value.diaryId} />;
+              return <MyDiary list={value} key={value.diaryId} />;
             })}
-          </DiaryMainWrapper>
+          </DiaryContainer>
         ) : currentTab === 2 ? (
-          <DiaryMainWrapper>
-            {myLikeDiaryData
-              .slice(offset, offset + LIMIT_COUNT)
-              .map((value) => {
-                return <MyLikeList list={value} key={value.diaryId} />;
-              })}
-          </DiaryMainWrapper>
-        ) : (
-          <DiaryCommentWrapper>
-            {myCommentData.map((value) => {
-              return <MyCommentList list={value} key={value.commentId} />;
+          <DiaryContainer>
+            {myLikeDiaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
+              return <MyLikeDiary list={value} key={value.diaryId} />;
             })}
-          </DiaryCommentWrapper>
+          </DiaryContainer>
+        ) : (
+          <CommentContainer>
+            {myCommentData.slice(offset, offset + LIMIT_COUNT).map((value) => {
+              return <MyComment list={value} key={value.commentId} />;
+            })}
+          </CommentContainer>
         )}
-      </MypageMainContainer>
+      </MypageContainer>
       <MypagePagination
         myPageLength={myDiaryData.length}
         myLikePageLength={myLikeDiaryData.length}
+        myCommentPageLength={myCommentData.length}
         LIMIT_COUNT={LIMIT_COUNT}
         page={page}
         setPage={setPage}
