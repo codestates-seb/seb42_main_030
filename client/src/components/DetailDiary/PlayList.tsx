@@ -75,6 +75,7 @@ const Lists = styled.li`
     margin: 0 20px 0 15px;
     width: 45px;
     height: 45px;
+    border-radius: 4px;
   }
 
   > .listTitle {
