@@ -14,9 +14,9 @@ import java.util.List;
 @Setter
 @Builder
 public class PlaylistResponseDto {
-    private long playlist_id;
+    private long playlistId;
 
-    private long user_id;
+    private long userId;
 
     private String nickname;
 
@@ -24,11 +24,11 @@ public class PlaylistResponseDto {
 
     private String title;
 
-    private int like;
+//    private int like;
 
     private List<Song> songs;
 
-    private List<String> tagList;
+//    private List<String> tagList;
 
     private LocalDateTime createdAt;
 

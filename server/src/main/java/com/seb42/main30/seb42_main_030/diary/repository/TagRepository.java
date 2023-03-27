@@ -1,4 +1,4 @@
-package com.seb42.main30.seb42_main_030.playlist.repository;
+package com.seb42.main30.seb42_main_030.diary.repository;
 
 import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
 import com.seb42.main30.seb42_main_030.diary.entity.tag;

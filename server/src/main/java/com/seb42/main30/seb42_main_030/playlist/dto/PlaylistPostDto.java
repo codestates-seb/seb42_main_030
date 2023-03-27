@@ -15,6 +15,7 @@ public class PlaylistPostDto {
     private String title;
 
     private List<SongDto> songs;
+
     private List<String> tagList;
 
 

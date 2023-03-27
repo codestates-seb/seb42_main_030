@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary, Long> {
 
-    List<Diary> findByPlaylistId(Long playlist_id);
+    List<Diary> findByPlaylistId(Long playlistId);
 }

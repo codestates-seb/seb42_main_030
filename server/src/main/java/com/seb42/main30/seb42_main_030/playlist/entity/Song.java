@@ -15,10 +15,10 @@ public class Song extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long song_id;
+    private long songId;
 
     @Column(nullable = false)
-    private String url;
+    private String uri;
 
     private String songTitle;
 
@@ -28,10 +28,12 @@ public class Song extends Auditable {
 
     private String artist;
 
-    private String album_art;
+    private String images;
 
 
     @ManyToOne
-    @JoinColumn(name = "Playlist_id")
+    @JoinColumn(name = "PlaylistId")
     private Playlist playlist;
+
+
 }

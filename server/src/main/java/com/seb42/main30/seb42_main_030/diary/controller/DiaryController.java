@@ -6,6 +6,7 @@ import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import com.seb42.main30.seb42_main_030.diary.mapper.DiaryMapper;
 import com.seb42.main30.seb42_main_030.diary.service.DiaryService;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
+import com.seb42.main30.seb42_main_030.response.SingleResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -103,6 +104,30 @@ public class DiaryController {
         } catch (BusinessException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    /** Like 구현 **/
+    @PostMapping("/{diary-id}/likes") // playlist-id = like 대상
+    public ResponseEntity postLike(@PathVariable("diary-id") Long diaryId, Long authUserId) {
+        diaryService.likeDiarylist(diaryId, authUserId);
+
+        Playlist playlist = playlistService.findPlaylist(playlistId);
+
+        followService.getGrade(playlist.getMember());
+
+        Boolean likeState = playlistService.likeState(playlistId, authMemberId);
+        if (likeState == true) {
+            playlist.setLikePlus(playlist.getLikePlus() + 1);
+        }
+        else if (likeState == false) {
+            playlist.setLikePlus(playlist.getLikePlus() - 1);
+        }
+        Boolean bookmarkState = playlistService.BookmarkState(playlistId, authMemberId);
+
+        // Like했을 때, likecount가 반대로 되는 현상이 있어서 memberToFollowMemberResponseDto 추가로 만듦
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.playlistToLikePlaylistResponseDto(playlist, likeState, bookmarkState)),HttpStatus.OK);
+
     }
 
 }

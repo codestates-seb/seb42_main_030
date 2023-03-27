@@ -1,7 +1,9 @@
 package com.seb42.main30.seb42_main_030.diary.service;
 
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
+import com.seb42.main30.seb42_main_030.diary.entity.Likes;
 import com.seb42.main30.seb42_main_030.diary.repository.DiaryRepository;
+import com.seb42.main30.seb42_main_030.diary.repository.LikesRepository;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
 import com.seb42.main30.seb42_main_030.user.entity.User;
@@ -26,6 +28,7 @@ public class DiaryService {
     private DiaryRepository diaryRepository;
     private UserRepository  userRepository;
     private UserService userService;
+    private LikesRepository likesRepository;
 
 
 //    create
@@ -89,4 +92,66 @@ public class DiaryService {
         return diary;
     }
 
+// Diary 검증
+    private Diary verifiedDiary(long diaryId) {
+        Diary findDiary = diaryRepository.findById(diaryId)
+                .orElseThrow(() -> new BusinessException(ExceptionCode.PLAYLIST_NOT_EXIST));
+
+        return findDiary;
+    }
+// Diary 없을때
+    private void verifiedNoDiary(Page<Diary> findAllDiary) {
+        if (findAllDiary.getTotalElements() == 0) {
+            throw new BusinessException(ExceptionCode.PLAYLIST_NOT_EXIST);
+        }
+    }
+
+//  Like
+    public void likeDiary(Long diaryId, Long authUserId) {
+
+        // Like 해줄 다이어리
+        Diary diary = verifiedDiary(diaryId);
+
+        // 다이어리의 주인인 회원
+        User user = diary.getUser();
+
+        // 본인 다이어리에 좋아요 누르는 경우
+        //if (user.getUserId() == authUserId){ throw new BusinessException(ExceptionCode.BAD_REQUEST);}
+
+        // 다이어리 like의 합
+        List<Diary> usersDiary = user.getDiaries();
+        int Score = 0;
+
+        for (Diary diary1 : usersDiary) {
+            int like = diary1.getLikes().size();
+            Score += like;
+        }
+
+        Long LikeCount = likesRepository.findByDiary(diary)// 해당 Diary를 Like한 entity
+                .stream()
+                .filter(f -> f.getLikeuserId().equals(authUserId)) // 그안에 내가 있는 경우
+                .count(); // 0, 1
+
+        // Unlike 처리
+        if (LikeCount == 1) {
+            // 내가 Like한 경우를 찾기
+            Likes LikeDiary = likesRepository.findByDiary(diary)
+                    .stream()
+                    .filter(f -> f.getLikeuserId().equals(authUserId))
+                    .findAny().get();
+
+            // Repository에서 삭제
+            likesRepository.delete(LikeDiary);
+        }
+        // Like 처리 LikeCount != 1
+        else {
+            // Like
+            Likes LikeDiary = new Likes();
+            LikeDiary.setLikeuserId(authUserId);
+            LikeDiary.setDiary(diary);
+
+            // Repository에 저장
+            likesRepository.save(LikeDiary);
+        }
+    }
 }

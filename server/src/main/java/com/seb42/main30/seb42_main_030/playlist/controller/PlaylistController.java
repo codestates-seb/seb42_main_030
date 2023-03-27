@@ -32,13 +32,40 @@ public class PlaylistController {
     @PostMapping
     public ResponseEntity postPlaylist(@Valid @RequestBody PlaylistPostDto playlistPostDto, Long authUserId) throws Exception {
         User user = userService.findUser(authUserId);
-        /* 인증된 유저 호출 필요*/
+                                    /* 인증된 유저 호출 필요*/
         Playlist playlist = playlistmapper.playlistPostDtoToPlaylist(playlistPostDto, user);
 
         Playlist savedPlaylist = playlistService.createPlaylist(playlist, playlistPostDto);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(playlistmapper.playlistToPlaylistResponseDto(savedPlaylist)), HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{playlist-id}")
+    public ResponseEntity patchPlaylist(@PathVariable("playlist-id") @Positive long playlistId,
+                                        @Valid @RequestBody PlaylistPatchDto playlistPatchDto, Long authUserId) {
+        playlistPatchDto.setPlaylistId((playlistId));
+
+        User user = userService.findUser(authUserId);
+
+        Playlist playlist = playlistmapper.playlistPatchDtoToPlaylist(playlistPatchDto);
+        Playlist savedPlaylist = playlistService.updatePlaylist(playlist, playlistPatchDto, authUserId);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(playlistmapper.playlistToPlaylistResponseDto(savedPlaylist)), HttpStatus.OK);
+    }
+    // 플레이리스트 검색
+    @GetMapping("/search")
+    public ResponseEntity searchMembers(@RequestParam(defaultValue = "1") int page,
+                                        @RequestParam(defaultValue = "6") int size,
+                                        @RequestParam String type, @RequestParam String name) {
+
+        Page<Playlist> pagePlaylists = playlistService.searchPlaylists(type, name, page-1, size);
+        List<Playlist> playlists = pagePlaylists.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(playlistmapper.playlistToPlaylistResponseDtoList(playlists), pagePlaylists), HttpStatus.OK);
+
     }
 
     // 플레이리스 조회
@@ -55,12 +82,11 @@ public class PlaylistController {
 
     // 플레이리스트 삭제
     @DeleteMapping("/{playlist-id}")
-    public String deletePlaylist(@PathVariable("playlist-id") @Positive long playlist_id) {
+    public String deletePlaylist(@PathVariable("playlist-id") @Positive long playlistId) {
 
-        playlistService.deletePlaylist(playlist_id);
+        playlistService.deletePlaylist(playlistId);
 
         return "success playlist deleted";
     }
 
-    // 곡 등록
 }

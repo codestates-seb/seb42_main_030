@@ -8,13 +8,12 @@ import java.util.List;
 @Getter
 @Setter
 public class PlaylistPatchDto {
-    private long playlist_id;
+    private long playlistId;
 
     private String title;
 
     private List<SongDto> songs;
 
     private List<String> tagList;
-
 
 }

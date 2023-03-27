@@ -1,5 +1,6 @@
 package com.seb42.main30.seb42_main_030.playlist.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,10 +8,10 @@ import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
-
+@AllArgsConstructor
 public class SongDto {
     @NotNull(message = "음악을 추가하세요.")
-    private String url;
+    private String uri;
     private String songTitle;
 
     private String album;
@@ -19,6 +20,8 @@ public class SongDto {
 
     private String artist;
 
-    private String album_art;
+    private String images;
 
+    private String duration_ms;
 }
+

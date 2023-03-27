@@ -18,7 +18,7 @@ import java.util.List;
 public class Playlist extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long playlist_id;
+    private Long playlistId;
 
     @Column
     private String title;
@@ -26,25 +26,20 @@ public class Playlist extends Auditable {
     private String album;
     @Column
     private String track;
-    @Column
-    private String artist;
-    @Column
-    private String album_art;
-
-    @Column
-    @ElementCollection(fetch = FetchType.LAZY)
-    private List<String> TagList;
 
     // 연관관계 매핑
     @ManyToOne
-    @JoinColumn(name = "diary_id")
+    @JoinColumn(name = "diaryId")
     private Diary diary;
+
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
+
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.REMOVE)
     private List<Song> songs = new ArrayList<>();
     @Column
+
     private int likePlus = 0;
 
 }
