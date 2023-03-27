@@ -36,7 +36,7 @@ const BorderLine = styled.hr`
   width: 450px;
   margin: 30px;
   border: 1px solid gray;
-`
+`;
 
 const Form = styled.form`
   width: 450px;
@@ -124,7 +124,7 @@ const LoginWrapper = styled.div`
   align-items: center;
   position: absolute;
   top: 25%;
-`
+`;
 
 const LoginContainer = styled.div`
   width: 100%;
@@ -135,8 +135,7 @@ const LoginContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   box-sizing: border-box;
-`
-
+`;
 
 const Login = () => {
   return (
@@ -148,27 +147,18 @@ const Login = () => {
             Spotify로 계속하기
           </SpotifyButton>
         </Buttons>
-
-        <BorderLine/>
-
+        <BorderLine />
         <Form>
           <EmailText>이메일 주소</EmailText>
-          <EmailInput/>
+          <EmailInput />
           <PassText>비밀번호</PassText>
-          <UnderText>
-            비밀번호 찾기
-          </UnderText>
-          <PassInput/>
-          <LoginButton type="button">
-            로그인
-          </LoginButton>
+          <UnderText>비밀번호 찾기</UnderText>
+          <PassInput />
+          <LoginButton type='button'>로그인</LoginButton>
         </Form>
-
-        <BorderLine/>
+        <BorderLine />
         <div>아직 계정이 없으신가요?</div>
-        <SignupButton>
-            나만의 작은 음악 다이어리 가입하기
-        </SignupButton>
+        <SignupButton>나만의 작은 음악 다이어리 가입하기</SignupButton>
       </LoginWrapper>
     </LoginContainer>
   );

@@ -154,7 +154,7 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
   const [click, setClick] = useState<boolean>(false);
   const [deleteCommentModal, setDeleteCommentModal] = useState<boolean>(false);
 
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5NzI2NTU2LCJleHAiOjE2ODAzMjY1NTZ9.y2-PjQUPjcGsD5YQtU8ezxrh_bPEPGXe3YzJiXo-P_sNzDsS6w5IfVLaVjWyWw7ekubLVLchJIv6623bheoybQ`;
+  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5ODg1MDA4LCJleHAiOjE2ODA0ODUwMDh9.1-OOV2q8MfsbzCN5muUuqH3I7n3p9AmvwVOAOYB8KVPtTZ9izxK2xfOwHgmdz0kAkQQ3zA0QzsyJJxTEdw3t0g`;
 
   // 댓글 patch 요청
   const changeComment = async () => {
@@ -170,13 +170,12 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
     setClick(false);
   };
 
-  // 댓글  delete 요청
+  // 댓글 delete 요청
   const commentDelete = async () => {
-    const res = await BASE_API.delete(`/diary/${list.commentId}`, {
+    const res = await BASE_API.delete(`/comment/${list.commentId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     getDetailData(res.data);
-    console.log(list.commentId);
   };
 
   // 댓글 변경 클릭 이벤트

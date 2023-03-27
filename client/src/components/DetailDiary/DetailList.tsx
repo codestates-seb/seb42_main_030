@@ -326,7 +326,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
   const { diaryId } = useParams();
   const navigate = useNavigate();
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5NzI2NTU2LCJleHAiOjE2ODAzMjY1NTZ9.y2-PjQUPjcGsD5YQtU8ezxrh_bPEPGXe3YzJiXo-P_sNzDsS6w5IfVLaVjWyWw7ekubLVLchJIv6623bheoybQ`;
+  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5ODg1MDA4LCJleHAiOjE2ODA0ODUwMDh9.1-OOV2q8MfsbzCN5muUuqH3I7n3p9AmvwVOAOYB8KVPtTZ9izxK2xfOwHgmdz0kAkQQ3zA0QzsyJJxTEdw3t0g`;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -334,14 +334,18 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
       const like = {
         likeCount: list.likeCount + 1,
       };
-      const res = await BASE_API.patch(`/diary/${diaryId}`, like);
+      const res = await BASE_API.patch(`/diary/${diaryId}`, like, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       getDetailData(res.data);
       setCheckLike(true);
     } else {
       const like = {
         likeCount: list.likeCount - 1,
       };
-      const res = await BASE_API.patch(`/diary/${diaryId}`, like);
+      const res = await BASE_API.patch(`/diary/${diaryId}`, like, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       getDetailData(res.data);
       setCheckLike(false);
     }
@@ -507,7 +511,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
               placeholder='댓글을 작성하세요'
               onChange={changeHandler}
             />
-            <button className='sumbit' onClick={submitHandler}>
+            <button className='sumbit' onClick={submitHandler} disabled={text.length === 0}>
               등록
             </button>
           </TextArea>
