@@ -1,5 +1,9 @@
 import SpotifyLogo from "../../img/spotifylogo.png";
 import styled from "styled-components";
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import {SubmitHandler, useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 
 const Buttons = styled.div`
   display: flex;
@@ -136,11 +140,55 @@ const LoginContainer = styled.div`
   justify-content: center;
   box-sizing: border-box;
 `
-
+interface setLogintype {
+  setLogin: boolean;
+}
 
 const Login = () => {
+
+   interface FormValue {
+     email: string; 
+     password: any;
+   }
+
+    
+    const navigate = useNavigate();
+    const [loginError, setLoginError] = useState(false);
+
+    const {
+      register,
+      handleSubmit,
+      watch,
+      formState:{errors}
+    } = useForm<FormValue>();
+
+  const  onSubmit: SubmitHandler<FormValue> = data => {
+    console.log(data.email);
+    console.log(data.password);
+    axios
+      .post('http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/auth/login', {
+        email: data.email,
+        password: data.password
+      })
+      .then(res => {
+        console.log(res.headers.authorization);
+        if (res.headers.authorization) {
+          localStorage.setItem('login-token', res.headers.authorization);
+          localStorage.setItem('login-refresh', res.headers.refresh);
+        }
+        setLoginError(false);
+      })
+      .then(() => {
+        console.log("로긴넘어옴")
+        navigate('/');
+      })
+      .catch(() => {
+        setLoginError(true);
+      });
+  };
+
   return (
-    <LoginContainer>
+    <LoginContainer onSubmit={handleSubmit(onSubmit)}>
       <LoginWrapper>
         <Buttons>
           <SpotifyButton>
@@ -153,13 +201,27 @@ const Login = () => {
 
         <Form>
           <EmailText>이메일 주소</EmailText>
-          <EmailInput/>
+          <EmailInput 
+            type="email"
+            id="email"
+            {...register('email', {
+              required: true,
+            })}
+          />
           <PassText>비밀번호</PassText>
           <UnderText>
             비밀번호 찾기
           </UnderText>
-          <PassInput/>
-          <LoginButton type="button">
+          <PassInput
+            type="password"
+            id="password"
+            {...register('password', {
+              required: true,
+            })}
+          />
+          <LoginButton type="button" 
+            onClick={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit(onSubmit)}>
             로그인
           </LoginButton>
         </Form>
