@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DiaryDataProps } from "../../util/Type";
 import { TOKEN_API } from "../../util/API";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const EditMainContainer = styled.div`
   display: flex;
@@ -33,11 +35,10 @@ const TitleArea = styled.div`
     background-color: ${(props) => props.theme.background};
     font-weight: 600;
     padding: 10px 8px 10px 8px;
-    border: none;
+    border: 0.5px solid ${(props) => props.theme.editBorder};
     border-radius: 4px;
-    outline: 0.5px solid ${(props) => props.theme.editBorder};
     &:focus {
-      outline: 1px solid ${(props) => props.theme.editBorder};
+      outline: none;
     }
   }
 `;
@@ -88,7 +89,7 @@ const UserInfo = styled.div`
 `;
 
 const AlbumInfoArea = styled.div`
-  padding: 30px 10px 30px 10px;
+  padding: 30px 10px 80px 10px;
   border-top: 1px solid #d9d9d9;
   border-bottom: 1px solid #d9d9d9;
 
@@ -104,15 +105,28 @@ const AlbumInfoArea = styled.div`
     background-color: ${(props) => props.theme.background};
     width: 100%;
     height: 200px;
-    font-size: 14px;
-    resize: none;
-    padding: 10px 8px 10px 8px;
-    border-radius: 4px;
-    border: none;
-    outline: 0.5px solid ${(props) => props.theme.editBorder};
-    &:focus {
-      outline: 1px solid ${(props) => props.theme.editBorder};
+    /* font-size: 14px; */
+    /* resize: none; */
+    /* padding: 10px 8px 10px 8px; */
+    /* border-radius: 4px; */
+    /* border: none; */
+    /* outline: 0.5px solid ${(props) => props.theme.editBorder}; */
+
+    > .ql-toolbar {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border: 0.5px solid ${(props) => props.theme.editBorder};
     }
+
+    > .ql-container {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border: 0.5px solid ${(props) => props.theme.editBorder};
+    }
+
+    /* &:focus {
+      outline: 1px solid ${(props) => props.theme.editBorder};
+    } */
   }
 `;
 
@@ -139,8 +153,8 @@ function EditList({ list }: DiaryDataProps) {
   };
 
   // 본문 수정 체인지 이벤트
-  const changeEditBody = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setEditBody(e.target.value);
+  const changeEditBody = (e: any) => {
+    setEditBody(e);
   };
 
   return (
@@ -177,7 +191,13 @@ function EditList({ list }: DiaryDataProps) {
         </AlbumCoverArea>
         <AlbumInfoArea>
           <div className='playTitle'>다이어리 소개</div>
-          <textarea
+          {/* <textarea
+            className='playContent'
+            value={editBody}
+            placeholder='나만의 다이어리를 작성해 보세요'
+            onChange={changeEditBody}
+          /> */}
+          <ReactQuill
             className='playContent'
             value={editBody}
             placeholder='나만의 다이어리를 작성해 보세요'

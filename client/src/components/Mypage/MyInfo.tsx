@@ -60,12 +60,11 @@ const NickNameWrapper = styled.div`
     color: ${(props) => props.theme.mainText};
     background-color: ${(props) => props.theme.background};
     font-weight: 600;
-    border: none;
+    border: 0.5px solid ${(props) => props.theme.editBorder};
     border-radius: 4px;
     padding: 10px 8px 10px 8px;
-    outline: 0.5px solid ${(props) => props.theme.editBorder};
     &:focus {
-      outline: 1px solid ${(props) => props.theme.editBorder};
+      outline: none;
     }
   }
 
@@ -113,12 +112,11 @@ const PasswordWrapper = styled.div`
     width: 560px;
     color: ${(props) => props.theme.mainText};
     background-color: ${(props) => props.theme.background};
-    border: none;
     border-radius: 4px;
     padding: 10px 8px 10px 8px;
-    outline: 0.5px solid ${(props) => props.theme.editBorder};
+    border: 0.5px solid ${(props) => props.theme.editBorder};
     &:focus {
-      outline: 1px solid ${(props) => props.theme.editBorder};
+      outline: none;
     }
   }
 
