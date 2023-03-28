@@ -1,10 +1,10 @@
-import EditMain from "../components/NewDiary/EditMain";
+import EditMain from "../components/EditDiary/EditMain";
 
 function EditDiary() {
   return (
-    <div>
+    <>
       <EditMain />
-    </div>
+    </>
   );
 }
 

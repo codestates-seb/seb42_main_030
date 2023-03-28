@@ -3,10 +3,10 @@ import DiaryMain from "../components/Main/DiaryMain";
 
 function Main() {
   return (
-    <div>
+    <>
       <Carousel />
       <DiaryMain />
-    </div>
+    </>
   );
 }
 

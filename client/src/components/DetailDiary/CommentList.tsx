@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { CommentData } from "../../util/Type";
-import { BASE_API } from "../../util/API";
+import { TOKEN_API } from "../../util/API";
 
 const CommentListContainer = styled.li`
   display: flex;
@@ -154,8 +154,6 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
   const [click, setClick] = useState<boolean>(false);
   const [deleteCommentModal, setDeleteCommentModal] = useState<boolean>(false);
 
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZGRhZHpAbmF2ZXIuY29tIiwic3ViIjoiZGRhZHpAbmF2ZXIuY29tIiwiaWF0IjoxNjc5OTE3ODI3LCJleHAiOjE2ODA1MTc4Mjd9.InKMqa_ozFhKP-TNbUceA2nk3f9uPY5umYFxadKn-4uGgf4tW3nfbBDrK3nVXYLhu00ie1BExiJpeDCrFgX2RQ`;
-
   // 댓글 patch 요청
   const changeComment = async () => {
     const newComment = {
@@ -163,20 +161,14 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
       commentId: list.commentId,
       body: commentContent,
     };
-    const res = await BASE_API.patch(`/comment/${list.commentId}`, newComment, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await TOKEN_API.patch(`/comment/${list.commentId}`, newComment);
     getDetailData(res.data);
     setClick(false);
   };
 
   // 댓글 delete 요청
   const commentDelete = async () => {
-    const res = await BASE_API.delete(`/comment/${list.commentId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.delete(`/comment/${list.commentId}`);
     getDetailData(res.data);
   };
 

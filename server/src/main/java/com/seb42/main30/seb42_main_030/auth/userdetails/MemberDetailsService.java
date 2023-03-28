@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Optional;
 
+//User Role을 DB에서 조회하고 HelloAuthorityUtils로 Spring Security에게 Role 정보 제공
 @Component
-@AllArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final CustomAuthorityUtils authorityUtils;
@@ -32,12 +32,12 @@ public class MemberDetailsService implements UserDetailsService {
         User findUser = optionalUser.orElseThrow(() ->
                 new BusinessException(ExceptionCode.USER_NOT_FOUND));
 
-        return new UserDetails(findUser);
+        return new MemberDetails(findUser);
     }
 
-    private final class UserDetails extends User implements UserDetails {
+    private final class MemberDetails extends User implements UserDetails {
 
-        UserDetails(User user) {
+        MemberDetails(User user) {
             setUserId(user.getUserId());
             setNickname(user.getNickname());
             setEmail(user.getEmail());
@@ -51,12 +51,17 @@ public class MemberDetailsService implements UserDetailsService {
         }
 
         @Override
-        public String getNickname() {
+        public String getUsername() {
             return getEmail();
         }
 
         @Override
         public boolean isAccountNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
             return true;
         }
 

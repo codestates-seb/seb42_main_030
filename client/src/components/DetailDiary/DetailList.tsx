@@ -4,7 +4,7 @@ import PlayList from "./PlayList";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
-import { BASE_API } from "../../util/API";
+import { TOKEN_API } from "../../util/API";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { RiErrorWarningLine } from "react-icons/ri";
 
@@ -29,6 +29,7 @@ const TitleArea = styled.div`
   padding: 0 10px 0 10px;
 
   > .DetailTitle {
+    width: 580px;
     font-size: 24px;
     color: #21252b;
     font-weight: 600;
@@ -326,7 +327,6 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
   const { diaryId } = useParams();
   const navigate = useNavigate();
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZGRhZHpAbmF2ZXIuY29tIiwic3ViIjoiZGRhZHpAbmF2ZXIuY29tIiwiaWF0IjoxNjc5OTE3ODI3LCJleHAiOjE2ODA1MTc4Mjd9.InKMqa_ozFhKP-TNbUceA2nk3f9uPY5umYFxadKn-4uGgf4tW3nfbBDrK3nVXYLhu00ie1BExiJpeDCrFgX2RQ`;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -334,18 +334,14 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
       const like = {
         likeCount: list.likeCount + 1,
       };
-      const res = await BASE_API.patch(`/diary/${diaryId}`, like, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await TOKEN_API.patch(`/diary/${diaryId}`, like);
       getDetailData(res.data);
       setCheckLike(true);
     } else {
       const like = {
         likeCount: list.likeCount - 1,
       };
-      const res = await BASE_API.patch(`/diary/${diaryId}`, like, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await TOKEN_API.patch(`/diary/${diaryId}`, like);
       getDetailData(res.data);
       setCheckLike(false);
     }
@@ -371,9 +367,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
 
   // 선택한 다이어리 delete 요청
   const postDelete = async () => {
-    const res = await BASE_API.delete(`/diary/${diaryId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.delete(`/diary/${diaryId}`);
     getDetailData(res.data);
     const scrollY = document.body.style.top;
     document.body.style.cssText = "";
@@ -387,9 +381,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
       diaryId: diaryId,
       body: text,
     };
-    const res = await BASE_API.post(`/comment`, newComment, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.post(`/comment`, newComment);
     getDetailData(res.data);
   };
 
@@ -416,7 +408,8 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
   };
 
-  const clickHandler = () => {
+  // 수정 페이지로 이동
+  const moveEditDiary = () => {
     navigate(`/EditDiary/${list.diaryId}`);
   };
 
@@ -426,7 +419,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         <TitleArea>
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
-            <button className='edit' onClick={clickHandler}>
+            <button className='edit' onClick={moveEditDiary}>
               수정
             </button>
             <button className='delete' onClick={openModalHandler}>

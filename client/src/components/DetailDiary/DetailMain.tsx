@@ -1,9 +1,8 @@
-// import styled from "styled-components";
+import DetailList from "./DetailList";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
-import DetailList from "./DetailList";
 
 function DetailMain() {
   const [detailData, setDetailData] = useState<DiaryData>();

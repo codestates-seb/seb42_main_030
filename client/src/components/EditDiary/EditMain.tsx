@@ -1,9 +1,8 @@
-// import styled from "styled-components";
+import EditList from "./EditList";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
-import EditList from "./EditList";
 
 function EditMain() {
   const [detailData, setDetailData] = useState<DiaryData>();

@@ -107,12 +107,13 @@ const LikeAndComment = styled.div`
 function DiaryList({ list }: DiaryDataProps) {
   const navigate = useNavigate();
 
-  const clickHandler = () => {
+  // 디테일 페이지로 이동
+  const moveDetailDiary = () => {
     navigate(`/DetailDiary/${list.diaryId}`);
   };
 
   return (
-    <DiaryListContainer onClick={clickHandler}>
+    <DiaryListContainer onClick={moveDetailDiary}>
       <Thumbnail>썸네일 이미지</Thumbnail>
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>

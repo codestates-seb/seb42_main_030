@@ -112,6 +112,7 @@ function MyDiary({ list }: DiaryDataProps) {
   // list.nickname === isLogin
   const myDiary: boolean = list.userNickname === "kevin";
 
+  // 디테일 페이지로 이동
   const clickHandler = () => {
     navigate(`/DetailDiary/${list.diaryId}`);
   };
