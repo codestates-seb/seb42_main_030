@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState, useRef } from "react";
 import { UserData } from "../../util/Type";
-import { BASE_API } from "../../util/API";
+import { TOKEN_API } from "../../util/API";
 
 const MyInfoContainer = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const MyInfoContainer = styled.div`
 const ProfileImgWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #eeeeee;
+  border-right: 1px solid ${(props) => props.theme.diaryInfoLine};
 `;
 
 const ProfileImg = styled.img`
@@ -23,7 +23,7 @@ const ProfileImg = styled.img`
   margin: 0 20px 20px 20px;
 
   &:hover {
-    outline: 5px solid #ffefd5;
+    outline: 5px solid ${(props) => props.theme.mainColor};
   }
 `;
 
@@ -35,14 +35,14 @@ const ImgSubmitBtn = styled.button`
   width: 140px;
   height: 35px;
   border-radius: 5px;
-  background-color: #ffefd5;
-  color: #1c1a16;
+  background-color: ${(props) => props.theme.mainColor};
+  color: ${(props) => props.theme.TagColor};
   font-weight: 700;
   border: none;
   margin: 0 25px 0 25px;
 
   &:hover {
-    background-color: #ffdeb7;
+    background-color: ${(props) => props.theme.buttonHover};
   }
 `;
 
@@ -57,14 +57,20 @@ const NickNameWrapper = styled.div`
   > .editNicknameArea {
     width: 100%;
     font-size: 25px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
+    background-color: ${(props) => props.theme.background};
     font-weight: 600;
-    border: 1px solid gray;
+    border: none;
     border-radius: 4px;
-    padding: 5px;
+    padding: 10px 8px 10px 8px;
+    outline: 0.5px solid ${(props) => props.theme.editBorder};
+    &:focus {
+      outline: 1px solid ${(props) => props.theme.editBorder};
+    }
   }
 
   > .nicknameArea {
+    color: ${(props) => props.theme.mainText};
     width: 100%;
     font-size: 30px;
     font-weight: 700;
@@ -72,7 +78,7 @@ const NickNameWrapper = styled.div`
 `;
 
 const EditNicknameBtn = styled.button`
-  color: #21252b;
+  color: ${(props) => props.theme.mainText};
   width: 40px;
   margin-top: 10px;
   border: none;
@@ -96,6 +102,7 @@ const PasswordWrapper = styled.div`
   height: 50px;
 
   > .passwordTitle {
+    color: ${(props) => props.theme.mainText};
     width: 100px;
     margin: 0 75px 0 30px;
     font-weight: 700;
@@ -103,19 +110,25 @@ const PasswordWrapper = styled.div`
 
   > .editPasswordArea {
     width: 560px;
-    color: #21252b;
-    border: 1px solid gray;
+    color: ${(props) => props.theme.mainText};
+    background-color: ${(props) => props.theme.background};
+    border: none;
     border-radius: 4px;
-    padding: 5px;
+    padding: 10px 8px 10px 8px;
+    outline: 0.5px solid ${(props) => props.theme.editBorder};
+    &:focus {
+      outline: 1px solid ${(props) => props.theme.editBorder};
+    }
   }
 
   > .passwordArea {
+    color: ${(props) => props.theme.mainText};
     width: 560px;
   }
 `;
 
 const EditPasswordBtn = styled.button`
-  color: #21252b;
+  color: ${(props) => props.theme.mainText};
   width: 100px;
   border: none;
   background-color: transparent;
@@ -136,6 +149,7 @@ const MyWithdrawalWrapper = styled.div`
   height: 50px;
 
   > .withdrawalTitle {
+    color: ${(props) => props.theme.mainText};
     width: 100px;
     margin: 0 75px 0 30px;
     font-weight: 700;
@@ -158,12 +172,12 @@ const MyWithdrawalWrapper = styled.div`
 
 const WarningText = styled.div`
   font-size: 13px;
-  color: gray;
+  color: ${(props) => props.theme.diaryDate};
   padding-bottom: 10px;
   margin: 0 70px -5px 30px;
 
   > .pwWarningTexy {
-    border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid ${(props) => props.theme.diaryInfoLine};
     padding-bottom: 15px;
   }
 `;
@@ -252,7 +266,6 @@ function MyInfo({ list, getUserData }: UserDataProps) {
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
 
   const fileInput = useRef<HTMLInputElement>(null);
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5NzI2NTU2LCJleHAiOjE2ODAzMjY1NTZ9.y2-PjQUPjcGsD5YQtU8ezxrh_bPEPGXe3YzJiXo-P_sNzDsS6w5IfVLaVjWyWw7ekubLVLchJIv6623bheoybQ`;
 
   // 프로필 이미지 클릭 시 input으로 연결되는 이벤트
   const clickProfile = () => {
@@ -271,9 +284,7 @@ function MyInfo({ list, getUserData }: UserDataProps) {
       nickname: list.nickname,
       password: list.password,
     };
-    const res = await BASE_API.patch(`/users/${list.userId}`, newImg, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.patch(`/users/${list.userId}`, newImg);
     setImage(res.data);
     window.location.reload();
   };
@@ -285,9 +296,7 @@ function MyInfo({ list, getUserData }: UserDataProps) {
       nickname: nickname,
       password: list.password,
     };
-    const res = await BASE_API.patch(`/users/${list.userId}`, newNickname, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.patch(`/users/${list.userId}`, newNickname);
     getUserData(res.data);
     setEditNickname(false);
   };
@@ -299,9 +308,7 @@ function MyInfo({ list, getUserData }: UserDataProps) {
       nickname: list.nickname,
       password: password,
     };
-    const res = await BASE_API.patch(`/users/${list.userId}`, newPassword, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.patch(`/users/${list.userId}`, newPassword);
     getUserData(res.data);
     setEditPassword(false);
   };

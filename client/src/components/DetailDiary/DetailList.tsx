@@ -25,13 +25,13 @@ const TitleArea = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
   padding: 0 10px 0 10px;
 
   > .DetailTitle {
     width: 580px;
     font-size: 24px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     font-weight: 600;
   }
 `;
@@ -50,7 +50,7 @@ const ButtonArea = styled.div`
 
   > .edit {
     width: 40px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     border: none;
     text-decoration: underline;
     font-weight: 600;
@@ -58,22 +58,22 @@ const ButtonArea = styled.div`
 
   > .delete {
     width: 40px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     border: none;
     text-decoration: underline;
     font-weight: 600;
   }
 
   > .like {
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     margin-left: 25px;
     width: 140px;
     height: 35px;
-    border: 1px solid #d1d1d1;
+    border: 1px solid ${(props) => props.theme.detailLine};
     border-radius: 4px;
 
     > .likeIcon {
-      color: red;
+      color: #ec1d36;
       margin-right: 5px;
     }
 
@@ -82,7 +82,7 @@ const ButtonArea = styled.div`
     }
 
     &:hover {
-      background-color: #eeeeee;
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 `;
@@ -102,12 +102,13 @@ const DeleteModalBack = styled.div`
 const DeleteModalView = styled.div`
   text-align: center;
   border-radius: 5px;
-  background-color: white;
+  background-color: ${(props) => props.theme.background};
   width: 430px;
   height: 220px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
 
   > .deleteModalTitle {
+    color: ${(props) => props.theme.mainText};
     font-size: 20px;
     font-weight: 700;
     text-align: center;
@@ -115,6 +116,7 @@ const DeleteModalView = styled.div`
   }
 
   > .warningText {
+    color: ${(props) => props.theme.subText};
     font-size: 15px;
     font-weight: 500;
     margin-bottom: 50.5px;
@@ -124,7 +126,6 @@ const DeleteModalView = styled.div`
     font-weight: 500;
     width: 215px;
     height: 50px;
-    color: white;
     border: none;
     text-decoration: none;
     &:hover {
@@ -133,14 +134,14 @@ const DeleteModalView = styled.div`
   }
 
   > .deleteCancelButton {
-    color: #21252b;
+    color: ${(props) => props.theme.subText};
     font-weight: 600;
     background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    border-right: 0.5px solid #eeeeee;
+    border-top: 1px solid ${(props) => props.theme.detailLine};
+    border-right: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-left-radius: 5px;
     &:hover {
-      background-color: #eeeeee;
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 
@@ -148,60 +149,11 @@ const DeleteModalView = styled.div`
     color: #ec1d36;
     font-weight: 600;
     background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    border-left: 0.5px solid #eeeeee;
+    border-top: 1px solid ${(props) => props.theme.detailLine};
+    border-left: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-right-radius: 5px;
     &:hover {
-      background-color: #eeeeee;
-    }
-  }
-`;
-
-const RuleModalView = styled.div`
-  text-align: center;
-  border-radius: 5px;
-  background-color: white;
-  width: 550px;
-  height: 420px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
-
-  > .ruleModalTitle {
-    font-size: 20px;
-    font-weight: 700;
-    text-align: center;
-    margin: 30px 0 45px 0;
-  }
-
-  > .warningText {
-    line-height: 30px;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 0 25px 0 25px;
-    margin-bottom: 59px;
-  }
-
-  > button {
-    font-weight: 500;
-    width: 550px;
-    height: 50px;
-    color: white;
-    border: none;
-    text-decoration: none;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
-  > .confirmButton {
-    color: #21252b;
-    font-weight: 600;
-    background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    &:hover {
-      background-color: #eeeeee;
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 `;
@@ -227,8 +179,10 @@ const InfoArea = styled.div`
 const UserInfo = styled.div`
   margin-bottom: 15px;
   font-size: 14px;
+  color: ${(props) => props.theme.subText};
 
   > .text {
+    color: ${(props) => props.theme.mainText};
     font-size: 13px;
     margin-right: 50px;
   }
@@ -236,17 +190,19 @@ const UserInfo = styled.div`
 
 const AlbumInfoArea = styled.div`
   padding: 30px 10px 30px 10px;
-  border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
 
   > .playTitle {
     font-size: 19px;
     font-weight: 500;
     margin-bottom: 20px;
+    color: ${(props) => props.theme.mainText};
   }
 
   > .playContent {
     font-size: 14px;
+    color: ${(props) => props.theme.subText};
   }
 `;
 
@@ -259,6 +215,7 @@ const CommentInputArea = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: ${(props) => props.theme.mainText};
     margin-bottom: 20px;
 
     > .commentCount {
@@ -284,17 +241,18 @@ const TextArea = styled.div`
   display: flex;
 
   > .textArea {
+    color: ${(props) => props.theme.mainText};
     width: 1300px;
     height: 70px;
     resize: none;
     margin: 0 10px 30px 0;
-    border: 1px solid #d1d1d1;
+    border: 1px solid ${(props) => props.theme.detailLine};
     border-radius: 4px;
     padding: 10px 8px 10px 8px;
+    background-color: ${(props) => props.theme.commentInputBackground};
 
     &:focus {
       outline: 0.5px solid gray;
-      padding: 10px 8px 10px 8px;
     }
   }
 
@@ -305,10 +263,61 @@ const TextArea = styled.div`
     border: none;
     color: #21252b;
     border-radius: 4px;
-    background-color: #ffefd5;
+    background-color: ${(props) => props.theme.mainColor};
 
     &:hover {
-      background-color: #ffdeb7;
+      background-color: ${(props) => props.theme.buttonHover};
+    }
+  }
+`;
+
+const RuleModalView = styled.div`
+  text-align: center;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.background};
+  width: 550px;
+  height: 420px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
+
+  > .ruleModalTitle {
+    color: ${(props) => props.theme.mainText};
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin: 30px 0 45px 0;
+  }
+
+  > .warningText {
+    color: ${(props) => props.theme.subText};
+    line-height: 30px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 25px 0 25px;
+    margin-bottom: 59px;
+  }
+
+  > button {
+    font-weight: 500;
+    width: 550px;
+    height: 50px;
+    color: white;
+    border: none;
+    text-decoration: none;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  > .confirmButton {
+    color: ${(props) => props.theme.subText};
+    font-weight: 600;
+    background-color: transparent;
+    border-top: 1px solid ${(props) => props.theme.detailLine};
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    &:hover {
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 `;

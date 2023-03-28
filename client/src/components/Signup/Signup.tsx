@@ -1,4 +1,4 @@
-import SpotifyLogo from "../../img/spotifylogo.png";
+import spotifylogo from "../../util/img/spotifylogo.png";
 import styled from "styled-components";
 
 const Buttons = styled.div`
@@ -151,7 +151,7 @@ const Signup = () => {
       <LoginWrapper>
         <Buttons>
           <SpotifyButton>
-            <ImgSrc src={SpotifyLogo} />
+            <ImgSrc src={spotifylogo} />
             Spotify로 가입하기
           </SpotifyButton>
         </Buttons>

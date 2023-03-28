@@ -29,15 +29,15 @@ const TitleArea = styled.div`
   > .EditTitle {
     width: 580px;
     font-size: 24px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
+    background-color: ${(props) => props.theme.background};
     font-weight: 600;
     padding: 10px 8px 10px 8px;
     border: none;
     border-radius: 4px;
-    resize: none;
+    outline: 0.5px solid ${(props) => props.theme.editBorder};
     &:focus {
-      outline: 0.5px solid gray;
-      padding: 10px 8px 10px 8px;
+      outline: 1px solid ${(props) => props.theme.editBorder};
     }
   }
 `;
@@ -82,8 +82,10 @@ const InfoArea = styled.div`
 const UserInfo = styled.div`
   margin-bottom: 15px;
   font-size: 14px;
+  color: ${(props) => props.theme.subText};
 
   > .text {
+    color: ${(props) => props.theme.mainText};
     font-size: 13px;
     margin-right: 50px;
   }
@@ -98,9 +100,12 @@ const AlbumInfoArea = styled.div`
     font-size: 19px;
     font-weight: 500;
     margin-bottom: 20px;
+    color: ${(props) => props.theme.mainText};
   }
 
   > .playContent {
+    color: ${(props) => props.theme.mainText};
+    background-color: ${(props) => props.theme.background};
     width: 100%;
     height: 200px;
     font-size: 14px;
@@ -108,9 +113,9 @@ const AlbumInfoArea = styled.div`
     padding: 10px 8px 10px 8px;
     border-radius: 4px;
     border: none;
+    outline: 0.5px solid ${(props) => props.theme.editBorder};
     &:focus {
-      outline: 0.5px solid gray;
-      padding: 10px 8px 10px 8px;
+      outline: 1px solid ${(props) => props.theme.editBorder};
     }
   }
 `;
@@ -141,6 +146,7 @@ function EditList({ list }: DiaryDataProps) {
   const changeEditBody = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditBody(e.target.value);
   };
+
   return (
     <EditMainContainer>
       <EditMainWrapper>
@@ -180,7 +186,7 @@ function EditList({ list }: DiaryDataProps) {
           <textarea
             className='playContent'
             value={editBody}
-            placeholder='나만의 다이어리를 만들어 보세요'
+            placeholder='나만의 다이어리를 작성해 보세요'
             onChange={changeEditBody}
           />
         </AlbumInfoArea>

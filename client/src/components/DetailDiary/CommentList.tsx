@@ -14,14 +14,16 @@ const CommentListWrapper = styled.div`
   min-width: 300px;
   border: none;
   border-bottom: 1px solid lightgray;
+  color: ${(props) => props.theme.mainText};
 
   > .content {
     font-size: 13px;
-    color: #323232;
+    color: ${(props) => props.theme.mainText};
     font-weight: 500;
   }
 
   > .date {
+    color: ${(props) => props.theme.subText};
     font-size: 12px;
     color: #848180;
     margin: 10px 0 15px 0;

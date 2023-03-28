@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
+  background-color: ${(props) => props.theme.background}; ;
 `;
 
 const HeaderWrapper = styled.div`
@@ -15,11 +16,6 @@ const HeaderWrapper = styled.div`
   height: 80px;
   padding: 0 15px 0 15px;
   justify-content: space-between;
-
-  > a {
-    color: black;
-    text-decoration: none;
-  }
 `;
 
 const Logo = styled.div`
@@ -27,7 +23,7 @@ const Logo = styled.div`
   font-size: 20px;
 
   a {
-    color: black;
+    color: ${(props) => props.theme.logo};
     text-decoration: none;
   }
 `;
@@ -40,7 +36,7 @@ const SubmitButton = styled.button`
   font-size: 15px;
 
   a {
-    color: black;
+    color: ${(props) => props.theme.mainText};
     text-decoration: none;
   }
 `;
@@ -52,11 +48,11 @@ const LoginButton = styled.button`
   font-size: 15px;
   background-color: transparent;
   border-radius: 50px;
-  border: 2px solid black;
+  border: 2px solid ${(props) => props.theme.mainText};
   margin-left: 20px;
 
   a {
-    color: black;
+    color: ${(props) => props.theme.mainText};
     text-decoration: none;
   }
 `;

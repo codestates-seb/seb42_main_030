@@ -7,8 +7,10 @@ import Login from "./pages/Login";
 import DetailDiary from "./pages/DetailDiary";
 import Signup from "./pages/Signup";
 import EditDiary from "./pages/EditDiary";
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { lightMode, darkMode } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -19,24 +21,39 @@ const GlobalStyle = createGlobalStyle`
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   }
+
+  body {
+    background-color: ${(props) => props.theme.background};
+  }
 `;
 
 function App() {
+  const LocalTheme = window.localStorage.getItem("theme");
+  const [isChange, setIsChange] = useState(LocalTheme);
+
+  const changeMode = () => {
+    const changeTheme = isChange === "light" ? "dark" : "light";
+    setIsChange(changeTheme);
+    localStorage.setItem("theme", changeTheme);
+  };
+
   return (
-    <div className='App'>
-      <GlobalStyle />
-      {/* <LogoutHeader /> */}
-      <LoginHeader />
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/NewDiary' element={<NewDiary />} />
-        <Route path='/Mypage' element={<Mypage />} />
-        <Route path='/Login' element={<Login />} />
-        <Route path='/Signup' element={<Signup />} />
-        <Route path='/DetailDiary/:diaryId' element={<DetailDiary />} />
-        <Route path='/EditDiary/:diaryId' element={<EditDiary />} />
-      </Routes>
-    </div>
+    <ThemeProvider theme={isChange === "dark" ? darkMode : lightMode}>
+      <div className='App'>
+        <GlobalStyle />
+        {/* <LogoutHeader /> */}
+        <LoginHeader isChange={isChange} changeMode={changeMode} />
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='/NewDiary' element={<NewDiary />} />
+          <Route path='/Mypage' element={<Mypage />} />
+          <Route path='/Login' element={<Login />} />
+          <Route path='/Signup' element={<Signup />} />
+          <Route path='/DetailDiary/:diaryId' element={<DetailDiary />} />
+          <Route path='/EditDiary/:diaryId' element={<EditDiary />} />
+        </Routes>
+      </div>
+    </ThemeProvider>
   );
 }
 

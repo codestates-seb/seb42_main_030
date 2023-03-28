@@ -18,30 +18,31 @@ const ListTab = styled.ul`
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    font-weight: 500;
     width: 100px;
     height: 40px;
-    border: 1px solid #d1d1d1;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
     border-radius: 50px;
     text-align: center;
     padding: 7px 7px;
+    cursor: pointer;
+    background-color: ${(props) => props.theme.disabledTagBackground};
     &:hover {
       transform: scale(1.05);
       transition: 0.2s;
     }
 
     > .el {
-      color: gray;
+      color: ${(props) => props.theme.disabledTagColor};
     }
   }
 
   .focused {
-    border: 3px solid #ffefd5;
-    background-color: #ffefd5;
+    border: 1px solid ${(props) => props.theme.mainColor};
+    background-color: ${(props) => props.theme.mainColor};
 
     > .el {
-      color: #1c1a16;
-      font-weight: 700;
+      color: ${(props) => props.theme.TagColor};
+      font-weight: 600;
     }
   }
 `;
