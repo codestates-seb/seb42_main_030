@@ -70,7 +70,11 @@ const Lists = styled.li`
   font-size: 14px;
   color: #323232;
   padding: 10px 0 10px 0;
+  margin-bottom:1rem;
 
+  > .link {
+    color:black;
+  }
   > img {
     margin: 0 20px 0 15px;
     width: 45px;
@@ -130,21 +134,32 @@ function PlayList() {
     ],
   };
 
+  const arr2 = {
+    list: [
+      {
+        link:"https://www.youtube.com/watch?v=bkEpWA-4FfU"
+      },
+      {
+        link: "https://www.youtube.com/watch?v=Km71Rr9K-Bw"
+      }
+    ]
+  }
+
   return (
     <PlayListContainer>
       <PlayListWrapper>
         <TitleArea>
-          <div className='playListTitle'>다이어리 수록곡</div>
+          <div className='playListTitle'>다이어리 수록곡 링크</div>
           <ListContainer>
-            <ListHeader>
+            {/* <ListHeader>
               <div className='empty'></div>
               <div className='song'>노래</div>
               <div className='artist'>아티스트</div>
               <div className='album'>앨범</div>
               <div className='time'>시간</div>
               <div className='setting'></div>
-            </ListHeader>
-            {arr.list.map((list, idx) => (
+            </ListHeader> */}
+            {/* {arr.list.map((list, idx) => (
               <Lists key={idx}>
                 <img src={list.img} alt='앨범 이미지' />
                 <div className='listTitle'>{list.title}</div>
@@ -153,8 +168,17 @@ function PlayList() {
                 <div className='listTime'>3:42</div>
                 <BsThreeDotsVertical className='test' />
               </Lists>
-            ))}
+            ))} */}
+            {
+              arr2.list.map((val, idx) => {
+                return(
+                <Lists key={idx}>
+                  <a className='link' href='https://www.youtube.com/watch?v=bkEpWA-4FfU'>{val.link}</a>
+                </Lists>)
+              })
+            }
           </ListContainer>
+
         </TitleArea>
       </PlayListWrapper>
     </PlayListContainer>

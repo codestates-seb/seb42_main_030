@@ -9,6 +9,7 @@ export interface DiaryData {
   userNickname: string;
   comments: CommentData[];
   tag: string[];
+  
 }
 
 export interface DiaryDataProps {
@@ -33,5 +34,5 @@ export interface UserData {
   nickname: string;
   email: string;
   password: string;
-  imageUrl: string;
+  imageUrl?: string;
 }
