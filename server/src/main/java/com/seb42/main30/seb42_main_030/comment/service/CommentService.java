@@ -3,11 +3,11 @@ package com.seb42.main30.seb42_main_030.comment.service;
 
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.comment.repository.CommentRepository;
-import com.seb42.main30.seb42_main_030.domain.user.entity.User;
-import com.seb42.main30.seb42_main_030.domain.user.repository.UserRepository;
-import com.seb42.main30.seb42_main_030.domain.user.service.UserService;
+import com.seb42.main30.seb42_main_030.user.entity.User;
+import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
+import com.seb42.main30.seb42_main_030.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,7 +37,7 @@ public class CommentService {
         comment.setUser(user);
         return commentRepository.save(comment);
     }
-//    read
+    //    read
     private User getUserFromId(long userId) {return userRepository.findById(userId).get(); }
 
     @Transactional(readOnly = true)
@@ -45,16 +45,16 @@ public class CommentService {
 
     public List<Comment> readComments() { return commentRepository.findAll(); }
 
-//    update
+    //    update
     @Transactional(propagation = Propagation.REQUIRED)
     public Comment updateComment (long commentId, Comment comment) {
         Comment verifyComment = verifyWriter(commentId);
-        verifyComment.setDiary(comment.getDiary());
+        verifyComment.setBody(comment.getBody());
 
         return commentRepository.save(comment);
     }
 
-//    delete
+    //    delete
     public void deleteComment (long commentId) {
 
         Comment verifyComment = verifyWriter(commentId);
@@ -63,7 +63,7 @@ public class CommentService {
     }
 
 
-//    ID 값의 댓글이 없으면 오류
+    //    ID 값의 댓글이 없으면 오류
     @Transactional(readOnly = true)
     private Comment verifyComment (long commentId){
 
