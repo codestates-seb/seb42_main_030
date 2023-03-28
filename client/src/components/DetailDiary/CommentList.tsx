@@ -154,7 +154,7 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
   const [click, setClick] = useState<boolean>(false);
   const [deleteCommentModal, setDeleteCommentModal] = useState<boolean>(false);
 
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5ODg1MDA4LCJleHAiOjE2ODA0ODUwMDh9.1-OOV2q8MfsbzCN5muUuqH3I7n3p9AmvwVOAOYB8KVPtTZ9izxK2xfOwHgmdz0kAkQQ3zA0QzsyJJxTEdw3t0g`;
+  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZGRhZHpAbmF2ZXIuY29tIiwic3ViIjoiZGRhZHpAbmF2ZXIuY29tIiwiaWF0IjoxNjc5OTE3ODI3LCJleHAiOjE2ODA1MTc4Mjd9.InKMqa_ozFhKP-TNbUceA2nk3f9uPY5umYFxadKn-4uGgf4tW3nfbBDrK3nVXYLhu00ie1BExiJpeDCrFgX2RQ`;
 
   // 댓글 patch 요청
   const changeComment = async () => {
@@ -164,7 +164,9 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
       body: commentContent,
     };
     const res = await BASE_API.patch(`/comment/${list.commentId}`, newComment, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     getDetailData(res.data);
     setClick(false);

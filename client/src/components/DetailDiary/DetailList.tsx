@@ -326,7 +326,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
   const { diaryId } = useParams();
   const navigate = useNavigate();
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5ODg1MDA4LCJleHAiOjE2ODA0ODUwMDh9.1-OOV2q8MfsbzCN5muUuqH3I7n3p9AmvwVOAOYB8KVPtTZ9izxK2xfOwHgmdz0kAkQQ3zA0QzsyJJxTEdw3t0g`;
+  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZGRhZHpAbmF2ZXIuY29tIiwic3ViIjoiZGRhZHpAbmF2ZXIuY29tIiwiaWF0IjoxNjc5OTE3ODI3LCJleHAiOjE2ODA1MTc4Mjd9.InKMqa_ozFhKP-TNbUceA2nk3f9uPY5umYFxadKn-4uGgf4tW3nfbBDrK3nVXYLhu00ie1BExiJpeDCrFgX2RQ`;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -416,13 +416,19 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
   };
 
+  const clickHandler = () => {
+    navigate(`/EditDiary/${list.diaryId}`);
+  };
+
   return (
     <DetailMainContainer>
       <DetailMainWrapper>
         <TitleArea>
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
-            <button className='edit'>수정</button>
+            <button className='edit' onClick={clickHandler}>
+              수정
+            </button>
             <button className='delete' onClick={openModalHandler}>
               삭제
             </button>
