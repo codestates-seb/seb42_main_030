@@ -53,5 +53,3 @@ export const darkMode: DefaultTheme = {
   playListHover: `#3C4048`,
   editBorder: `gray`,
 };
-
-// ${(props) => props.theme.background};

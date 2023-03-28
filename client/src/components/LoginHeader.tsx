@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { BASE_API } from "../util/API";
@@ -113,7 +113,7 @@ const ProfileButton = styled.div`
 const Profile = styled.img`
   width: 40px;
   height: 40px;
-  margin: 0 10px 0 20px;
+  margin: 0 10px 0 10px;
   border-radius: 50%;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.086) 0px 0px 8px;
