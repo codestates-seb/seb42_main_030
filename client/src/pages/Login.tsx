@@ -5,7 +5,6 @@ import Login from "../components/Login/Login";
 function LoginPage() {
   return (
     <>
-    <LogoutHeader/>
     <Login/>
     </>
   );
