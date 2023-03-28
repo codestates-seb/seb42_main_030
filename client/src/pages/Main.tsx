@@ -1,5 +1,13 @@
+import Carousel from "../components/Main/Carousel";
+import DiaryMain from "../components/Main/DiaryMain";
+
 function Main() {
-  return <div>이곳은 메인 페이지입니다.</div>;
+  return (
+    <div>
+      <Carousel />
+      <DiaryMain />
+    </div>
+  );
 }
 
 export default Main;
