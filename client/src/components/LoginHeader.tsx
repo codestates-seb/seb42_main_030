@@ -78,6 +78,14 @@ const ModeButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+
+  > .lightIcon {
+    color: ${(props) => props.theme.mainText};
+  }
+
+  > .darkIcon {
+    color: ${(props) => props.theme.mainText};
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -146,7 +154,11 @@ function LoginHeader({ isChange, changeMode }: any) {
         </Logo>
         <div className='buttonArea'>
           <ModeButton onClick={changeMode}>
-            {isChange === "dark" ? <BsFillMoonStarsFill size={25} /> : <BsFillSunFill size={25} />}
+            {isChange === "dark" ? (
+              <BsFillMoonStarsFill className='darkIcon' size={20} />
+            ) : (
+              <BsFillSunFill className='lightIcon' size={25} />
+            )}
           </ModeButton>
           <SubmitButton onClick={closeDropdown}>
             <Link to='/NewDiary'>새 다이어리 등록</Link>

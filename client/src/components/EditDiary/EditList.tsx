@@ -42,22 +42,18 @@ const TitleArea = styled.div`
   }
 `;
 
-const ButtonArea = styled.div`
-  display: flex;
-
-  > .EditButton {
-    font-size: 13px;
-    color: #1c1a16;
-    font-weight: 700;
-    background-color: #ffefd5;
-    border: none;
-    width: 140px;
-    height: 35px;
-    border-radius: 4px;
-
-    &:hover {
-      background-color: #ffdeb7;
-    }
+const EditButton = styled.button`
+  font-size: 13px;
+  color: #1c1a16;
+  font-weight: 700;
+  background-color: #ffefd5;
+  border: none;
+  width: 140px;
+  height: 35px;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ffdeb7;
   }
 `;
 
@@ -158,15 +154,13 @@ function EditList({ list }: DiaryDataProps) {
             placeholder='제목을 입력하세요'
             onChange={changeEditTitle}
           />
-          <ButtonArea>
-            <button
-              className='EditButton'
-              onClick={submitHandler}
-              disabled={editTitle.length === 0}
-            >
-              수정하기
-            </button>
-          </ButtonArea>
+          <EditButton
+            className='EditButton'
+            onClick={submitHandler}
+            disabled={editTitle.length === 0}
+          >
+            수정하기
+          </EditButton>
         </TitleArea>
         <AlbumCoverArea>
           <div className='coverImg'></div>

@@ -46,6 +46,7 @@ const ButtonArea = styled.div`
     font-size: 13px;
     padding: 5px;
     background-color: transparent;
+    cursor: pointer;
   }
 
   > .edit {
@@ -128,6 +129,7 @@ const DeleteModalView = styled.div`
     height: 50px;
     border: none;
     text-decoration: none;
+    cursor: pointer;
     &:hover {
       text-decoration: none;
     }
@@ -229,6 +231,7 @@ const CommentInputArea = styled.div`
       align-items: center;
       font-size: 14px;
       margin-right: 5px;
+      cursor: pointer;
 
       > .ruleIcon {
         margin-right: 5px;
@@ -264,7 +267,7 @@ const TextArea = styled.div`
     color: #21252b;
     border-radius: 4px;
     background-color: ${(props) => props.theme.mainColor};
-
+    cursor: pointer;
     &:hover {
       background-color: ${(props) => props.theme.buttonHover};
     }
@@ -304,6 +307,7 @@ const RuleModalView = styled.div`
     color: white;
     border: none;
     text-decoration: none;
+    cursor: pointer;
     &:hover {
       text-decoration: none;
     }

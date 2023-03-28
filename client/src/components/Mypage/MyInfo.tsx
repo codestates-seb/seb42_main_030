@@ -21,7 +21,7 @@ const ProfileImg = styled.img`
   height: 150px;
   border-radius: 100%;
   margin: 0 20px 20px 20px;
-
+  cursor: pointer;
   &:hover {
     outline: 5px solid ${(props) => props.theme.mainColor};
   }
@@ -40,7 +40,7 @@ const ImgSubmitBtn = styled.button`
   font-weight: 700;
   border: none;
   margin: 0 25px 0 25px;
-
+  cursor: pointer;
   &:hover {
     background-color: ${(props) => props.theme.buttonHover};
   }
@@ -87,6 +87,7 @@ const EditNicknameBtn = styled.button`
   text-decoration: underline;
   font-size: 15px;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const MySettingContainer = styled.div`
@@ -135,6 +136,7 @@ const EditPasswordBtn = styled.button`
   text-decoration: underline;
   font-size: 15px;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const MyWithdrawalContainer = styled.div`
@@ -163,7 +165,7 @@ const MyWithdrawalWrapper = styled.div`
     background-color: #ff6b6c;
     font-weight: 700;
     color: white;
-
+    cursor: pointer;
     &:hover {
       background-color: #ec1d36;
     }
@@ -176,7 +178,7 @@ const WarningText = styled.div`
   padding-bottom: 10px;
   margin: 0 70px -5px 30px;
 
-  > .pwWarningTexy {
+  > .waringText {
     border-bottom: 1px solid ${(props) => props.theme.diaryInfoLine};
     padding-bottom: 15px;
   }
@@ -197,12 +199,13 @@ const WithdrawalModalBack = styled.div`
 const WithdrawalModalView = styled.div`
   text-align: center;
   border-radius: 5px;
-  background-color: white;
+  background-color: ${(props) => props.theme.background};
   width: 430px;
   height: 220px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
 
   > .deleteModalTitle {
+    color: ${(props) => props.theme.mainText};
     font-size: 20px;
     font-weight: 700;
     text-align: center;
@@ -210,6 +213,7 @@ const WithdrawalModalView = styled.div`
   }
 
   > .warningText {
+    color: ${(props) => props.theme.subText};
     font-size: 15px;
     font-weight: 500;
     margin-bottom: 41.5px;
@@ -222,20 +226,21 @@ const WithdrawalModalView = styled.div`
     color: white;
     border: none;
     text-decoration: none;
+    cursor: pointer;
     &:hover {
       text-decoration: none;
     }
   }
 
   > .deleteCancelButton {
-    color: #21252b;
+    color: ${(props) => props.theme.subText};
     font-weight: 600;
     background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    border-right: 0.5px solid #eeeeee;
+    border-top: 1px solid ${(props) => props.theme.detailLine};
+    border-right: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-left-radius: 5px;
     &:hover {
-      background-color: #eeeeee;
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 
@@ -243,11 +248,11 @@ const WithdrawalModalView = styled.div`
     color: #ec1d36;
     font-weight: 600;
     background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    border-left: 0.5px solid #eeeeee;
+    border-top: 1px solid ${(props) => props.theme.detailLine};
+    border-left: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-right-radius: 5px;
     &:hover {
-      background-color: #eeeeee;
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 `;
@@ -384,7 +389,7 @@ function MyInfo({ list, getUserData }: UserDataProps) {
           )}
         </PasswordWrapper>
         <WarningText>
-          <div className='pwWarningTexy'>로그인 시 사용되는 비밀번호입니다.</div>
+          <div className='waringText'>로그인 시 사용되는 비밀번호입니다.</div>
         </WarningText>
       </MySettingContainer>
       <MyWithdrawalContainer>

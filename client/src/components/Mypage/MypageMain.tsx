@@ -17,6 +17,7 @@ const ListTab = styled.ul`
   position: relative;
   margin: 50px 0 50px 0;
   gap: 10px;
+  cursor: pointer;
 
   .tab {
     display: flex;
