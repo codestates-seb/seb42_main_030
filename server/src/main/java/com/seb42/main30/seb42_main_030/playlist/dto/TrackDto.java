@@ -1,7 +1,6 @@
 package com.seb42.main30.seb42_main_030.playlist.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +27,6 @@ public class TrackDto {
     }
     @Getter
     @AllArgsConstructor
-    @Builder
     public class Response{
         private String url;
         private String trackTitle;

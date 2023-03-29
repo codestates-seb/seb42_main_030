@@ -3,7 +3,6 @@ package com.seb42.main30.seb42_main_030.playlist.dto;
 
 import com.seb42.main30.seb42_main_030.playlist.entity.Track;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,7 +30,6 @@ public class PlaylistDto {
     }
     @Getter
     @AllArgsConstructor
-    @Builder
     public class Response{
         private long playlistId;
         private long userId;
@@ -42,7 +40,7 @@ public class PlaylistDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-        private List<TrackDto.Response> tracks;
+        private List<TrackResponseDto> tracks;
 
     }
 }

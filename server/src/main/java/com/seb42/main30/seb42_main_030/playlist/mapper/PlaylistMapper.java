@@ -1,14 +1,13 @@
 package com.seb42.main30.seb42_main_030.playlist.mapper;
 
-import com.seb42.main30.seb42_main_030.comment.dto.CommentDto;
-import com.seb42.main30.seb42_main_030.comment.entity.Comment;
+
 import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistDto;
-import com.seb42.main30.seb42_main_030.playlist.dto.TrackDto;
+import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistResponseDto;
+import com.seb42.main30.seb42_main_030.playlist.dto.TrackResponseDto;
 import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
 import com.seb42.main30.seb42_main_030.playlist.entity.Track;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,11 +42,11 @@ public interface PlaylistMapper {
     }
 
     /** Response **/
-    default PlaylistDto.Response playlistToPlaylistResponseDto(Playlist playlist) {
+    default PlaylistResponseDto playlistToPlaylistResponseDto(Playlist playlist) {
         if (playlist == null) {
             return null;
         } else {
-            PlaylistDto.Response.ResponseBuilder playlistResponseDto = PlaylistDto.Response.builder();
+            PlaylistResponseDto.PlaylistResponseDtoBuilder playlistResponseDto = PlaylistResponseDto.builder();
             List<Track> tracks = playlist.getTracks();
             playlistResponseDto.playlistId(playlist.getPlaylistId());
             playlistResponseDto.playlistTitle(playlist.getPlaylistTitle());
@@ -62,10 +61,10 @@ public interface PlaylistMapper {
     }
 
     /** Track > TrackResponse **/
-    default List<TrackDto.Response> playlistItemsToPlaylistItemResponseDto(List<Track> tracks) {
+    default List<TrackResponseDto> playlistItemsToPlaylistItemResponseDto(List<Track> tracks) {
         return  tracks
                 .stream()
-                .map(track -> TrackDto.Response
+                .map(track -> TrackResponseDto
                         .builder()
                         .url(track.getUrl())
                         .channelTitle(track.getChannelTitle())
@@ -76,14 +75,14 @@ public interface PlaylistMapper {
                 .collect(Collectors.toList());
     }
 
-    Playlist playlistPatchToPaylist (PlaylistDto.Patch patch);
-
-    @Mapping(source = "diary.diaryId", target = "diaryId")
-    @Mapping(source = "user.nickname", target = "userNickname")
-
-    PlaylistDto playlistToPlaylistDto(Playlist playlist);
-
-    List<PlaylistDto> playlistsToResponses (List<Playlist> playlists);
+//    Playlist playlistPatchToPaylist (PlaylistDto.Patch patch);
+//
+//    @Mapping(source = "diary.diaryId", target = "diaryId")
+//    @Mapping(source = "user.nickname", target = "userNickname")
+//
+//    PlaylistDto playlistToPlaylistDto(Playlist playlist);
+//
+//    List<PlaylistDto> playlistsToResponses (List<Playlist> playlists);
 
 
 }

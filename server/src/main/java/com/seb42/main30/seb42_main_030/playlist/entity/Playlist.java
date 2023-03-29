@@ -1,5 +1,6 @@
 package com.seb42.main30.seb42_main_030.playlist.entity;
 
+
 import com.seb42.main30.seb42_main_030.audit.Auditable;
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import com.seb42.main30.seb42_main_030.user.entity.User;

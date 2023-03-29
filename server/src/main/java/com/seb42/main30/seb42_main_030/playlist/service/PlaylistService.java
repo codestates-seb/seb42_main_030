@@ -1,7 +1,7 @@
 package com.seb42.main30.seb42_main_030.playlist.service;
 
-import com.seb42.main30.seb42_main_030.diary.repository.DiaryRepository;
-import com.seb42.main30.seb42_main_030.diary.service.DiaryService;
+
+
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
 import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistDto;
@@ -9,11 +9,12 @@ import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
 import com.seb42.main30.seb42_main_030.playlist.entity.Track;
 import com.seb42.main30.seb42_main_030.playlist.repository.PlaylistRepository;
 import com.seb42.main30.seb42_main_030.playlist.repository.TrackRepository;
-import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
 import com.seb42.main30.seb42_main_030.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,8 +26,8 @@ import java.util.Optional;
 public class PlaylistService {
     private final PlaylistRepository playlistRepository;
     private final TrackRepository trackRepository;
-    private final DiaryRepository diaryRepository;
-    private final DiaryService diaryService;
+//    private final DiaryRepository diaryRepository;
+//    private final DiaryService diaryService;
     private final UserService userService;
     private final UserRepository userRepository;
 
@@ -104,6 +105,7 @@ public class PlaylistService {
 //
 //        playlistRepository.delete(findPlaylist);
 //    }
+    /**
     public void deletePlaylist (long playlistId) {
 
         Playlist verifyPlaylist = verifyWriter(playlistId);
@@ -123,7 +125,7 @@ public class PlaylistService {
         }
         return playlist;
     }
-
+*/
     // 플레이리스트 검증
     private Playlist verifiedPlaylist(long playlistId) {
         Playlist findPlaylist = playlistRepository.findById(playlistId)

@@ -1,5 +1,7 @@
 package com.seb42.main30.seb42_main_030.playlist.controller;
 
+
+
 import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistDto;
 import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
 import com.seb42.main30.seb42_main_030.playlist.mapper.PlaylistMapper;
@@ -67,6 +69,7 @@ public class PlaylistController{
     }
 
 // 플레이리스트 삭제
+    /**
     @DeleteMapping("/{playlist-id}")
     public String deletePlaylist(@PathVariable("playlist-id") @Positive long playlistId) {
 
@@ -74,5 +77,5 @@ public class PlaylistController{
 
         return "success playlist deleted";
     }
-
+*/
 }

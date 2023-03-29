@@ -15,8 +15,8 @@ public class Track {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long trackId;
 
-//    @Column(nullable = false)
-//    private String url;
+    @Column(nullable = false)
+    private String url;
     private String trackTitle;
     private String thumbnail;
     private String channelTitle;
