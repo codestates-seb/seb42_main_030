@@ -1,5 +1,4 @@
 import Carousel from "../components/Main/Carousel";
-// import DiaryList from '../components/Main/DiaryList';
 import DiaryMain from "../components/Main/DiaryMain";
 
 function Main() {
@@ -7,7 +6,6 @@ function Main() {
     <div>
       <Carousel />
       <DiaryMain />
-
     </div>
   );
 }

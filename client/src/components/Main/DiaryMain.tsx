@@ -2,12 +2,8 @@ import DiaryList from "./DiaryList";
 import Pagination from "./Pagination";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import axios from "axios";
-
-const DiaryMainContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
+import { DiaryData } from "../../util/Type";
+import { BASE_API } from "../../util/API";
 
 const ListTab = styled.ul`
   display: flex;
@@ -18,6 +14,9 @@ const ListTab = styled.ul`
   gap: 10px;
 
   .tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 14px;
     font-weight: 500;
     width: 100px;
@@ -32,21 +31,24 @@ const ListTab = styled.ul`
     }
 
     > .el {
-      margin-top: 3px;
       color: gray;
     }
   }
 
   .focused {
-    border: 3px solid #ffe575;
-    background-color: #ffe575;
+    border: 3px solid #ffefd5;
+    background-color: #ffefd5;
 
     > .el {
-      margin-top: 1px;
-      color: #21252b;
-      font-weight: 600;
+      color: #1c1a16;
+      font-weight: 700;
     }
   }
+`;
+
+const DiaryMainContainer = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const DiaryMainWrapper = styled.ul`
@@ -54,35 +56,23 @@ const DiaryMainWrapper = styled.ul`
   max-width: 1440px;
   min-width: 300px;
   display: flex;
-  /* justify-content: center; */
   flex-wrap: wrap;
   padding: 0 15px 0 15px;
   gap: 56.6px;
 `;
 
-export interface IDiaryData {
-  diary_id: number;
-  nickname: string;
-  title: string;
-  body: string;
-  like: number;
-  tag: string[];
-  createdAt: string;
-  modifiedAt: string;
-  viewcount: number;
-}
-
 function DiaryMain() {
-  const [diaryData, setDiaryData] = useState<IDiaryData[]>([]); // 전체 diary 데이터
+  const [diaryData, setDiaryData] = useState<DiaryData[]>([]); // 전체 diary 데이터
   const [currentTab, setCurrentTab] = useState<number>(0); // 탭 이동 상태
   const [page, setPage] = useState<number>(1); // 현재 페이지 번호 (기본값: 1페이지부터 노출)
-  const limit: number = 20;
-  const offset: number = (page - 1) * limit; // 각 페이지에서 첫 데이터의 위치(index) 계산
-  // "http://localhost:3001/diary"
+
+  const LIMIT_COUNT: number = 20;
+  const offset: number = (page - 1) * LIMIT_COUNT; // 각 페이지에서 첫 데이터의 위치(index) 계산
+
   // 전체 diary 데이터 get 요청
   const getDiaryData = async () => {
     try {
-      const res = await axios.get("http://localhost:3001/diary");
+      const res = await BASE_API.get(`/diary`);
       setDiaryData(res.data);
     } catch (err) {
       console.error(err);
@@ -104,6 +94,7 @@ function DiaryMain() {
     { feel: "#어쿠스틱한" },
     { feel: "#청량한" },
   ];
+
   // 태그 선택 이벤트 핸들러
   const selectTagHandler = (index: number) => {
     setCurrentTab(index);
@@ -125,9 +116,14 @@ function DiaryMain() {
         })}
       </ListTab>
       <DiaryMainContainer>
-        {currentTab === 0 ? (
+        <DiaryMainWrapper>
+          {diaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
+            return <DiaryList list={value} key={value.diaryId} />;
+          })}
+        </DiaryMainWrapper>
+        {/* {currentTab === 0 ? (
           <DiaryMainWrapper>
-            {diaryData.slice(offset, offset + limit).map((value) => {
+            {diaryData.slice(offset, offset + LIMIT_COUNT).map((value) => {
               return <DiaryList list={value} key={value.diary_id} />;
             })}
           </DiaryMainWrapper>
@@ -135,7 +131,7 @@ function DiaryMain() {
           <DiaryMainWrapper>
             {diaryData
               .filter((value) => value.tag.includes(tagArr[1].feel))
-              .slice(offset, offset + limit)
+              .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
                 return <DiaryList list={value} key={value.diary_id} />;
               })}
@@ -144,7 +140,7 @@ function DiaryMain() {
           <DiaryMainWrapper>
             {diaryData
               .filter((value) => value.tag.includes(tagArr[2].feel))
-              .slice(offset, offset + limit)
+              .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
                 return <DiaryList list={value} key={value.diary_id} />;
               })}
@@ -153,7 +149,7 @@ function DiaryMain() {
           <DiaryMainWrapper>
             {diaryData
               .filter((value) => value.tag.includes(tagArr[3].feel))
-              .slice(offset, offset + limit)
+              .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
                 return <DiaryList list={value} key={value.diary_id} />;
               })}
@@ -162,7 +158,7 @@ function DiaryMain() {
           <DiaryMainWrapper>
             {diaryData
               .filter((value) => value.tag.includes(tagArr[4].feel))
-              .slice(offset, offset + limit)
+              .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
                 return <DiaryList list={value} key={value.diary_id} />;
               })}
@@ -171,7 +167,7 @@ function DiaryMain() {
           <DiaryMainWrapper>
             {diaryData
               .filter((value) => value.tag.includes(tagArr[5].feel))
-              .slice(offset, offset + limit)
+              .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
                 return <DiaryList list={value} key={value.diary_id} />;
               })}
@@ -180,7 +176,7 @@ function DiaryMain() {
           <DiaryMainWrapper>
             {diaryData
               .filter((value) => value.tag.includes(tagArr[6].feel))
-              .slice(offset, offset + limit)
+              .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
                 return <DiaryList list={value} key={value.diary_id} />;
               })}
@@ -189,7 +185,7 @@ function DiaryMain() {
           <DiaryMainWrapper>
             {diaryData
               .filter((value) => value.tag.includes(tagArr[7].feel))
-              .slice(offset, offset + limit)
+              .slice(offset, offset + LIMIT_COUNT)
               .map((value) => {
                 return <DiaryList list={value} key={value.diary_id} />;
               })}
@@ -197,19 +193,44 @@ function DiaryMain() {
         ) : (
           <DiaryMainWrapper>
             {diaryData
-              .slice(offset, offset + limit)
+              .slice(offset, offset + LIMIT_COUNT)
               .filter((value) => value.tag.includes(tagArr[8].feel))
               .map((value) => {
                 return <DiaryList list={value} key={value.diary_id} />;
               })}
           </DiaryMainWrapper>
-        )}
+        )} */}
       </DiaryMainContainer>
       <Pagination
         allPageLength={diaryData.length}
-        limit={limit}
+        // tagOnePageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[1].feel)).length
+        // }
+        // tagTwoPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[2].feel)).length
+        // }
+        // tagThreePageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[3].feel)).length
+        // }
+        // tagFourPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[4].feel)).length
+        // }
+        // tagFivePageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[5].feel)).length
+        // }
+        // tagSixPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[6].feel)).length
+        // }
+        // tagSevenPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[7].feel)).length
+        // }
+        // tagEightPageLength={
+        //   diaryData.filter((value) => value.tag.includes(tagArr[8].feel)).length
+        // }
+        LIMIT_COUNT={LIMIT_COUNT}
         page={page}
         setPage={setPage}
+        currentTab={currentTab}
       />
     </main>
   );

@@ -1,0 +1,35 @@
+spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url:
+#    username:
+#    password:
+  jpa:
+    show-sql: true      # SQL 쿼리 출력
+    properties:
+      hibernate:
+        format_sql: true  # SQL pretty print
+  security:
+    oauth2:
+      client:
+        registration:
+          spotify:
+            clientId: ${SPOTIFY_CLIENT_ID}
+            clientSecret: ${SPOTIFY_CLIENT_SECRET}
+            authorization-grant-type: authorization_code  # OAuth종류
+            redirect-uri: http://localhost:8080/callback/login  # 로그인 후 이동할 URI: {baseUri}/callback/login
+            scope: user-read-email, user-read-private, playlist-read-private, playlist-modify-private, playlist-modify-public, user-read-currently-playing, user-read-playback-state, user-modify-playback-state, streaming #가져올 수 있는 정보의 범위 지정
+        provider:
+          spotify:
+            authorization-uri: https://accounts.spotify.com/authorize   #Authorization code
+            token-uri: https://accounts.spotify.com/api/token   #Access Token
+logging:  # log를 자동으로 남겨준다.
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+jwt:
+  key: ${JWT_SECRET_KEY}               # 민감한 정보는 시스템 환경 변수에서 로드한다.
+  access-token-expiration-minutes: 30
+  refresh-token-expiration-minutes: 420

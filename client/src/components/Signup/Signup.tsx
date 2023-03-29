@@ -41,7 +41,7 @@ const BorderLine = styled.hr`
   width: 450px;
   margin: 30px;
   border: 1px solid gray;
-`
+`;
 
 const Form = styled.form`
   width: 450px;
@@ -137,7 +137,7 @@ const SignUpWrapper = styled.div`
   align-items: center;
   position: absolute;
   top: 25%;
-`
+`;
 
 const SignUpContainer = styled.div`
   width: 100%;
@@ -148,8 +148,7 @@ const SignUpContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   box-sizing: border-box;
-`
-
+`;
 
 const Signup = () => {
   interface FormValue {
@@ -201,7 +200,7 @@ const Signup = () => {
           </SpotifyButton>
         </Buttons>
 
-        <BorderLine/>
+        <BorderLine />
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Text>이메일로 가입하기</Text>

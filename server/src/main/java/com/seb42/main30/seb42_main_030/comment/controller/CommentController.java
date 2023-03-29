@@ -1,7 +1,7 @@
 package com.seb42.main30.seb42_main_030.comment.controller;
 
 
-import com.seb42.main30.seb42_main_030.comment.dto.CommentDto;
+import com.seb42.main30.seb42_main_030.comment.controller.dto.CommentDto;
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.comment.mapper.CommentMapper;
 import com.seb42.main30.seb42_main_030.comment.service.CommentService;
