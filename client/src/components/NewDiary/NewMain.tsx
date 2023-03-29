@@ -124,7 +124,7 @@ function NewMain() {
   const [newBody, setNewBody] = useState<string>("");
 
   const navigate = useNavigate();
-  const today: any = new Date().toISOString().substring(0, 10);
+  const today: string = new Date().toISOString().substring(0, 10);
 
   // 다이어리 post 요청
   const submitHandler = async () => {

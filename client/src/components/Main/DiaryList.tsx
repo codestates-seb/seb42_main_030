@@ -120,7 +120,7 @@ function DiaryList({ list }: DiaryDataProps) {
 
   return (
     <DiaryListContainer onClick={moveDetailDiary}>
-      <Thumbnail>썸네일 이미지</Thumbnail>
+      <Thumbnail></Thumbnail>
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>
         <div className='infoDate'>{list.createdAt.substring(0, 10)}</div>

@@ -397,6 +397,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     };
     const res = await TOKEN_API.post(`/comment`, newComment);
     getDetailData(res.data);
+    setText("");
   };
 
   // 댓글 작성 체인지 이벤트
@@ -524,6 +525,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           <TextArea>
             <textarea
               className='textArea'
+              value={text}
               placeholder='댓글을 작성하세요'
               onChange={changeHandler}
             />
