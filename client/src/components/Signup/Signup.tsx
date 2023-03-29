@@ -1,5 +1,9 @@
 import SpotifyLogo from "../../img/spotifylogo.png";
 import styled from "styled-components";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const Buttons = styled.div`
   display: flex;
@@ -124,7 +128,8 @@ const UsernameInput = styled.input`
   left: 8%;
 `;
 
-const LoginWrapper = styled.div`
+
+const SignUpWrapper = styled.div`
   width: fit-content;
   height: fit-content;
   display: flex;
@@ -134,7 +139,7 @@ const LoginWrapper = styled.div`
   top: 25%;
 `;
 
-const LoginContainer = styled.div`
+const SignUpContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   margin: 0px;
@@ -146,9 +151,48 @@ const LoginContainer = styled.div`
 `;
 
 const Signup = () => {
+  interface FormValue {
+        email: string; 
+        nickname: string; 
+        password: any;
+    }
+  
+  const navigate = useNavigate();
+  const [signUpError, setSignUpError] = useState(false);
+  const [errorMessage, setErrormessage] = useState('');
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState:{errors}
+  } = useForm<FormValue>();
+
+  
+
+  const onSubmit: SubmitHandler<FormValue> = data => {
+    console.log(data.email);
+    axios
+      .post('http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/users/sign-up', {
+        email: data.email,
+        nickname: data.nickname,
+        password: data.password,
+      })
+      .then(() => {
+        console.log("회원가입성공")
+        setErrormessage('');
+        setSignUpError(false);
+        navigate('/login');
+      })
+      .catch(error => {
+        setErrormessage(error.response.data.message);
+        setSignUpError(true);
+      });
+  };
+
   return (
-    <LoginContainer>
-      <LoginWrapper>
+    <SignUpContainer>
+      <SignUpWrapper>
         <Buttons>
           <SpotifyButton>
             <ImgSrc src={SpotifyLogo} />
@@ -158,21 +202,38 @@ const Signup = () => {
 
         <BorderLine />
 
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Text>이메일로 가입하기</Text>
           <EmailText>이메일 주소</EmailText>
-          <EmailInput />
+          <EmailInput 
+            type="email"
+            id="email"
+            {...register('email')}
+          />
           <UserText>닉네임</UserText>
-          <UsernameInput />
+          <UsernameInput
+             id="nickname"
+             {...register('nickname')}
+          />
           <PassText>비밀번호</PassText>
-          <PassInput />
+          <PassInput
+            type="password"
+            id="password"
+            {...register('password')}
+          />
         </Form>
 
-        <BorderLine />
-
-        <SignupButton>가입하기</SignupButton>
-      </LoginWrapper>
-    </LoginContainer>
+        <BorderLine/>
+    
+        <SignupButton 
+          type="button"
+          onClick={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+            가입하기
+        </SignupButton>
+      </SignUpWrapper>
+    </SignUpContainer>
   );
 };
 
