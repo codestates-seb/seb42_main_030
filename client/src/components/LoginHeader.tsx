@@ -24,6 +24,7 @@ const HeaderWrapper = styled.div`
   .buttonArea {
     display: flex;
     align-items: center;
+    position: relative;
 
     > .dropdown {
       color: ${(props) => props.theme.mainText};
