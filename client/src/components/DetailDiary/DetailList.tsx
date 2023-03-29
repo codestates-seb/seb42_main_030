@@ -7,7 +7,7 @@ import { DiaryData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { RiErrorWarningLine } from "react-icons/ri";
-
+import { Link } from 'react-router-dom';
 const DetailMainContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -326,7 +326,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
   const { diaryId } = useParams();
   const navigate = useNavigate();
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5NzI2NTU2LCJleHAiOjE2ODAzMjY1NTZ9.y2-PjQUPjcGsD5YQtU8ezxrh_bPEPGXe3YzJiXo-P_sNzDsS6w5IfVLaVjWyWw7ekubLVLchJIv6623bheoybQ`;
+  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZGRhZHpAbmF2ZXIuY29tIiwic3ViIjoiZGRhZHpAbmF2ZXIuY29tIiwiaWF0IjoxNjc5OTE3ODI3LCJleHAiOjE2ODA1MTc4Mjd9.InKMqa_ozFhKP-TNbUceA2nk3f9uPY5umYFxadKn-4uGgf4tW3nfbBDrK3nVXYLhu00ie1BExiJpeDCrFgX2RQ`;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -412,13 +412,20 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
   };
 
+  const clickHandler = () => {
+    navigate(`/EditDiary/${list.diaryId}`);
+    // navigate(`/DetailDiary/${list.nickname}`)
+  };
+
   return (
     <DetailMainContainer>
       <DetailMainWrapper>
         <TitleArea>
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
-            <button className='edit'>수정</button>
+            
+            <button className='edit' onClick={clickHandler}>수정</button>
+            
             <button className='delete' onClick={openModalHandler}>
               삭제
             </button>
@@ -521,3 +528,4 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
 }
 
 export default DetailList;
+

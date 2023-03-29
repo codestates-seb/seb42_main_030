@@ -18,7 +18,6 @@ import java.util.List;
 @Setter
 @Entity
 public class Diary extends BaseTimeEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryId;

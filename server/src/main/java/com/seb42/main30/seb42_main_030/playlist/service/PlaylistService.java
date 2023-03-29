@@ -1,27 +1,21 @@
 package com.seb42.main30.seb42_main_030.playlist.service;
 
+import com.seb42.main30.seb42_main_030.diary.repository.DiaryRepository;
 import com.seb42.main30.seb42_main_030.diary.service.DiaryService;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
-import com.seb42.main30.seb42_main_030.mainpage.entity.Diary;
-import com.seb42.main30.seb42_main_030.mainpage.repository.DiaryRepository;
 import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistDto;
-import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistPatchDto;
-import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistPostDto;
 import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
-import com.seb42.main30.seb42_main_030.playlist.entity.Song;
+import com.seb42.main30.seb42_main_030.playlist.entity.Track;
 import com.seb42.main30.seb42_main_030.playlist.repository.PlaylistRepository;
-import com.seb42.main30.seb42_main_030.playlist.repository.SongRepository;
+import com.seb42.main30.seb42_main_030.playlist.repository.TrackRepository;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
+import com.seb42.main30.seb42_main_030.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,128 +24,104 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PlaylistService {
     private final PlaylistRepository playlistRepository;
-    private final SongRepository songRepository;
+    private final TrackRepository trackRepository;
     private final DiaryRepository diaryRepository;
     private final DiaryService diaryService;
+    private final UserService userService;
     private final UserRepository userRepository;
 
-    // 플레이리스트 생성
-    public Playlist createPlaylist(Playlist playlist, PlaylistPostDto playlistPostDto){
-        List<Song> songList = new ArrayList<>();
-        for (int i = 0; i < playlistPostDto.getSongs().size(); i++) {
-            Song song = new Song();
-            song.setUri(playlistPostDto.getSongs().get(i).getUri());
-            song.setSongTitle(playlistPostDto.getSongs().get(i).getSongTitle());
-            song.setAlbum(playlistPostDto.getSongs().get(i).getAlbum());
-            song.setTrack(playlistPostDto.getSongs().get(i).getTrack());
-            song.setArtist(playlistPostDto.getSongs().get(i).getArtist());
-            song.setImages(playlistPostDto.getSongs().get(i).getImages());
-            song.setPlaylist(playlist);
-            songList.add(song);
-            songRepository.save(song);
-        }
 
-        playlist.setSongs(songList);
+
+    /** CREATE */
+    public Playlist createPlaylist(Playlist playlist, PlaylistDto.Post post) {
+        List<Track> trackList = new ArrayList<>();
+        for (int i = 0; i < post.getTracks().size(); i++) {
+            Track track = new Track();
+            track.setUrl(post.getTracks().get(i).getUrl());
+            track.setTrackTitle(post.getTracks().get(i).getTrackTitle());
+            track.setThumbnail(post.getTracks().get(i).getThumbnail());
+            track.setChannelTitle(post.getTracks().get(i).getChannelTitle());
+            track.setVideoId(post.getTracks().get(i).getVideoId());
+            track.setPlaylist(playlist);
+            trackList.add(track);
+            trackRepository.save(track);
+        }
+        playlist.setTracks(trackList);
         Playlist savedPlaylist = playlistRepository.save(playlist);
 
         return savedPlaylist;
     }
+    /** READ */
+    // Single
+    public Playlist findPlaylist(long playlistId) {
 
-    // 플레이리스트 수정
-    public Playlist updatePlaylist(Playlist playlist, PlaylistPatchDto playlistPatchDto, Long authUserId) {
-        Playlist findPlaylist = verifiedPlaylist(playlist.getPlaylistId()); //수정할 플리가 있는지 검증
+        return verifiedPlaylist(playlistId);
+    }
+    // All
+    public Page<Playlist> findAllPlayList(int page, int size) {
 
-        if (findPlaylist.getUser().getUserId() != authUserId) {
-            throw new BusinessException(ExceptionCode.BAD_REQUEST);
+        Page<Playlist> findAllPlaylist = playlistRepository.findAll(
+                PageRequest.of(page, size, Sort.by("playlistId").descending()));
+
+        return findAllPlaylist;
+    }
+
+    /** UPDATE */
+    public Playlist updatePlaylist(Playlist playlist, PlaylistDto.Patch patch, Long loginUserId) {
+        Playlist findPlaylist = verifiedPlaylist(playlist.getPlaylistId()); //수정할 플레이리스트 검증
+
+        Optional.ofNullable(playlist.getPlaylistTitle()) //제목수정
+                .ifPresent(title -> findPlaylist.setPlaylistTitle(title));
+
+        for (int i = 0; i < findPlaylist.getTracks().size(); i++) {
+            trackRepository.delete(findPlaylist.getTracks().get(i));
         }
 
-        Optional.ofNullable(playlist.getTitle()) // 제목 수정
-                .ifPresent(title -> findPlaylist.setTitle(title));
-//        Optional.ofNullable(playlist.getTagList()) // 태그 수정
-//                .ifPresent(tags -> findPlaylist.setTagList(tags));
-
-        for (int i = 0; i < findPlaylist.getSongs().size(); i++) {
-            songRepository.delete(findPlaylist.getSongs().get(i));
+        List<Track> trackList = new ArrayList<>();
+        for (int i = 0; i < patch.getTracks().size(); i++) {
+            Track track = new Track();
+            track.setUrl(patch.getTracks().get(i).getUrl());
+            track.setTrackTitle(patch.getTracks().get(i).getTrackTitle());
+            track.setThumbnail(patch.getTracks().get(i).getThumbnail());
+            track.setChannelTitle(patch.getTracks().get(i).getChannelTitle());
+            track.setVideoId(patch.getTracks().get(i).getVideoId());
+            track.setPlaylist(playlist);
+            trackList.add(track);
+            trackRepository.save(track);
         }
-
-        List<Song> songList = new ArrayList<>();
-        for (int i = 0; i < playlistPatchDto.getSongs().size(); i++) {
-            Song song = new Song();
-            song.setUri(playlistPatchDto.getSongs().get(i).getUri());
-            song.setSongTitle(playlistPatchDto.getSongs().get(i).getSongTitle());
-            song.setAlbum(playlistPatchDto.getSongs().get(i).getAlbum());
-            song.setTrack(playlistPatchDto.getSongs().get(i).getTrack());
-            song.setArtist(playlistPatchDto.getSongs().get(i).getArtist());
-            song.setImages(playlistPatchDto.getSongs().get(i).getImages());
-            song.setPlaylist(playlist);
-            songList.add(song);
-            songRepository.save(song);
-        }
-        findPlaylist.setSongs(songList);
-
-//        findPlaylist.setModifiedAt(LocalDateTime.now());
+        findPlaylist.setTracks(trackList);
 
         return playlistRepository.save(findPlaylist);
     }
-    // 플레이리스트 서치
-    public Page<Playlist> searchPlaylists(String type, String name, int page, int size) {
+    /** DELETE */
+//    public void deletePlaylist(long playlistId) {
+//        Playlist findPlaylist = verifiedPlaylist(playlistId);
+//
+//        List<Diary> diaries = diaryRepository.findByPlaylistId(findPlaylist.getPlaylistId());
+//        for (Diary diary : diaries) {
+//            diaryService.deleteDiary(diary.getDiaryId());
+//        }
+//
+//        playlistRepository.delete(findPlaylist);
+//    }
+    public void deletePlaylist (long playlistId) {
 
-        List<Playlist> searchPlaylists = new ArrayList<>();
-
-        if (type.equals("title")) {
-            //해당 타이틀을 포함하는 플레이리스트 목록
-            searchPlaylists = playlistRepository.findByPlTitleContaining(name);
-        }
-        else if (type.equals("name")) {
-            // 멤버 이름이 포함된 member 검색
-            List<User> searchMembers = userRepository.findByNameContaining(name);
-            for (User user : searchUsers) {
-                // 해당 member들이 포함된 플리 검색
-                List<Playlist> playlists = playlistRepository.findByUser(user);
-                int index = 0;
-                for (Playlist playlist : playlists) {
-                    // 추가
-                    searchPlaylists.add(playlists.get(index));
-                    index++;
-                }
-            }
-        }
-        else if (type.equals("category")) {
-            // 해당 카테고리를 포함하는 플레이리스트 목록
-//            List<String> search = new ArrayList<>();
-//            search.add(name);
-//            searchPlaylists = playlistRepository.findByCategoryListContaining(search);
-
-            // 모든 플레이리스트를 조회해서 카테고리랑 일치하면 리스트에 넣기
-            // 플레이리스트를 전부 조회하기 때문에 플레이리스트가 많아지면 문제가 있음
-            List<Playlist> allPlaylists = playlistRepository.findAll();
-            for (Playlist playlist : allPlaylists){
-                for (int i=0; i<playlist.getCategoryList().size(); i++){
-                    if (playlist.getCategoryList().get(i).equals(name)){
-                        searchPlaylists.add(playlist);
-                    }
-                }
-            }
-        }
-        else {throw new BusinessException(ExceptionCode.BAD_REQUEST);
-        }
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("likes.size()").descending());
-        int start = (int)pageRequest.getOffset();
-        int end = Math.min((start + pageRequest.getPageSize()), searchPlaylists.size());
-        Page<Playlist> playlistPage = new PageImpl<>(searchPlaylists.subList(start, end), pageRequest, searchPlaylists.size());
-        return playlistPage;
+        Playlist verifyPlaylist = verifyWriter(playlistId);
+        playlistRepository.deleteById(verifyPlaylist.getPlaylistId());
 
     }
-    // 플레이리스트 삭제
-    public void deletePlaylist(long playlistId) {
-        Playlist findPlaylist = verifiedPlaylist(playlistId);
 
-        List<Diary> diarys = diaryRepository.findByPlaylistId(findPlaylist.getPlaylistId());
-        for (Diary diary : diarys) {
-            diaryService.deleteDiary(diary.getDiaryId());
+
+
+    // 작성자 검증
+    private Playlist verifyWriter (long playlistId) {
+
+        long userId = userService.getLoginUser().getUserId();
+        Playlist playlist = verifiedPlaylist(playlistId);
+        if (playlist.getUser().getUserId() != userId) {
+            throw new BusinessException(ExceptionCode.NOT_AUTHORITY);
         }
-
-        playlistRepository.delete(findPlaylist);
+        return playlist;
     }
 
     // 플레이리스트 검증
@@ -161,20 +131,8 @@ public class PlaylistService {
 
         return findPlaylist;
     }
-    //단일 조회
-    public Playlist findPlaylist(long playlistId) {
 
-        return verifiedPlaylist(playlistId);
-    }
-    //전체 조회
-    public Page<Playlist> findPlayList(int page, int size) {
-
-        Page<Playlist> findAllPlaylist = playlistRepository.findAll(
-                PageRequest.of(page, size, Sort.by("playlistId").descending()));
-
-        return findAllPlaylist;
-    }
-    // 플레이리스트가 존재하지 않을때
+    // 플레이리스트 없을때
     private void verifiedNoPlaylist(Page<Playlist> findAllPlaylist) {
         if (findAllPlaylist.getTotalElements() == 0) {
             throw new BusinessException(ExceptionCode.PLAYLIST_NOT_EXIST);

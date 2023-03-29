@@ -25,8 +25,6 @@ public class DiaryDto {
 
         private int likeCount;
 
-        private List<String> taglist;
-
     }
 
     @Getter
@@ -41,8 +39,6 @@ public class DiaryDto {
         private String body;
 
         private int likeCount;
-
-        private List<String> taglist;
 
     }
 

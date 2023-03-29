@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
 import DetailList from "./DetailList";
+import EditDetail from '../EditDiary/EditList';
 
 function DetailMain() {
   const [detailData, setDetailData] = useState<DiaryData>();
-
+  const [show, setShow] = useState(true)
   const { diaryId } = useParams();
 
   // 선택한 다이어리 get 요청
@@ -23,7 +24,10 @@ function DetailMain() {
     getDetailData();
   }, []);
 
-  return <>{detailData && <DetailList list={detailData} getDetailData={getDetailData} />};</>;
+  return <>
+    {detailData && <DetailList list={detailData} getDetailData={getDetailData} />};
+    {/* {detailData && <EditDetail list={detailData} />} */}
+  </>;
 }
 
 export default DetailMain;

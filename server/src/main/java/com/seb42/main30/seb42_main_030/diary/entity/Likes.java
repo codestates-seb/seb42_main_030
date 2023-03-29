@@ -18,12 +18,12 @@ public class Likes {
 
     // 좋아요를 누르는 UserId
     @Column
-    private Long likeuserId;
+    private Long likeUserId;
 
     // 플레이리스트 연관관계 매핑
     @ManyToOne
     @JoinColumn(name = "diaryId")
-    private Playlist diary;
+    private Diary diary;
 
 //    public void addDiarylist(Diary diary) {
 //        this.diary = diary;
