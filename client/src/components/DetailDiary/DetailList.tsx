@@ -7,6 +7,7 @@ import { DiaryData } from "../../util/Type";
 import { TOKEN_API } from "../../util/API";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { RiErrorWarningLine } from "react-icons/ri";
+import DOMPurify from "dompurify";
 
 const DetailMainContainer = styled.div`
   display: flex;
@@ -484,7 +485,10 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         </AlbumCoverArea>
         <AlbumInfoArea>
           <div className='playTitle'>다이어리 소개</div>
-          <div className='playContent'>{list.body}</div>
+          <div
+            className='playContent'
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(list.body) }}
+          ></div>
         </AlbumInfoArea>
         <PlayList />
         <CommentInputArea>

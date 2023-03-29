@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PlayList from "../DetailDiary/PlayList";
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TOKEN_API } from "../../util/API";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
