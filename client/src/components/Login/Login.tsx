@@ -140,6 +140,14 @@ const LoginContainer = styled.div`
   justify-content: center;
   box-sizing: border-box;
 `
+
+const Errormsg = styled.p`
+  display: block;
+  color: #d0393e;
+  margin: 2px 0px;
+  padding: 2px;
+  font-size: 12px;
+`;
 interface setLogintype {
   setLogin: boolean;
 }
@@ -163,8 +171,6 @@ const Login = () => {
     } = useForm<FormValue>();
 
   const  onSubmit: SubmitHandler<FormValue> = data => {
-    console.log(data.email);
-    console.log(data.password);
     axios
       .post('http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/auth/login', {
         email: data.email,
@@ -208,6 +214,12 @@ const Login = () => {
               required: true,
             })}
           />
+          {errors.email && errors.email.type === 'required' && (
+            <Errormsg>Email cannot be empty.</Errormsg>
+          )}
+          {loginError ? (
+            <Errormsg>The email or password is incorrect.</Errormsg>
+          ) : null}
           <PassText>비밀번호</PassText>
           <UnderText>
             비밀번호 찾기
@@ -217,8 +229,12 @@ const Login = () => {
             id="password"
             {...register('password', {
               required: true,
-            })}
-          />
+            })}>
+            {errors.password && errors.password.type === 'required' && (
+            <Errormsg>Password cannot be empty.</Errormsg>
+          )}
+            </PassInput>
+          
           <LoginButton type="button" 
             onClick={handleSubmit(onSubmit)}
             onSubmit={handleSubmit(onSubmit)}>
