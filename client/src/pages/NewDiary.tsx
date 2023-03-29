@@ -1,9 +1,9 @@
-import NewList from "../components/NewDiary/NewList";
+import NewMain from "../components/NewDiary/NewMain";
 
 function NewDiary() {
   return (
     <>
-      <NewList />
+      <NewMain />
     </>
   );
 }

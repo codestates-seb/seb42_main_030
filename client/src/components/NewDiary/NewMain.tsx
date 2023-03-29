@@ -2,7 +2,6 @@ import styled from "styled-components";
 import PlayList from "../DetailDiary/PlayList";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { DiaryDataProps } from "../../util/Type";
 import { TOKEN_API } from "../../util/API";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -120,31 +119,31 @@ const AlbumInfoArea = styled.div`
   }
 `;
 
-function EditList({ list }: DiaryDataProps) {
-  const [editTitle, setEditTitle] = useState<string>(list.title);
-  const [editBody, setEditBody] = useState<string>(list.body);
+function NewMain() {
+  const [newTitle, setNewTitle] = useState<string>("");
+  const [newBody, setNewBody] = useState<string>("");
 
   const navigate = useNavigate();
-  const { diaryId } = useParams();
+  const today: any = new Date().toISOString().substring(0, 10);
 
-  // 다이어리 patch 요청
+  // 다이어리 post 요청
   const submitHandler = async () => {
     const newDiary = {
-      title: editTitle,
-      body: editBody,
+      title: newTitle,
+      body: newBody,
     };
-    await TOKEN_API.patch(`/diary/${diaryId}`, newDiary);
-    navigate(`/DetailDiary/${diaryId}`);
+    await TOKEN_API.post(`/diary`, newDiary);
+    navigate(`/`);
   };
 
   // 제목 수정 체인지 이벤트
-  const changeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditTitle(e.target.value);
+  const changeNewTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewTitle(e.target.value);
   };
 
   // 본문 수정 체인지 이벤트
-  const changeEditBody = (e: any) => {
-    setEditBody(e);
+  const changeNewBody = (e: any) => {
+    setNewBody(e);
   };
 
   return (
@@ -154,16 +153,15 @@ function EditList({ list }: DiaryDataProps) {
           <input
             className='EditTitle'
             type='text'
-            value={editTitle}
             placeholder='제목을 입력하세요'
-            onChange={changeEditTitle}
+            onChange={changeNewTitle}
           />
           <EditButton
             className='EditButton'
             onClick={submitHandler}
-            disabled={editTitle.length === 0}
+            disabled={newTitle.length === 0}
           >
-            수정하기
+            등록하기
           </EditButton>
         </TitleArea>
         <AlbumCoverArea>
@@ -171,11 +169,11 @@ function EditList({ list }: DiaryDataProps) {
           <InfoArea>
             <UserInfo>
               <span className='text'>등록자</span>
-              {list.userNickname}
+              {/* {list.userNickname} */}
             </UserInfo>
             <UserInfo>
               <span className='text'>등록일</span>
-              {list.createdAt.substring(0, 10)}
+              {today.toString()}
             </UserInfo>
           </InfoArea>
         </AlbumCoverArea>
@@ -183,9 +181,8 @@ function EditList({ list }: DiaryDataProps) {
           <div className='playTitle'>다이어리 소개</div>
           <ReactQuill
             className='playContent'
-            value={editBody}
             placeholder='나만의 다이어리를 작성해 보세요'
-            onChange={changeEditBody}
+            onChange={changeNewBody}
           />
         </AlbumInfoArea>
         <PlayList />
@@ -194,4 +191,4 @@ function EditList({ list }: DiaryDataProps) {
   );
 }
 
-export default EditList;
+export default NewMain;
