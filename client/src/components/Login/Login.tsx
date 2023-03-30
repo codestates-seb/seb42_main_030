@@ -202,17 +202,7 @@ const Login = () => {
         <BorderLine />
         <Form>
           <EmailText>이메일 주소</EmailText>
-          <EmailInput
-            type='email'
-            id='email'
-            {...register("email", {
-              required: true,
-            })}
-          />
-          {errors.email && errors.email.type === "required" && (
-            <Errormsg>Email cannot be empty.</Errormsg>
-          )}
-          {loginError ? <Errormsg>The email or password is incorrect.</Errormsg> : null}
+          <EmailInput />
           <PassText>비밀번호</PassText>
           <UnderText>비밀번호 찾기</UnderText>
           <PassInput

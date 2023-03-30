@@ -1,37 +1,32 @@
 package com.seb42.main30.seb42_main_030.playlist.entity;
 
-import com.seb42.main30.seb42_main_030.audit.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-public class Song extends Auditable {
-
+public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long song_id;
+    private long trackId;
 
     @Column(nullable = false)
     private String url;
+    private String trackTitle;
+    private String thumbnail;
+    private String channelTitle;
 
-    private String songTitle;
-
-    private String album;
-
-    private String track;
-
-    private String artist;
-
-    private String album_art;
-
+    /** 필요할려나 */
+    private String videoId;
 
     @ManyToOne
     @JoinColumn(name = "Playlist_id")
     private Playlist playlist;
 }
+
+
