@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { DiaryData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
+import axios from "axios";
 
 const ListTab = styled.ul`
   display: flex;
@@ -103,6 +104,8 @@ function DiaryMain() {
 
   return (
     <main>
+      {/* <img src={test.items[0].snippet.thumbnails.default.url} alt='test' /> */}
+      {/* {test.items[0].snippet.thumbnails.default} */}
       <ListTab>
         {tagArr.map((tab, index) => {
           return (

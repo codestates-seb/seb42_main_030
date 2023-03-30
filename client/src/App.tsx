@@ -1,4 +1,4 @@
-// import LogoutHeader from "./components/LogoutHeader";
+import LogoutHeader from "./components/LogoutHeader";
 import LoginHeader from "./components/LoginHeader";
 import Main from "./pages/Main";
 import NewDiary from "./pages/NewDiary";
@@ -30,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const LocalTheme = window.localStorage.getItem("theme");
   const [isChange, setIsChange] = useState(LocalTheme);
+  const isLogin = localStorage.getItem("login-token");
 
   const changeMode = () => {
     const changeTheme = isChange === "light" ? "dark" : "light";
@@ -41,8 +42,13 @@ function App() {
     <ThemeProvider theme={isChange === "dark" ? darkMode : lightMode}>
       <div className='App'>
         <GlobalStyle />
-        {/* <LogoutHeader isChange={isChange} changeMode={changeMode} /> */}
-        <LoginHeader isChange={isChange} changeMode={changeMode} />
+
+        {isLogin ? (
+          <LoginHeader isChange={isChange} changeMode={changeMode} />
+        ) : (
+          <LogoutHeader isChange={isChange} changeMode={changeMode} />
+        )}
+
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path='/NewDiary' element={<NewDiary />} />

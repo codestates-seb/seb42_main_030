@@ -401,7 +401,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   };
 
   // 댓글 작성 체인지 이벤트
-  const changeHandler = (e: any) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
 
