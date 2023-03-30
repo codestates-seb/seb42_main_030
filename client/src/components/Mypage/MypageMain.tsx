@@ -17,6 +17,7 @@ const ListTab = styled.ul`
   position: relative;
   margin: 50px 0 50px 0;
   gap: 10px;
+  cursor: pointer;
 
   .tab {
     display: flex;
@@ -29,15 +30,15 @@ const ListTab = styled.ul`
     text-align: center;
 
     > .el {
-      color: #495057;
+      color: ${(props) => props.theme.subText};
     }
   }
 
   .focused {
-    border-bottom: 2px solid #1c1a16;
+    border-bottom: 2px solid ${(props) => props.theme.mainText};
 
     > .el {
-      color: #1c1a16;
+      color: ${(props) => props.theme.mainText};
     }
   }
 `;

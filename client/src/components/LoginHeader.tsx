@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { GoTriangleDown } from "react-icons/go";
 import { useState, useEffect } from "react";
-import { UserData } from "../util/Type";
 import { BASE_API } from "../util/API";
+import { GoTriangleDown } from "react-icons/go";
+import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
+  background-color: ${(props) => props.theme.background};
 `;
 
 const HeaderWrapper = styled.div`
@@ -20,22 +21,18 @@ const HeaderWrapper = styled.div`
   padding: 0 15px 0 15px;
   justify-content: space-between;
 
-  > a {
-    color: black;
-    text-decoration: none;
-  }
-
   .buttonArea {
     display: flex;
     align-items: center;
     position: relative;
 
     > .dropdown {
+      color: ${(props) => props.theme.mainText};
       font-size: 14.5px;
       font-weight: 400;
       width: 150px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
-      background-color: white;
+      background-color: ${(props) => props.theme.disabledTagBackground};
       display: flex;
       flex-direction: column;
       position: absolute;
@@ -43,14 +40,15 @@ const HeaderWrapper = styled.div`
       right: 1px;
       list-style: none;
       z-index: 1;
+      cursor: pointer;
 
       > a {
         text-decoration: none;
-        color: black;
+        color: ${(props) => props.theme.mainText};
         padding: 12px 10px 10px 12px;
         &:hover {
           font-weight: 600;
-          background-color: #f1f3f5;
+          background-color: ${(props) => props.theme.playListHover};
         }
       }
 
@@ -58,7 +56,7 @@ const HeaderWrapper = styled.div`
         padding: 10px 10px 12px 12px;
         &:hover {
           font-weight: 600;
-          background-color: #f1f3f5;
+          background-color: ${(props) => props.theme.playListHover};
         }
       }
     }
@@ -70,8 +68,24 @@ const Logo = styled.div`
   font-size: 20px;
 
   a {
-    color: black;
+    color: ${(props) => props.theme.logo};
     text-decoration: none;
+  }
+`;
+
+const ModeButton = styled.button`
+  padding-top: 3px;
+  width: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  > .lightIcon {
+    color: ${(props) => props.theme.mainText};
+  }
+
+  > .darkIcon {
+    color: ${(props) => props.theme.mainText};
   }
 `;
 
@@ -83,7 +97,7 @@ const SubmitButton = styled.button`
   font-size: 15px;
 
   a {
-    color: black;
+    color: ${(props) => props.theme.mainText};
     text-decoration: none;
   }
 `;
@@ -100,12 +114,13 @@ const ProfileButton = styled.div`
 const Profile = styled.img`
   width: 40px;
   height: 40px;
-  margin: 0 10px 0 20px;
+  margin: 0 10px 0 10px;
   border-radius: 50%;
+  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.086) 0px 0px 8px;
 `;
 
-function LoginHeader() {
+function LoginHeader({ isChange, changeMode }: any) {
   const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -139,6 +154,13 @@ function LoginHeader() {
           <Link to='/'>나만의 작은 음악 다이어리</Link>
         </Logo>
         <div className='buttonArea'>
+          <ModeButton onClick={changeMode}>
+            {isChange === "dark" ? (
+              <BsFillMoonStarsFill className='darkIcon' size={20} />
+            ) : (
+              <BsFillSunFill className='lightIcon' size={25} />
+            )}
+          </ModeButton>
           <SubmitButton onClick={closeDropdown}>
             <Link to='/NewDiary'>새 다이어리 등록</Link>
           </SubmitButton>

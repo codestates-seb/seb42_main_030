@@ -10,6 +10,8 @@ const DiaryListContainer = styled.li`
   height: 339px;
   list-style: none;
   border-radius: 4px;
+  cursor: pointer;
+  background-color: ${(props) => props.theme.diaryBackground};
   &:hover {
     transform: scale(1.02);
     transition: 0.2s;
@@ -28,6 +30,7 @@ const InfoArea = styled.div`
   padding: 15px;
 
   > .infoTitle {
+    color: ${(props) => props.theme.mainText};
     font-weight: 500;
     margin-bottom: 10px;
     white-space: nowrap;
@@ -37,8 +40,8 @@ const InfoArea = styled.div`
 
   > .infoDate {
     font-size: 12px;
-    font-weight: 500;
-    color: #848180;
+    font-weight: 400;
+    color: ${(props) => props.theme.diaryDate};
     margin-bottom: 15px;
   }
 `;
@@ -63,7 +66,7 @@ const UserArea = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 8px 15px 8px 15px;
-  border-top: 1px solid #d1d1d1;
+  border-top: 0.5px solid ${(props) => props.theme.diaryInfoLine};
 `;
 
 const Profile = styled.div`
@@ -80,11 +83,12 @@ const ByUsername = styled.div`
   justify-content: flex-end;
   font-size: 13px;
   font-weight: 500;
-  color: #21252b;
+  color: ${(props) => props.theme.mainText};
 
   > .by {
     font-size: 12px;
-    color: gray;
+    font-weight: 400;
+    color: ${(props) => props.theme.diaryDate};
     margin-right: 5px;
   }
 `;
@@ -93,6 +97,7 @@ const LikeAndComment = styled.div`
   display: flex;
   align-items: center;
   font-size: 13px;
+  color: ${(props) => props.theme.mainText};
 
   > .likeIcon {
     color: red;
@@ -100,6 +105,7 @@ const LikeAndComment = styled.div`
   }
 
   > .commentIcon {
+    color: ${(props) => props.theme.mainText};
     margin: 0 5px 0 10px;
   }
 `;
@@ -107,14 +113,14 @@ const LikeAndComment = styled.div`
 function DiaryList({ list }: DiaryDataProps) {
   const navigate = useNavigate();
 
-  const clickHandler = () => {
+  // 디테일 페이지로 이동
+  const moveDetailDiary = () => {
     navigate(`/DetailDiary/${list.diaryId}`);
-    // navigate(`/DetailDiary/${list.nickname}`)
   };
 
   return (
-    <DiaryListContainer onClick={clickHandler}>
-      <Thumbnail>썸네일 이미지</Thumbnail>
+    <DiaryListContainer onClick={moveDetailDiary}>
+      <Thumbnail></Thumbnail>
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>
         <div className='infoDate'>{list.createdAt.substring(0, 10)}</div>

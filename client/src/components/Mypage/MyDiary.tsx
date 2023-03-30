@@ -110,8 +110,9 @@ function MyDiary({ list }: DiaryDataProps) {
 
   // const isLogin = localStorage.getItem('nickname')
   // list.nickname === isLogin
-  const myDiary: boolean = list.userNickname === "kevin";
+  const myDiary: boolean = list.userNickname === "킵코딩";
 
+  // 디테일 페이지로 이동
   const clickHandler = () => {
     navigate(`/DetailDiary/${list.diaryId}`);
   };

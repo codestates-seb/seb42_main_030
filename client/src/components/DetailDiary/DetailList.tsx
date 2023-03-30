@@ -4,10 +4,11 @@ import PlayList from "./PlayList";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
-import { BASE_API } from "../../util/API";
+import { TOKEN_API } from "../../util/API";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { RiErrorWarningLine } from "react-icons/ri";
-import { Link } from 'react-router-dom';
+import DOMPurify from "dompurify";
+
 const DetailMainContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -25,12 +26,13 @@ const TitleArea = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
   padding: 0 10px 0 10px;
 
   > .DetailTitle {
+    width: 580px;
     font-size: 24px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     font-weight: 600;
   }
 `;
@@ -45,11 +47,12 @@ const ButtonArea = styled.div`
     font-size: 13px;
     padding: 5px;
     background-color: transparent;
+    cursor: pointer;
   }
 
   > .edit {
     width: 40px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     border: none;
     text-decoration: underline;
     font-weight: 600;
@@ -57,22 +60,22 @@ const ButtonArea = styled.div`
 
   > .delete {
     width: 40px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     border: none;
     text-decoration: underline;
     font-weight: 600;
   }
 
   > .like {
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     margin-left: 25px;
     width: 140px;
     height: 35px;
-    border: 1px solid #d1d1d1;
+    border: 1px solid ${(props) => props.theme.detailLine};
     border-radius: 4px;
 
     > .likeIcon {
-      color: red;
+      color: #ec1d36;
       margin-right: 5px;
     }
 
@@ -81,7 +84,7 @@ const ButtonArea = styled.div`
     }
 
     &:hover {
-      background-color: #eeeeee;
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 `;
@@ -101,12 +104,13 @@ const DeleteModalBack = styled.div`
 const DeleteModalView = styled.div`
   text-align: center;
   border-radius: 5px;
-  background-color: white;
+  background-color: ${(props) => props.theme.background};
   width: 430px;
   height: 220px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
 
   > .deleteModalTitle {
+    color: ${(props) => props.theme.mainText};
     font-size: 20px;
     font-weight: 700;
     text-align: center;
@@ -114,6 +118,7 @@ const DeleteModalView = styled.div`
   }
 
   > .warningText {
+    color: ${(props) => props.theme.subText};
     font-size: 15px;
     font-weight: 500;
     margin-bottom: 50.5px;
@@ -123,23 +128,23 @@ const DeleteModalView = styled.div`
     font-weight: 500;
     width: 215px;
     height: 50px;
-    color: white;
     border: none;
     text-decoration: none;
+    cursor: pointer;
     &:hover {
       text-decoration: none;
     }
   }
 
   > .deleteCancelButton {
-    color: #21252b;
+    color: ${(props) => props.theme.subText};
     font-weight: 600;
     background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    border-right: 0.5px solid #eeeeee;
+    border-top: 1px solid ${(props) => props.theme.detailLine};
+    border-right: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-left-radius: 5px;
     &:hover {
-      background-color: #eeeeee;
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 
@@ -147,60 +152,11 @@ const DeleteModalView = styled.div`
     color: #ec1d36;
     font-weight: 600;
     background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    border-left: 0.5px solid #eeeeee;
+    border-top: 1px solid ${(props) => props.theme.detailLine};
+    border-left: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-right-radius: 5px;
     &:hover {
-      background-color: #eeeeee;
-    }
-  }
-`;
-
-const RuleModalView = styled.div`
-  text-align: center;
-  border-radius: 5px;
-  background-color: white;
-  width: 550px;
-  height: 420px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
-
-  > .ruleModalTitle {
-    font-size: 20px;
-    font-weight: 700;
-    text-align: center;
-    margin: 30px 0 45px 0;
-  }
-
-  > .warningText {
-    line-height: 30px;
-    text-align: left;
-    font-size: 15px;
-    font-weight: 500;
-    padding: 0 25px 0 25px;
-    margin-bottom: 59px;
-  }
-
-  > button {
-    font-weight: 500;
-    width: 550px;
-    height: 50px;
-    color: white;
-    border: none;
-    text-decoration: none;
-    &:hover {
-      text-decoration: none;
-    }
-  }
-
-  > .confirmButton {
-    color: #21252b;
-    font-weight: 600;
-    background-color: transparent;
-    border-top: 1px solid #eeeeee;
-    border-bottom-right-radius: 5px;
-    border-bottom-left-radius: 5px;
-    &:hover {
-      background-color: #eeeeee;
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 `;
@@ -226,8 +182,10 @@ const InfoArea = styled.div`
 const UserInfo = styled.div`
   margin-bottom: 15px;
   font-size: 14px;
+  color: ${(props) => props.theme.subText};
 
   > .text {
+    color: ${(props) => props.theme.mainText};
     font-size: 13px;
     margin-right: 50px;
   }
@@ -235,17 +193,19 @@ const UserInfo = styled.div`
 
 const AlbumInfoArea = styled.div`
   padding: 30px 10px 30px 10px;
-  border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
 
   > .playTitle {
     font-size: 19px;
     font-weight: 500;
     margin-bottom: 20px;
+    color: ${(props) => props.theme.mainText};
   }
 
   > .playContent {
     font-size: 14px;
+    color: ${(props) => props.theme.subText};
   }
 `;
 
@@ -258,6 +218,7 @@ const CommentInputArea = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: ${(props) => props.theme.mainText};
     margin-bottom: 20px;
 
     > .commentCount {
@@ -271,6 +232,7 @@ const CommentInputArea = styled.div`
       align-items: center;
       font-size: 14px;
       margin-right: 5px;
+      cursor: pointer;
 
       > .ruleIcon {
         margin-right: 5px;
@@ -283,17 +245,18 @@ const TextArea = styled.div`
   display: flex;
 
   > .textArea {
+    color: ${(props) => props.theme.mainText};
     width: 1300px;
     height: 70px;
     resize: none;
     margin: 0 10px 30px 0;
-    border: 1px solid #d1d1d1;
+    border: 1px solid ${(props) => props.theme.detailLine};
     border-radius: 4px;
     padding: 10px 8px 10px 8px;
+    background-color: ${(props) => props.theme.commentInputBackground};
 
     &:focus {
       outline: 0.5px solid gray;
-      padding: 10px 8px 10px 8px;
     }
   }
 
@@ -304,10 +267,62 @@ const TextArea = styled.div`
     border: none;
     color: #21252b;
     border-radius: 4px;
-    background-color: #ffefd5;
-
+    background-color: ${(props) => props.theme.mainColor};
+    cursor: pointer;
     &:hover {
-      background-color: #ffdeb7;
+      background-color: ${(props) => props.theme.buttonHover};
+    }
+  }
+`;
+
+const RuleModalView = styled.div`
+  text-align: center;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.background};
+  width: 550px;
+  height: 420px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
+
+  > .ruleModalTitle {
+    color: ${(props) => props.theme.mainText};
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin: 30px 0 45px 0;
+  }
+
+  > .warningText {
+    color: ${(props) => props.theme.subText};
+    line-height: 30px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 25px 0 25px;
+    margin-bottom: 59px;
+  }
+
+  > button {
+    font-weight: 500;
+    width: 550px;
+    height: 50px;
+    color: white;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  > .confirmButton {
+    color: ${(props) => props.theme.subText};
+    font-weight: 600;
+    background-color: transparent;
+    border-top: 1px solid ${(props) => props.theme.detailLine};
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    &:hover {
+      background-color: ${(props) => props.theme.likeHover};
     }
   }
 `;
@@ -326,7 +341,6 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
   const { diaryId } = useParams();
   const navigate = useNavigate();
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZGRhZHpAbmF2ZXIuY29tIiwic3ViIjoiZGRhZHpAbmF2ZXIuY29tIiwiaWF0IjoxNjc5OTE3ODI3LCJleHAiOjE2ODA1MTc4Mjd9.InKMqa_ozFhKP-TNbUceA2nk3f9uPY5umYFxadKn-4uGgf4tW3nfbBDrK3nVXYLhu00ie1BExiJpeDCrFgX2RQ`;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -334,14 +348,14 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
       const like = {
         likeCount: list.likeCount + 1,
       };
-      const res = await BASE_API.patch(`/diary/${diaryId}`, like);
+      const res = await TOKEN_API.patch(`/diary/${diaryId}`, like);
       getDetailData(res.data);
       setCheckLike(true);
     } else {
       const like = {
         likeCount: list.likeCount - 1,
       };
-      const res = await BASE_API.patch(`/diary/${diaryId}`, like);
+      const res = await TOKEN_API.patch(`/diary/${diaryId}`, like);
       getDetailData(res.data);
       setCheckLike(false);
     }
@@ -367,9 +381,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
 
   // 선택한 다이어리 delete 요청
   const postDelete = async () => {
-    const res = await BASE_API.delete(`/diary/${diaryId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.delete(`/diary/${diaryId}`);
     getDetailData(res.data);
     const scrollY = document.body.style.top;
     document.body.style.cssText = "";
@@ -383,14 +395,13 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
       diaryId: diaryId,
       body: text,
     };
-    const res = await BASE_API.post(`/comment`, newComment, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.post(`/comment`, newComment);
     getDetailData(res.data);
+    setText("");
   };
 
   // 댓글 작성 체인지 이벤트
-  const changeHandler = (e: any) => {
+  const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
 
@@ -412,9 +423,9 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
   };
 
-  const clickHandler = () => {
+  // 수정 페이지로 이동
+  const moveEditDiary = () => {
     navigate(`/EditDiary/${list.diaryId}`);
-    // navigate(`/DetailDiary/${list.nickname}`)
   };
 
   return (
@@ -423,9 +434,9 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         <TitleArea>
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
-            
-            <button className='edit' onClick={clickHandler}>수정</button>
-            
+            <button className='edit' onClick={moveEditDiary}>
+              수정
+            </button>
             <button className='delete' onClick={openModalHandler}>
               삭제
             </button>
@@ -475,7 +486,10 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         </AlbumCoverArea>
         <AlbumInfoArea>
           <div className='playTitle'>다이어리 소개</div>
-          <div className='playContent'>{list.body}</div>
+          <div
+            className='playContent'
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(list.body) }}
+          ></div>
         </AlbumInfoArea>
         <PlayList />
         <CommentInputArea>
@@ -511,10 +525,11 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           <TextArea>
             <textarea
               className='textArea'
+              value={text}
               placeholder='댓글을 작성하세요'
               onChange={changeHandler}
             />
-            <button className='sumbit' onClick={submitHandler}>
+            <button className='sumbit' onClick={submitHandler} disabled={text.length === 0}>
               등록
             </button>
           </TextArea>
@@ -528,4 +543,3 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
 }
 
 export default DetailList;
-

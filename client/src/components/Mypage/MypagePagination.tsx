@@ -19,6 +19,11 @@ const PageNum = styled.div`
     border: none;
     font-size: 15px;
     margin: 0 5px 0 5px;
+    cursor: pointer;
+    color: ${(props) => props.theme.mainText};
+    &:disabled {
+      color: ${(props) => props.theme.disabled};
+    }
   }
 
   > .pageFocused {
@@ -54,7 +59,7 @@ function MypagePagination({
 }: PaginationProps) {
   const [blockNum, setBlockNum] = useState<number>(0); // 페이지 당 표시할 페이지네이션 수
 
-  const PAGE_COUNT: number = 20; // 페이지 당 표시할 페이지네이션 수 (기본값 : 10개의 페이지네이션 노출)
+  const PAGE_COUNT: number = 1; // 페이지 당 표시할 페이지네이션 수 (기본값 : 10개의 페이지네이션 노출)
   const blockArea: number = blockNum * PAGE_COUNT; // 각 페이지에서 첫 페이지네이션의 위치 계산
 
   const numMyPages: number = Math.ceil(myPageLength / LIMIT_COUNT); // 나의 다이어리 페이지 개수
@@ -69,7 +74,7 @@ function MypagePagination({
     }
     return iArr;
   };
-  const allArr: number[] = createArr(numMyPages);
+  const myArr: number[] = createArr(numMyPages);
   const likeArr: number[] = createArr(numMyLikePages);
   const commentArr: number[] = createArr(numCommentPages);
 
@@ -119,7 +124,7 @@ function MypagePagination({
           <button className='leftHandle' onClick={prevPageHandler} disabled={page === 1}>
             <BiLeftArrowAlt size={19} />
           </button>
-          {allArr.slice(blockArea, PAGE_COUNT + blockArea).map((n) => (
+          {myArr.slice(blockArea, PAGE_COUNT + blockArea).map((n) => (
             <button
               className={page === n ? "pageTab pageFocused" : "pageTab"}
               key={n}

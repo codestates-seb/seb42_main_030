@@ -1,9 +1,11 @@
-import React from 'react'
-import EditMain from '../components/EditDiary/EditMain'
-export default function EditDiary() {
+import EditMain from "../components/EditDiary/EditMain";
+
+function EditDiary() {
   return (
-    <div>
+    <>
       <EditMain />
-    </div>
-  )
+    </>
+  );
 }
+
+export default EditDiary;

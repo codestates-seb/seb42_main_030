@@ -2,8 +2,8 @@ import styled from "styled-components";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import firstcarousel from "../../img/firstcarousel.png";
-import secondcarousel from "../../img/secondcarousel.png";
+import firstcarousel from "../../util/img/firstcarousel.png";
+import secondcarousel from "../../util/img/secondcarousel.png";
 
 const StyledSlider = styled(Slider)`
   height: 320px;

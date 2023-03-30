@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
+  background-color: ${(props) => props.theme.background}; ;
 `;
 
 const HeaderWrapper = styled.div`
@@ -16,9 +18,9 @@ const HeaderWrapper = styled.div`
   padding: 0 15px 0 15px;
   justify-content: space-between;
 
-  > a {
-    color: black;
-    text-decoration: none;
+  .buttonArea {
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -27,8 +29,24 @@ const Logo = styled.div`
   font-size: 20px;
 
   a {
-    color: black;
+    color: ${(props) => props.theme.logo};
     text-decoration: none;
+  }
+`;
+
+const ModeButton = styled.button`
+  padding-top: 3px;
+  width: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  > .lightIcon {
+    color: ${(props) => props.theme.mainText};
+  }
+
+  > .darkIcon {
+    color: ${(props) => props.theme.mainText};
   }
 `;
 
@@ -40,7 +58,7 @@ const SubmitButton = styled.button`
   font-size: 15px;
 
   a {
-    color: black;
+    color: ${(props) => props.theme.mainText};
     text-decoration: none;
   }
 `;
@@ -52,16 +70,16 @@ const LoginButton = styled.button`
   font-size: 15px;
   background-color: transparent;
   border-radius: 50px;
-  border: 2px solid black;
-  margin-left: 20px;
+  border: 2px solid ${(props) => props.theme.mainText};
+  margin: 0 10px 0 10px;
 
   a {
-    color: black;
+    color: ${(props) => props.theme.mainText};
     text-decoration: none;
   }
 `;
 
-function LogoutHeader() {
+function LogoutHeader({ isChange, changeMode }: any) {
   return (
     <HeaderContainer>
       <HeaderWrapper>
@@ -69,12 +87,21 @@ function LogoutHeader() {
           <Link to='/'>나만의 작은 음악 다이어리</Link>
         </Logo>
         <div className='buttonArea'>
-          <SubmitButton>
-            <Link to='/Login'>새 다이어리 등록</Link>
-          </SubmitButton>
-          <LoginButton>
-            <Link to='/Login'>로그인</Link>
-          </LoginButton>
+          <ModeButton onClick={changeMode}>
+            {isChange === "dark" ? (
+              <BsFillMoonStarsFill className='darkIcon' size={20} />
+            ) : (
+              <BsFillSunFill className='lightIcon' size={25} />
+            )}
+          </ModeButton>
+          <div className='buttonArea'>
+            <SubmitButton>
+              <Link to='/Login'>새 다이어리 등록</Link>
+            </SubmitButton>
+            <LoginButton>
+              <Link to='/Login'>로그인</Link>
+            </LoginButton>
+          </div>
         </div>
       </HeaderWrapper>
     </HeaderContainer>

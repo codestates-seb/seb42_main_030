@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { CommentData } from "../../util/Type";
-import { BASE_API } from "../../util/API";
+import { TOKEN_API } from "../../util/API";
 
 const CommentListContainer = styled.li`
   display: flex;
@@ -14,14 +14,16 @@ const CommentListWrapper = styled.div`
   min-width: 300px;
   border: none;
   border-bottom: 1px solid lightgray;
+  color: ${(props) => props.theme.mainText};
 
   > .content {
     font-size: 13px;
-    color: #323232;
+    color: ${(props) => props.theme.mainText};
     font-weight: 500;
   }
 
   > .date {
+    color: ${(props) => props.theme.subText};
     font-size: 12px;
     color: #848180;
     margin: 10px 0 15px 0;
@@ -154,8 +156,6 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
   const [click, setClick] = useState<boolean>(false);
   const [deleteCommentModal, setDeleteCommentModal] = useState<boolean>(false);
 
-  const token = `eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiZ2dAZ21haWwuY29tIiwic3ViIjoiZ2dAZ21haWwuY29tIiwiaWF0IjoxNjc5NzI2NTU2LCJleHAiOjE2ODAzMjY1NTZ9.y2-PjQUPjcGsD5YQtU8ezxrh_bPEPGXe3YzJiXo-P_sNzDsS6w5IfVLaVjWyWw7ekubLVLchJIv6623bheoybQ`;
-
   // 댓글 patch 요청
   const changeComment = async () => {
     const newComment = {
@@ -163,20 +163,15 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
       commentId: list.commentId,
       body: commentContent,
     };
-    const res = await BASE_API.patch(`/comment/${list.commentId}`, newComment, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.patch(`/comment/${list.commentId}`, newComment);
     getDetailData(res.data);
     setClick(false);
   };
 
-  // 댓글  delete 요청
+  // 댓글 delete 요청
   const commentDelete = async () => {
-    const res = await BASE_API.delete(`/diary/${list.commentId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await TOKEN_API.delete(`/comment/${list.commentId}`);
     getDetailData(res.data);
-    console.log(list.commentId);
   };
 
   // 댓글 변경 클릭 이벤트

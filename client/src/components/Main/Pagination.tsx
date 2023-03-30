@@ -19,6 +19,11 @@ const PageNum = styled.div`
     border: none;
     font-size: 15px;
     margin: 0 5px 0 5px;
+    cursor: pointer;
+    color: ${(props) => props.theme.mainText};
+    &:disabled {
+      color: ${(props) => props.theme.disabled};
+    }
   }
 
   > .pageFocused {
