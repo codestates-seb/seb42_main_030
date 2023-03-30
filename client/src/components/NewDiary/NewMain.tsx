@@ -91,7 +91,6 @@ const UserInfo = styled.div`
 const AlbumInfoArea = styled.div`
   padding: 30px 10px 80px 10px;
   border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
 
   > .playTitle {
     font-size: 19px;
@@ -122,7 +121,7 @@ const AlbumInfoArea = styled.div`
 
 const UrlInput = styled.div`
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   > input {
     color: ${(props) => props.theme.mainText};
@@ -164,25 +163,25 @@ function NewMain() {
   const today: string = new Date().toISOString().substring(0, 10);
 
   // 다이어리 post 요청
-  const submitHandler = async () => {
-    const newDiary = {
-      title: newTitle,
-      body: newBody,
-      playlist: plList,
-    };
-    await TOKEN_API.post(`/diary`, newDiary);
-    navigate(`/`);
-  };
-
-  //! json 서버 post 테스트 용
   // const submitHandler = async () => {
   //   const newDiary = {
   //     title: newTitle,
   //     body: newBody,
   //     playlist: plList,
   //   };
-  //   await axios.post(`http://localhost:3001/diary`, newDiary);
+  //   await TOKEN_API.post(`/diary`, newDiary);
+  //   navigate(`/`);
   // };
+
+  //! json 서버 post 테스트 용
+  const submitHandler = async () => {
+    const newDiary = {
+      title: newTitle,
+      body: newBody,
+      playlist: plList,
+    };
+    await axios.post(`http://localhost:3001/diary`, newDiary);
+  };
 
   // 제목 수정 체인지 이벤트
   const changeNewTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -194,6 +193,7 @@ function NewMain() {
     setNewBody(e);
   };
 
+  // input에 등록한 Url 정보 불러옴
   const getYoutubeData = async (id: any) => {
     try {
       const res =
@@ -206,6 +206,7 @@ function NewMain() {
     }
   };
 
+  // 추가 버튼 클릭 시 플레이리스트 담는 이벤트 핸들러
   const addPlayList = () => {
     const musicInfo: any = {};
 
@@ -221,7 +222,7 @@ function NewMain() {
       });
   };
 
-  console.log(plList);
+  // console.log(plList);
 
   return (
     <EditMainContainer>
@@ -275,15 +276,8 @@ function NewMain() {
               추가
             </button>
           </UrlInput>
-          {plList?.map((value: any) => {
-            return (
-              <YouTubeList
-                list={value}
-                key={value.channelId}
-                plList={plList}
-                setPlList={setPlList}
-              />
-            );
+          {plList?.map((value: any, index: any) => {
+            return <YouTubeList list={value} key={index} plList={plList} setPlList={setPlList} />;
           })}
         </AlbumInfoArea>
       </EditMainWrapper>

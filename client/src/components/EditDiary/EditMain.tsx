@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
+import axios from "axios";
 
 function EditMain() {
   const [detailData, setDetailData] = useState<DiaryData>();
@@ -22,7 +23,22 @@ function EditMain() {
     getDetailData();
   }, []);
 
-  return <>{detailData && <EditList list={detailData} />}</>;
+  //! json 서버 유튜브 링크 테스트 용
+  const [test, setTest] = useState<any>();
+
+  const getYoutubeData = async () => {
+    try {
+      const res = await axios.get(`http://localhost:3001/diary`);
+      setTest(res.data[0].playlist);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getYoutubeData();
+  }, []);
+
+  return <>{detailData && <EditList list={detailData} test={test} />}</>;
 }
 
 export default EditMain;

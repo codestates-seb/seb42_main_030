@@ -182,7 +182,7 @@ const InfoArea = styled.div`
 const UserInfo = styled.div`
   margin-bottom: 15px;
   font-size: 14px;
-  color: ${(props) => props.theme.subText};
+  color: ${(props) => props.theme.mainText};
 
   > .text {
     color: ${(props) => props.theme.mainText};
@@ -195,6 +195,22 @@ const AlbumInfoArea = styled.div`
   padding: 30px 10px 30px 10px;
   border-top: 1px solid ${(props) => props.theme.detailLine};
   border-bottom: 1px solid ${(props) => props.theme.detailLine};
+
+  > .playTitle {
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: ${(props) => props.theme.mainText};
+  }
+
+  > .playContent {
+    font-size: 14px;
+    color: ${(props) => props.theme.mainText};
+  }
+`;
+
+const PlayListArea = styled.div`
+  padding: 30px 10px 30px 10px;
 
   > .playTitle {
     font-size: 19px;
@@ -330,9 +346,10 @@ const RuleModalView = styled.div`
 interface DiaryDataProps {
   list: DiaryData;
   getDetailData: React.Dispatch<React.SetStateAction<object>>;
+  test: any;
 }
 
-function DetailList({ list, getDetailData }: DiaryDataProps) {
+function DetailList({ list, getDetailData, test }: DiaryDataProps) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
@@ -428,6 +445,8 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     navigate(`/EditDiary/${list.diaryId}`);
   };
 
+  // console.log(test);
+
   return (
     <DetailMainContainer>
       <DetailMainWrapper>
@@ -491,7 +510,13 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(list.body) }}
           ></div>
         </AlbumInfoArea>
-        <PlayList />
+        {/* PlayList json 데이터 부분 */}
+        <PlayListArea>
+          <div className='playTitle'>다이어리 수록곡</div>
+          {test?.map((value: any, index: any) => {
+            return <PlayList list={value} key={index} />;
+          })}
+        </PlayListArea>
         <CommentInputArea>
           <div className='commentTitle'>
             <span className='commentCount'>댓글 ({commentData.length})</span>

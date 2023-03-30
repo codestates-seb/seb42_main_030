@@ -1,9 +1,9 @@
-import spotifylogo from "../../util/img/spotifylogo.png";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { BASE_API } from "../../util/API";
+import axios from "axios";
 
 const Buttons = styled.div`
   display: flex;
@@ -155,8 +155,13 @@ interface FormValue {
 }
 
 const Login = () => {
-  const [loginError, setLoginError] = useState(false);
+  interface FormValue {
+    email: string;
+    password: any;
+  }
+
   const navigate = useNavigate();
+  const [loginError, setLoginError] = useState(false);
 
   const {
     register,
@@ -166,24 +171,24 @@ const Login = () => {
   } = useForm<FormValue>();
 
   const onSubmit: SubmitHandler<FormValue> = (data) => {
-    BASE_API.post(`/auth/login`, {
-      email: data.email,
-      password: data.password,
-    })
+    axios
+      .post("http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/auth/login", {
+        email: data.email,
+        password: data.password,
+      })
       .then((res) => {
         console.log(res);
         if (res.headers.authorization) {
           localStorage.setItem("login-token", res.headers.authorization);
-          // localStorage.setItem("login-refresh", res.headers.refresh);
           localStorage.setItem("userId", res.data.userId);
-          localStorage.setItem("nickname", res.data.nickname);
+          // localStorage.setItem("login-refresh", res.headers.refresh);
         }
         setLoginError(false);
+        console.log(res);
       })
       .then(() => {
         navigate("/");
-        // 왜 새로고침이 필요한지?
-        window.location.reload();
+        // window.location.reload();
       })
       .catch(() => {
         setLoginError(true);
@@ -194,15 +199,24 @@ const Login = () => {
     <LoginContainer onSubmit={handleSubmit(onSubmit)}>
       <LoginWrapper>
         <Buttons>
-          <SpotifyButton>
-            <ImgSrc src={spotifylogo} />
-            Spotify로 계속하기
-          </SpotifyButton>
+          <SpotifyButton>Spotify로 계속하기</SpotifyButton>
         </Buttons>
+
         <BorderLine />
+
         <Form>
           <EmailText>이메일 주소</EmailText>
-          <EmailInput />
+          <EmailInput
+            type='email'
+            id='email'
+            {...register("email", {
+              required: true,
+            })}
+          />
+          {errors.email && errors.email.type === "required" && (
+            <Errormsg>Email cannot be empty.</Errormsg>
+          )}
+          {loginError ? <Errormsg>The email or password is incorrect.</Errormsg> : null}
           <PassText>비밀번호</PassText>
           <UnderText>비밀번호 찾기</UnderText>
           <PassInput
@@ -216,6 +230,7 @@ const Login = () => {
               <Errormsg>Password cannot be empty.</Errormsg>
             )}
           </PassInput>
+
           <LoginButton
             type='button'
             onClick={handleSubmit(onSubmit)}
@@ -224,6 +239,7 @@ const Login = () => {
             로그인
           </LoginButton>
         </Form>
+
         <BorderLine />
         <div>아직 계정이 없으신가요?</div>
         <SignupButton>

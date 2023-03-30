@@ -182,7 +182,6 @@ const Signup = () => {
         setErrormessage(error.response.data.message);
         setSignUpError(true);
       });
-    console.log(data);
   };
 
   return (
@@ -200,12 +199,18 @@ const Signup = () => {
           <EmailText>이메일 주소</EmailText>
           <EmailInput type='email' id='email' {...register("email")} />
           <UserText>닉네임</UserText>
-          <UsernameInput />
+          <UsernameInput id='nickname' {...register("nickname")} />
           <PassText>비밀번호</PassText>
           <PassInput type='password' id='password' {...register("password")} />
         </Form>
         <BorderLine />
-        <SignupButton>가입하기</SignupButton>
+        <SignupButton
+          type='button'
+          onClick={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          가입하기
+        </SignupButton>
       </SignUpWrapper>
     </SignUpContainer>
   );

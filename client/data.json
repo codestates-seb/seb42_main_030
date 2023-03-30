@@ -1,3 +1,25 @@
 {
-  "diary": []
+  "diary": [
+    {
+      "title": "ㄴㅇㅁㄹ",
+      "body": "<p>ㄴㅇㄹ</p>",
+      "playlist": [
+        {
+          "channelId": "UCoT_lytD89e6mRVrTuS4gCQ",
+          "thumbnail": "https://i.ytimg.com/vi/B2TjVEt5j-4/default.jpg",
+          "title": "버스커버스커 - 벚꽃 엔딩"
+        },
+        {
+          "channelId": "UC3IZKseVpdzPSBaWxBxundA",
+          "thumbnail": "https://i.ytimg.com/vi/sVTy_wmn5SU/default.jpg",
+          "title": "NewJeans (뉴진스) 'OMG' Official MV (Performance ver.1)"
+        },
+        {
+          "channelId": "UC3IZKseVpdzPSBaWxBxundA",
+          "thumbnail": "https://i.ytimg.com/vi/11cta61wi0g/default.jpg",
+          "title": "NewJeans (뉴진스) 'Hype Boy' Official MV (Performance ver.1)"
+        }
+      ]
+    }
+  ]
 }

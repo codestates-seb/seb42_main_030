@@ -1,11 +1,14 @@
 import styled from "styled-components";
-import PlayList from "../DetailDiary/PlayList";
+// import PlayList from "../DetailDiary/PlayList";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { DiaryDataProps } from "../../util/Type";
+// import { DiaryDataProps } from "../../util/Type";
+import { DiaryData } from "../../util/Type";
 import { TOKEN_API } from "../../util/API";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import axios from "axios";
+import EditYouTubeList from "./EditYouTubeList";
 
 const EditMainContainer = styled.div`
   display: flex;
@@ -120,9 +123,50 @@ const AlbumInfoArea = styled.div`
   }
 `;
 
-function EditList({ list }: DiaryDataProps) {
+const UrlInput = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+
+  > input {
+    color: ${(props) => props.theme.mainText};
+    width: 1300px;
+    resize: none;
+    margin-right: 10px;
+    border: 1px solid ${(props) => props.theme.detailLine};
+    border-radius: 4px;
+    padding: 10px 8px 10px 8px;
+    background-color: ${(props) => props.theme.commentInputBackground};
+
+    &:focus {
+      outline: 0.5px solid gray;
+    }
+  }
+
+  > .sumbit {
+    width: 90px;
+    min-width: 90px;
+    border: none;
+    color: #21252b;
+    border-radius: 4px;
+    background-color: ${(props) => props.theme.mainColor};
+    cursor: pointer;
+    &:hover {
+      background-color: ${(props) => props.theme.buttonHover};
+    }
+  }
+`;
+
+interface DiaryDataProps {
+  list: DiaryData;
+  test: any;
+}
+
+function EditList({ list, test }: DiaryDataProps) {
   const [editTitle, setEditTitle] = useState<string>(list.title);
   const [editBody, setEditBody] = useState<string>(list.body);
+
+  const [plList, setPlList] = useState<any>(test);
+  const [url, setUrl] = useState("");
 
   const navigate = useNavigate();
   const { diaryId } = useParams();
@@ -137,6 +181,16 @@ function EditList({ list }: DiaryDataProps) {
     navigate(`/DetailDiary/${diaryId}`);
   };
 
+  //! json 서버 post 테스트 용
+  // const submitHandler = async () => {
+  //   const newDiary = {
+  //     title: editTitle,
+  //     body: editBody,
+  //     playlist: plList,
+  //   };
+  //   await axios.patch(`http://localhost:3001/diary`, newDiary);
+  // };
+
   // 제목 수정 체인지 이벤트
   const changeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditTitle(e.target.value);
@@ -146,6 +200,35 @@ function EditList({ list }: DiaryDataProps) {
   const changeEditBody = (e: any) => {
     setEditBody(e);
   };
+
+  const getYoutubeData = async (id: any) => {
+    try {
+      const res =
+        await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}
+      &part=snippet`);
+      console.log(res.data);
+      return res.data.items[0].snippet;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const addPlayList = () => {
+    const musicInfo: any = {};
+
+    getYoutubeData(url)
+      .then((res) => {
+        musicInfo.channelId = res.channelId;
+        musicInfo.thumbnail = res.thumbnails.default.url;
+        musicInfo.title = res.title;
+      })
+      .then(() => {
+        setPlList((value: any) => [...value, musicInfo]);
+        setUrl("");
+      });
+  };
+
+  // console.log(plList);
 
   return (
     <EditMainContainer>
@@ -188,7 +271,25 @@ function EditList({ list }: DiaryDataProps) {
             onChange={changeEditBody}
           />
         </AlbumInfoArea>
-        <PlayList />
+        {/* <PlayList /> */}
+        <AlbumInfoArea>
+          <div className='playTitle'>다이어리 수록곡</div>
+          <UrlInput>
+            <input
+              value={url}
+              placeholder='유튜브 URL을 입력해 주세요'
+              onChange={(e) => setUrl(e.target.value)}
+            />
+            <button className='sumbit' onClick={addPlayList} disabled={url.length === 0}>
+              추가
+            </button>
+          </UrlInput>
+          {plList?.map((value: any, index: any) => {
+            return (
+              <EditYouTubeList list={value} key={index} plList={plList} setPlList={setPlList} />
+            );
+          })}
+        </AlbumInfoArea>
       </EditMainWrapper>
     </EditMainContainer>
   );
