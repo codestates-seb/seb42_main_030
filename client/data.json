@@ -1,23 +1,20 @@
 {
   "diary": [
     {
-      "title": "ㄴㅇㅁㄹ",
-      "body": "<p>ㄴㅇㄹ</p>",
+      "title": "sadf",
+      "body": "",
       "playlist": [
         {
-          "channelId": "UCoT_lytD89e6mRVrTuS4gCQ",
-          "thumbnail": "https://i.ytimg.com/vi/B2TjVEt5j-4/default.jpg",
-          "title": "버스커버스커 - 벚꽃 엔딩"
+          "channelId": "UCUbNhCJCQH-94fKhqKyTN-g",
+          "thumbnail": "https://i.ytimg.com/vi/76-NvbHdiX4/default.jpg",
+          "title": "오래 간직하고 싶은 기억을 기록했다 (playlist)",
+          "url": "https://www.youtube.com/watch?v=76-NvbHdiX4"
         },
         {
-          "channelId": "UC3IZKseVpdzPSBaWxBxundA",
-          "thumbnail": "https://i.ytimg.com/vi/sVTy_wmn5SU/default.jpg",
-          "title": "NewJeans (뉴진스) 'OMG' Official MV (Performance ver.1)"
-        },
-        {
-          "channelId": "UC3IZKseVpdzPSBaWxBxundA",
-          "thumbnail": "https://i.ytimg.com/vi/11cta61wi0g/default.jpg",
-          "title": "NewJeans (뉴진스) 'Hype Boy' Official MV (Performance ver.1)"
+          "channelId": "UC0Y0T9JpgIBbyGDjvy9PbOg",
+          "thumbnail": "https://i.ytimg.com/vi/qMwzWk81tVM/default.jpg",
+          "title": "[inflaylist] 공부/작업 할 때 집중해서 듣기 좋은 음악✍ | 4 hour playlist | lofi, piano | 직장인 | 대학생 | 프리랜서 | 취준생",
+          "url": "https://www.youtube.com/watch?v=qMwzWk81tVM"
         }
       ]
     }

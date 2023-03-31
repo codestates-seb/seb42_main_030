@@ -180,7 +180,7 @@ const Login = () => {
         console.log(res);
         if (res.headers.authorization) {
           localStorage.setItem("login-token", res.headers.authorization);
-          localStorage.setItem("userId", res.data.userId);
+          // localStorage.setItem("userId", res.data.userId);
           // localStorage.setItem("login-refresh", res.headers.refresh);
         }
         setLoginError(false);

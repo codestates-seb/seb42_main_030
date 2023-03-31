@@ -38,6 +38,8 @@ function DetailMain() {
     getYoutubeData();
   }, []);
 
+  // console.log(test);
+
   return (
     <>{detailData && <DetailList list={detailData} getDetailData={getDetailData} test={test} />};</>
   );

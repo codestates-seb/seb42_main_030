@@ -193,6 +193,19 @@ function NewMain() {
     setNewBody(e);
   };
 
+  // 전체 url을 입력받은 후 id만 필터링
+  const getVideoId = (url: string) => {
+    if (url.indexOf("/watch") > -1) {
+      const arr = url.replaceAll(/=|&/g, "?").split("?");
+      return arr[arr.indexOf("v") + 1];
+    } else if (url.indexOf("/youtu.be") > -1) {
+      const arr = url.replaceAll(/=|&|\//g, "?").split("?");
+      return arr[arr.indexOf("youtu.be") + 1];
+    } else {
+      return "none";
+    }
+  };
+
   // input에 등록한 Url 정보 불러옴
   const getYoutubeData = async (id: any) => {
     try {
@@ -209,12 +222,14 @@ function NewMain() {
   // 추가 버튼 클릭 시 플레이리스트 담는 이벤트 핸들러
   const addPlayList = () => {
     const musicInfo: any = {};
+    const urlId = getVideoId(url);
 
-    getYoutubeData(url)
+    getYoutubeData(urlId)
       .then((res) => {
         musicInfo.channelId = res.channelId;
         musicInfo.thumbnail = res.thumbnails.default.url;
         musicInfo.title = res.title;
+        musicInfo.url = url;
       })
       .then(() => {
         setPlList((value: any) => [...value, musicInfo]);

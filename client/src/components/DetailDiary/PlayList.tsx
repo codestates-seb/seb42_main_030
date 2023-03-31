@@ -1,10 +1,10 @@
 import styled from "styled-components";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PlayListContainer = styled.li`
   display: flex;
   justify-content: center;
-  margin: 10px 0;
+  line-height: 4;
 `;
 
 const PlayListWrapper = styled.div`
@@ -18,6 +18,11 @@ const PlayListWrapper = styled.div`
 const ContentArea = styled.div`
   display: flex;
   align-items: center;
+  text-decoration: none;
+
+  > a {
+    text-decoration: none;
+  }
 
   > .thumbnail {
     width: 80px;
@@ -28,6 +33,7 @@ const ContentArea = styled.div`
   > .listTitle {
     font-size: 15px;
     width: 100%;
+    color: ${(props) => props.theme.mainText};
   }
 
   > .delete {
@@ -40,6 +46,10 @@ const ContentArea = styled.div`
     margin: 5px;
     background-color: transparent;
   }
+  &:hover {
+    border-radius: 4px;
+    background-color: ${(props) => props.theme.playListHover};
+  }
 `;
 
 interface YoutubeDataProps {
@@ -51,10 +61,12 @@ function PlayList({ list }: YoutubeDataProps) {
   return (
     <PlayListContainer>
       <PlayListWrapper>
-        <ContentArea>
-          <img className='thumbnail' src={list.thumbnail} alt='썸네일' />
-          <div className='listTitle'>{list.title}</div>
-        </ContentArea>
+        <Link to={list.url}>
+          <ContentArea>
+            <img className='thumbnail' src={list.thumbnail} alt='썸네일' />
+            <div className='listTitle'>{list.title}</div>
+          </ContentArea>
+        </Link>
       </PlayListWrapper>
     </PlayListContainer>
   );
