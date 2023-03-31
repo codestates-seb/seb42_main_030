@@ -1,10 +1,9 @@
 spring:
-  h2:
-    console:
-      enabled: true
-      path: /h2
   datasource:
-    url: jdbc:h2:mem:test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://diary-deploy.cs8oc5fuvzgl.ap-northeast-2.rds.amazonaws.com:13306/main
+    username: admin
+    password: admin-diary
   jpa:
     hibernate:
       ddl-auto: create
@@ -12,17 +11,35 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        ddl-auto: update
+    generate:
+      ddl: true
+    security:
+      oauth2:
+        client:
+          registration:
+            google:
+              client-id: 9104364997-7i6fd1uko0bjd69g8uqpbhs05n8c35s3.apps.googleusercontent.com
+              client-secret: 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
+              redirect_uri: http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080/
+              scope: profile, email
 logging:
   level:
     org:
       springframework:
         orm:
           jpa: DEBUG
+      hibernate.SQL: debug
 server:
   servlet:
     encoding:
       force-response: true
 jwt:
-  key: ${JWT_SECRET_KEY}              # 민감한 정보는 시스템 환경 변수에서 로드한다.
+  key:
   access-token-expiration-minutes: 10000
   refresh-token-expiration-minutes: 420
+servlet:
+  multipart:
+    max-file-size: 10MB
+    max-request-size: 10MB
+

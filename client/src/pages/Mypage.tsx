@@ -1,5 +1,11 @@
+import MypageMain from "../components/Mypage/MypageMain";
+
 function Mypage() {
-  return <div>이곳은 마이 페이지입니다.</div>;
+  return (
+    <>
+      <MypageMain />
+    </>
+  );
 }
 
 export default Mypage;

@@ -1,5 +1,9 @@
-import SpotifyLogo from "../../img/spotifylogo.png";
+import spotifylogo from "../../util/img/spotifylogo.png";
 import styled from "styled-components";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { BASE_API } from "../../util/API";
 
 const Buttons = styled.div`
   display: flex;
@@ -37,7 +41,7 @@ const BorderLine = styled.hr`
   width: 450px;
   margin: 30px;
   border: 1px solid gray;
-`
+`;
 
 const Form = styled.form`
   width: 450px;
@@ -124,8 +128,7 @@ const UsernameInput = styled.input`
   left: 8%;
 `;
 
-
-const LoginWrapper = styled.div`
+const SignUpWrapper = styled.div`
   width: fit-content;
   height: fit-content;
   display: flex;
@@ -133,9 +136,9 @@ const LoginWrapper = styled.div`
   align-items: center;
   position: absolute;
   top: 25%;
-`
+`;
 
-const LoginContainer = styled.div`
+const SignUpContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   margin: 0px;
@@ -144,39 +147,67 @@ const LoginContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   box-sizing: border-box;
-`
+`;
 
+interface FormValue {
+  email: string;
+  nickname: string;
+  password: any;
+}
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const [signUpError, setSignUpError] = useState(false);
+  const [errorMessage, setErrormessage] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValue>();
+
+  const onSubmit: SubmitHandler<FormValue> = (data) => {
+    BASE_API.post(`/users/sign-up`, {
+      email: data.email,
+      nickname: data.nickname,
+      password: data.password,
+    })
+      .then(() => {
+        setErrormessage("");
+        setSignUpError(false);
+        navigate("/login");
+      })
+      .catch((error) => {
+        setErrormessage(error.response.data.message);
+        setSignUpError(true);
+      });
+    console.log(data);
+  };
+
   return (
-    <LoginContainer>
-      <LoginWrapper>
+    <SignUpContainer>
+      <SignUpWrapper>
         <Buttons>
           <SpotifyButton>
-            <ImgSrc src={SpotifyLogo} />
+            <ImgSrc src={spotifylogo} />
             Spotify로 가입하기
           </SpotifyButton>
         </Buttons>
-
-        <BorderLine/>
-
-        <Form>
+        <BorderLine />
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Text>이메일로 가입하기</Text>
           <EmailText>이메일 주소</EmailText>
-          <EmailInput/>
+          <EmailInput type='email' id='email' {...register("email")} />
           <UserText>닉네임</UserText>
-          <UsernameInput/>
+          <UsernameInput />
           <PassText>비밀번호</PassText>
-          <PassInput/>
+          <PassInput type='password' id='password' {...register("password")} />
         </Form>
-
-        <BorderLine/>
-    
-        <SignupButton>
-            가입하기
-        </SignupButton>
-      </LoginWrapper>
-    </LoginContainer>
+        <BorderLine />
+        <SignupButton>가입하기</SignupButton>
+      </SignUpWrapper>
+    </SignUpContainer>
   );
 };
 

@@ -1,14 +1,17 @@
+import styled from "styled-components";
 import Carousel from "../components/Main/Carousel";
-// import DiaryList from '../components/Main/DiaryList';
 import DiaryMain from "../components/Main/DiaryMain";
+
+const MainPage = styled.div`
+  background-color: ${(props) => props.theme.background}; ;
+`;
 
 function Main() {
   return (
-    <div>
+    <MainPage>
       <Carousel />
       <DiaryMain />
-
-    </div>
+    </MainPage>
   );
 }
 

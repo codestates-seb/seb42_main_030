@@ -70,6 +70,7 @@ public class JwtTokenizer {
         return claims;
     }
 
+    //JWT검증
     public void verifySignature(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 

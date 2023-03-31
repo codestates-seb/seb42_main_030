@@ -1,76 +1,110 @@
-import React from 'react'
-import styled from 'styled-components'
-import { AiFillCaretRight } from 'react-icons/ai'
-import List from './List'
+import styled from "styled-components";
 
-const Container = styled.div`
-  padding:2rem;
-`
-const ListTitle = styled.div`
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  border-bottom: 2px solid black;
-  padding-bottom:2rem;
-`
-const H1 = styled.h1`
-  display:inline-block;
-`
-const Button = styled.button`
-  margin-left: 2rem;
-`
-const ListInfo = styled.div`
-  display:flex;
-  align-items:center;
-  padding:1rem;
-  border-bottom:1px solid;
-`
-const InfoInput = styled.div`
-  width:13px;
-  height:13px;
-  margin-right:1rem;
-`
-const InfoImg = styled.div`
-  width:50px;
-  height:20px;
-`
-const InfoSong = styled.div`
-  width:600px;
-  height:20px;
-  margin-left:1rem;
-`
-const InfoArtist = styled.div`
-  width:200px;
-`
-const InfoAlbum = styled.div`
-  width:170px;
-`
-const InfoListen = styled.div`
-  width: 100px;
-`
-export default function PlayList() {
+const PlayListContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const PlayListWrapper = styled.div`
+  width: 100vw;
+  max-width: 1440px;
+  min-width: 300px;
+  border: none;
+`;
+
+const TitleArea = styled.div`
+  padding: 30px 10px 30px 10px;
+
+  .playListTitle {
+    color: ${(props) => props.theme.mainText};
+    font-size: 19px;
+    font-weight: 500;
+  }
+`;
+
+const ListContainer = styled.ul`
+  padding: 30px 5px 0 5px;
+`;
+
+const Lists = styled.li`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #323232;
+  padding: 10px 0 10px 0;
+  margin-bottom: 1rem;
+
+  > .link {
+    color: black;
+    color: ${(props) => props.theme.subText};
+  }
+  > img {
+    margin: 0 20px 0 15px;
+    width: 45px;
+    height: 45px;
+    border-radius: 4px;
+  }
+
+  > .listTitle {
+    padding-left: 19px;
+    flex: 8;
+  }
+
+  > .listArtist {
+    flex: 4;
+  }
+
+  > .listAlbum {
+    flex: 4;
+  }
+
+  > .listTime {
+    flex: 2;
+  }
+
+  > .test {
+    flex: 0.5;
+    padding-right: 10px;
+  }
+
+  &:hover {
+    border-radius: 4px;
+    background-color: ${(props) => props.theme.playListHover};
+  }
+`;
+
+function PlayList() {
+  const arr2 = {
+    list: [
+      {
+        link: "https://www.youtube.com/watch?v=bkEpWA-4FfU",
+      },
+      {
+        link: "https://www.youtube.com/watch?v=Km71Rr9K-Bw",
+      },
+    ],
+  };
+
   return (
-    <Container>
-      <ListTitle>
-        <H1>플레이 리스트</H1>
-        <Button>
-          <AiFillCaretRight />
-          듣기
-        </Button>
-      </ListTitle>
-      <ListInfo>
-        <InfoInput></InfoInput>
-        <InfoImg></InfoImg>
-        <InfoSong>곡</InfoSong>
-        <InfoArtist>아티스트</InfoArtist>
-        <InfoAlbum>앨범</InfoAlbum>
-        <InfoListen>듣기</InfoListen>
-      </ListInfo>
-      <List />
-    </Container>
-  )
+    <PlayListContainer>
+      <PlayListWrapper>
+        <TitleArea>
+          <div className='playListTitle'>다이어리 수록곡</div>
+          <ListContainer>
+            {arr2.list.map((val, idx) => {
+              return (
+                <Lists key={idx}>
+                  <a className='link' href='https://www.youtube.com/watch?v=bkEpWA-4FfU'>
+                    {val.link}
+                  </a>
+                </Lists>
+              );
+            })}
+          </ListContainer>
+        </TitleArea>
+      </PlayListWrapper>
+    </PlayListContainer>
+  );
 }
 
-
-
-
+export default PlayList;

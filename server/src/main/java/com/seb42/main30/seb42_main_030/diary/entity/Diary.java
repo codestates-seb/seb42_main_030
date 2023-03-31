@@ -17,20 +17,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Diary {
 public class Diary extends BaseTimeEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryId;
-
-    private String title;
-    private String body;
-    private String playlistId;
-    private String tag;
-    private int like;
-    private int view;
-
 
     @Column(nullable = false)
     private String title;
@@ -55,5 +45,6 @@ public class Diary extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
+
 
 }

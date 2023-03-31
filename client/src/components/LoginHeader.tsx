@@ -1,11 +1,14 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { BASE_API } from "../util/API";
 import { GoTriangleDown } from "react-icons/go";
+import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
+  background-color: ${(props) => props.theme.background};
 `;
 
 const HeaderWrapper = styled.div`
@@ -14,14 +17,9 @@ const HeaderWrapper = styled.div`
   min-width: 300px;
   display: flex;
   align-items: center;
-  height: 70px;
+  height: 80px;
   padding: 0 15px 0 15px;
   justify-content: space-between;
-
-  > a {
-    color: black;
-    text-decoration: none;
-  }
 
   .buttonArea {
     display: flex;
@@ -29,11 +27,12 @@ const HeaderWrapper = styled.div`
     position: relative;
 
     > .dropdown {
-      font-size: 15px;
+      color: ${(props) => props.theme.mainText};
+      font-size: 14.5px;
       font-weight: 400;
       width: 150px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 10px 10px rgba(0, 0, 0, 0.1);
-      background-color: white;
+      background-color: ${(props) => props.theme.disabledTagBackground};
       display: flex;
       flex-direction: column;
       position: absolute;
@@ -41,20 +40,23 @@ const HeaderWrapper = styled.div`
       right: 1px;
       list-style: none;
       z-index: 1;
+      cursor: pointer;
 
       > a {
         text-decoration: none;
-        color: black;
+        color: ${(props) => props.theme.mainText};
         padding: 12px 10px 10px 12px;
         &:hover {
-          background-color: #dcdcdc;
+          font-weight: 600;
+          background-color: ${(props) => props.theme.playListHover};
         }
       }
 
       > li {
         padding: 10px 10px 12px 12px;
         &:hover {
-          background-color: #dcdcdc;
+          font-weight: 600;
+          background-color: ${(props) => props.theme.playListHover};
         }
       }
     }
@@ -64,6 +66,27 @@ const HeaderWrapper = styled.div`
 const Logo = styled.div`
   font-weight: 700;
   font-size: 20px;
+
+  a {
+    color: ${(props) => props.theme.logo};
+    text-decoration: none;
+  }
+`;
+
+const ModeButton = styled.button`
+  padding-top: 3px;
+  width: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  > .lightIcon {
+    color: ${(props) => props.theme.mainText};
+  }
+
+  > .darkIcon {
+    color: ${(props) => props.theme.mainText};
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -72,6 +95,11 @@ const SubmitButton = styled.button`
   background-color: transparent;
   font-weight: 700;
   font-size: 15px;
+
+  a {
+    color: ${(props) => props.theme.mainText};
+    text-decoration: none;
+  }
 `;
 
 const ProfileButton = styled.div`
@@ -83,17 +111,33 @@ const ProfileButton = styled.div`
   }
 `;
 
-const Profile = styled.div`
+const Profile = styled.img`
   width: 40px;
   height: 40px;
-  margin: 0 10px 0 20px;
-  background-color: lightgray;
+  margin: 0 10px 0 10px;
   border-radius: 50%;
-  position: relative;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.086) 0px 0px 8px;
 `;
 
-function LoginHeader() {
+function LoginHeader({ isChange, changeMode }: any) {
+  const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // 내 유저 정보 get 요청
+  const getImageData = async () => {
+    // const isLogin = localStorage.getItem('usernickname')
+    // URI -> `http://localhost:3001/user/${isLogin}`으로 변경
+    try {
+      const res = await BASE_API.get(`/users/1`);
+      setImageData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getImageData();
+  }, []);
 
   const openDropdown = () => {
     setIsOpen(!isOpen);
@@ -106,25 +150,30 @@ function LoginHeader() {
   return (
     <HeaderContainer>
       <HeaderWrapper>
-        <Link to='/'>
-          <Logo onClick={closeDropdown}>나만의 작은 음악 다이어리</Logo>
-        </Link>
+        <Logo onClick={closeDropdown}>
+          <Link to='/'>나만의 작은 음악 다이어리</Link>
+        </Logo>
         <div className='buttonArea'>
-          <Link to='/NewDiary'>
-            <SubmitButton onClick={closeDropdown}>
-              새 플레이리스트 등록
-            </SubmitButton>
-          </Link>
+          <ModeButton onClick={changeMode}>
+            {isChange === "dark" ? (
+              <BsFillMoonStarsFill className='darkIcon' size={20} />
+            ) : (
+              <BsFillSunFill className='lightIcon' size={25} />
+            )}
+          </ModeButton>
+          <SubmitButton onClick={closeDropdown}>
+            <Link to='/NewDiary'>새 다이어리 등록</Link>
+          </SubmitButton>
           <ProfileButton onClick={openDropdown}>
-            <Profile />
+            <Profile src={imageData.data && imageData.data.imageUrl} alt='헤더 프로필 이미지' />
             <GoTriangleDown className='triangleDown' size={14} />
           </ProfileButton>
           {isOpen ? (
-            <ul className='dropdown'>
+            <ul className='dropdown' onClick={closeDropdown}>
               <Link to='/Mypage'>
-                <li onClick={closeDropdown}>마이페이지</li>
+                <li>마이페이지</li>
               </Link>
-              <li onClick={closeDropdown}>로그아웃</li>
+              <li>로그아웃</li>
             </ul>
           ) : null}
         </div>
