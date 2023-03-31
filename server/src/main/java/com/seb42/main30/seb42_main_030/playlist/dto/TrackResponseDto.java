@@ -1,4 +1,4 @@
-package com.seb42.main30.seb42_main_030.comment.playlist.dto;
+package com.seb42.main30.seb42_main_030.playlist.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
