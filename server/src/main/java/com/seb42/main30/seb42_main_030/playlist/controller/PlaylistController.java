@@ -69,7 +69,7 @@ public class PlaylistController{
     }
 
 // 플레이리스트 삭제
-    /**
+
     @DeleteMapping("/{playlist-id}")
     public String deletePlaylist(@PathVariable("playlist-id") @Positive long playlistId) {
 
@@ -77,5 +77,4 @@ public class PlaylistController{
 
         return "success playlist deleted";
     }
-*/
 }

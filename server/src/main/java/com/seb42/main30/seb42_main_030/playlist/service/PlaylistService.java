@@ -105,7 +105,7 @@ public class PlaylistService {
 //
 //        playlistRepository.delete(findPlaylist);
 //    }
-    /**
+
     public void deletePlaylist (long playlistId) {
 
         Playlist verifyPlaylist = verifyWriter(playlistId);
@@ -125,7 +125,7 @@ public class PlaylistService {
         }
         return playlist;
     }
-*/
+
     // 플레이리스트 검증
     private Playlist verifiedPlaylist(long playlistId) {
         Playlist findPlaylist = playlistRepository.findById(playlistId)
