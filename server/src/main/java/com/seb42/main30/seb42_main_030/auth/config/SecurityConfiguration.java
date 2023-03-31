@@ -8,11 +8,13 @@ import com.seb42.main30.seb42_main_030.auth.handler.UserAuthenticationFailureHan
 import com.seb42.main30.seb42_main_030.auth.handler.UserAuthenticationSuccessHandler;
 import com.seb42.main30.seb42_main_030.auth.jwt.JwtTokenizer;
 import com.seb42.main30.seb42_main_030.auth.utils.CustomAuthorityUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -28,6 +30,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
+@EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
 
     private final JwtTokenizer jwtTokenizer;
@@ -41,10 +44,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers().frameOptions().sameOrigin()
+                .headers().frameOptions().disable()
                 .and()
                 .csrf().disable()
-                .cors(withDefaults())
+                .cors()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
@@ -62,15 +66,15 @@ public class SecurityConfiguration {
                         .antMatchers(HttpMethod.GET, "/users").hasRole("USER")
                         .antMatchers(HttpMethod.DELETE, "/users").hasRole("USER")
                         // 다이어리 접근 제어
-                        .antMatchers(HttpMethod.POST, "/diary").permitAll()
+                        .antMatchers(HttpMethod.POST, "/diary").hasRole("USER")
                         .antMatchers(HttpMethod.PATCH, "/diary").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/diary").hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/diary").permitAll()
                         .antMatchers(HttpMethod.DELETE, "/diary").hasRole("USER")
                         // 댓글 접근 제어
                         .antMatchers(HttpMethod.POST, "/comments").permitAll()
-                        .antMatchers(HttpMethod.PATCH, "/comments").hasRole("USER")
-                        .antMatchers(HttpMethod.GET, "/comments").hasRole("USER")
-                        .antMatchers(HttpMethod.DELETE, "/comments").hasRole("USER")
+                        .antMatchers(HttpMethod.PATCH, "/comments").permitAll()
+                        .antMatchers(HttpMethod.GET, "/comments").permitAll()
+                        .antMatchers(HttpMethod.DELETE, "/comments").permitAll()
                         // 로그아웃 접근 제어
                         .antMatchers(HttpMethod.POST, "/auth/logout").hasRole("USER")
 
@@ -84,17 +88,17 @@ public class SecurityConfiguration {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PATCH", "DELETE"));
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//
+//        return source;
+//    }
 
     public class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
         @Override

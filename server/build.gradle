@@ -28,7 +28,6 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.mapstruct:mapstruct:1.5.1.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
@@ -41,6 +40,9 @@ dependencies {
 	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	implementation 'com.google.code.gson:gson:2.8.7'
 
+	//mysql
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
+
 	//batch + scheduler
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
 	implementation 'org.springframework.boot:spring-boot-starter-quartz'
@@ -48,6 +50,12 @@ dependencies {
 	// spotify
 	implementation 'se.michaelthelin.spotify:spotify-web-api-java:8.0.0'
 	implementation 'com.github.thelinmichael:spotify-web-api-java:master-SNAPSHOT'
+
+	// s3
+	// Use ConfigurationProperties
+//	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+//	//aws s3
+//	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 
 }
 

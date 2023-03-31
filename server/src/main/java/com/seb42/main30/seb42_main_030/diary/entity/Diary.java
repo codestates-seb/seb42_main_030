@@ -1,14 +1,16 @@
 package com.seb42.main30.seb42_main_030.diary.entity;
 
-import com.seb42.main30.seb42_main_030.audit.basetime.BaseTimeEntity;
+import com.seb42.main30.seb42_main_030.audit.Auditable;
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Diary extends BaseTimeEntity {
+@Table
+public class Diary extends Auditable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long diaryId;
@@ -33,11 +37,14 @@ public class Diary extends BaseTimeEntity {
 
     private int likeCount;
 
-    @Column(name = "createdAt", insertable = false, updatable = false)
-    private LocalDateTime createdAt;
+//    @Column(name = "createdAt", insertable = false, updatable = false)
+//    private LocalDateTime createdAt;
+//
+//    @Column(name = "modifiedAt", insertable = false, updatable = false)
+//    private LocalDateTime modifiedAt;
 
-    @Column(name = "modifiedAt", insertable = false, updatable = false)
-    private LocalDateTime modifiedAt;
+    private LocalDateTime createdAt = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+    private LocalDateTime modifiedAt = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
 
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "USER_ID")
@@ -45,6 +52,5 @@ public class Diary extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "diary", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
-
 
 }

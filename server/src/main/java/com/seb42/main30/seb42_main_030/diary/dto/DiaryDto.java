@@ -4,7 +4,9 @@ package com.seb42.main30.seb42_main_030.diary.dto;
 import com.seb42.main30.seb42_main_030.comment.dto.CommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -14,7 +16,7 @@ public class DiaryDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Post{
 
         @NotBlank(message = "제목을 입력하세요")
@@ -29,7 +31,7 @@ public class DiaryDto {
 
     @Getter
     @Setter
-    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Patch {
 
         @NotBlank(message = "제목을 입력하세요")
@@ -55,11 +57,11 @@ public class DiaryDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-//        user 데이터 가져오는 것
-        private String nickname;
+        //        user 데이터 가져오는 것
+        private String userNickname;
 
 
-        private List<CommentDto> comments;
+        private List<CommentDto.Response> comments;
 
     }
 

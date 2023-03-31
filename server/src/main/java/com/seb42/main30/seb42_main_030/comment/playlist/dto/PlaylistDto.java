@@ -1,7 +1,7 @@
-package com.seb42.main30.seb42_main_030.playlist.dto;
+package com.seb42.main30.seb42_main_030.comment.playlist.dto;
 
 
-import com.seb42.main30.seb42_main_030.playlist.entity.Track;
+import com.seb42.main30.seb42_main_030.comment.playlist.entity.Track;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
