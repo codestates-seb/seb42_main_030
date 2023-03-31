@@ -1,10 +1,10 @@
 package com.seb42.main30.seb42_main_030.playlist.mapper;
 
 
+import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
 import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistDto;
 import com.seb42.main30.seb42_main_030.playlist.dto.PlaylistResponseDto;
 import com.seb42.main30.seb42_main_030.playlist.dto.TrackResponseDto;
-import com.seb42.main30.seb42_main_030.playlist.entity.Playlist;
 import com.seb42.main30.seb42_main_030.playlist.entity.Track;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import org.mapstruct.Mapper;

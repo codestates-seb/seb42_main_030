@@ -3,11 +3,10 @@ package com.seb42.main30.seb42_main_030.comment.service;
 
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.comment.repository.CommentRepository;
-import com.seb42.main30.seb42_main_030.user.entity.User;
-import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
-import com.seb42.main30.seb42_main_030.user.service.UserService;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
 import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
+import com.seb42.main30.seb42_main_030.user.entity.User;
+import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
 import com.seb42.main30.seb42_main_030.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.List;
 import java.util.Optional;
-
 
 @Slf4j
 @Service
@@ -41,16 +40,19 @@ public class CommentService {
     //    read
     private User getUserFromId(long userId) {return userRepository.findById(userId).get(); }
 
-    @Transactional(readOnly = true)
     public Comment readComment(long commentId) { return verifyComment(commentId); }
 
     public List<Comment> readComments() { return commentRepository.findAll(); }
 
     //    update
-    @Transactional(propagation = Propagation.REQUIRED)
+
     public Comment updateComment (long commentId, Comment comment) {
         Comment verifyComment = verifyWriter(commentId);
         verifyComment.setBody(comment.getBody());
+
+        long userId = userService.getLoginUser().getUserId();
+        User user = getUserFromId(userId);
+        comment.setUser(user);
 
         return commentRepository.save(comment);
     }
@@ -65,7 +67,7 @@ public class CommentService {
 
 
     //    ID 값의 댓글이 없으면 오류
-    @Transactional(readOnly = true)
+
     private Comment verifyComment (long commentId){
 
         Optional<Comment> optionalComment = commentRepository.findById(commentId);

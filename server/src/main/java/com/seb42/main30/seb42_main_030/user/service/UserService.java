@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +104,13 @@ public class UserService {
 
         if(user.isPresent())
             throw new BusinessException(ExceptionCode.USER_EXISTS);
+    }
+
+    // Login 한 Member 를 가져오는 로직
+    public User getLoginUser() {
+        return  userRepository.findByEmail(GetAuthUserUtils.getAuthUser().getName())
+                .orElseThrow(()
+                        -> new BusinessException(ExceptionCode.USER_NOT_FOUND));
     }
 
 }

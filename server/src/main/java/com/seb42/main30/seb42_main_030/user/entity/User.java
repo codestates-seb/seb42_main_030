@@ -1,16 +1,19 @@
 package com.seb42.main30.seb42_main_030.user.entity;
 
+//import com.seb42.main30.seb42_main_030.comment.entity.Comment;
+//import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import com.seb42.main30.seb42_main_030.comment.entity.Comment;
 import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Table(name = "USERS")
 @Getter
 @Setter
 @NoArgsConstructor

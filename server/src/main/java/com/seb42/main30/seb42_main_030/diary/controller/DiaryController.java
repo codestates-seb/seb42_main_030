@@ -6,7 +6,6 @@ import com.seb42.main30.seb42_main_030.diary.entity.Diary;
 import com.seb42.main30.seb42_main_030.diary.mapper.DiaryMapper;
 import com.seb42.main30.seb42_main_030.diary.service.DiaryService;
 import com.seb42.main30.seb42_main_030.exception.BusinessException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -25,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 @RequestMapping("/diary")
-@AllArgsConstructor
 public class DiaryController {
 
     private final DiaryService diaryService;
@@ -63,10 +62,13 @@ public class DiaryController {
 //    }
 
     //메인페이지 전체 게시글 조회 + 페이지네이션
-    @GetMapping("/main")
-    public String diaryList(Model model, @PageableDefault(page = 0, size = 12, sort = "diaryId", direction = Sort.Direction.DESC) Pageable pageable){
+    @GetMapping
+    public ResponseEntity diaryList(Model model,
+                                    @PageableDefault(page = 0, size = 12, sort = "diaryId", direction = Sort.Direction.DESC) Pageable pageable){
 
-        Page<Diary> list = diaryService.readDiaryList(pageable);
+        Page<Diary> list = diaryService.diaryList(pageable);
+        List<DiaryDto.Response> responsess = diaryMapper.diaryToResponses(list);
+
 
         int nowPage = list.getPageable().getPageNumber() + 1;
         int startPage = Math.max(nowPage - 4, 1);
@@ -77,8 +79,9 @@ public class DiaryController {
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
 
-        model.addAttribute("list", diaryService.readDiaryList(pageable));
-        return "diaryList";
+        model.addAttribute("list", diaryService.diaryList(pageable));
+
+        return new ResponseEntity(responsess, HttpStatus.OK);
     }
 
     // 게시물 수정

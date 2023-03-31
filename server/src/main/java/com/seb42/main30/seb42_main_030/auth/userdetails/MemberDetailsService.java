@@ -6,17 +6,18 @@ import com.seb42.main30.seb42_main_030.exception.ExceptionCode;
 import com.seb42.main30.seb42_main_030.user.entity.User;
 import com.seb42.main30.seb42_main_030.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Optional;
 
-//User Role을 DB에서 조회하고 HelloAuthorityUtils로 Spring Security에게 Role 정보 제공
-@Component
+@Service
 public class MemberDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final CustomAuthorityUtils authorityUtils;
@@ -35,6 +36,7 @@ public class MemberDetailsService implements UserDetailsService {
         return new MemberDetails(findUser);
     }
 
+    @Data
     private final class MemberDetails extends User implements UserDetails {
 
         MemberDetails(User user) {
