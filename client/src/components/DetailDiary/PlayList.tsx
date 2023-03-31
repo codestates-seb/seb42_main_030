@@ -13,16 +13,16 @@ const PlayListWrapper = styled.div`
   min-width: 300px;
   border: none;
   color: ${(props) => props.theme.mainText};
+
+  > a {
+    text-decoration: none;
+  }
 `;
 
 const ContentArea = styled.div`
   display: flex;
   align-items: center;
   text-decoration: none;
-
-  > a {
-    text-decoration: none;
-  }
 
   > .thumbnail {
     width: 80px;
