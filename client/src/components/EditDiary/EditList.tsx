@@ -28,18 +28,20 @@ const TitleArea = styled.div`
   white-space: normal;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
   padding: 0 10px 0 10px;
 
   > .EditTitle {
     width: 580px;
     font-size: 24px;
-    color: ${(props) => props.theme.mainText};
-    background-color: ${(props) => props.theme.background};
     font-weight: 600;
     padding: 10px 8px 10px 8px;
-    border: 0.5px solid ${(props) => props.theme.editBorder};
     border-radius: 4px;
+    color: ${(props) => props.theme.mainText};
+    border: none;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
+    background-color: ${(props) => props.theme.disabledTagBackground};
+
     &:focus {
       outline: none;
     }
@@ -50,14 +52,15 @@ const EditButton = styled.button`
   font-size: 13px;
   color: #1c1a16;
   font-weight: 700;
-  background-color: #ffefd5;
+  background-color: ${(props) => props.theme.mainColor};
   border: none;
   width: 140px;
   height: 35px;
   border-radius: 4px;
   cursor: pointer;
+
   &:hover {
-    background-color: #ffdeb7;
+    background-color: ${(props) => props.theme.buttonHover};
   }
 `;
 
@@ -82,10 +85,9 @@ const InfoArea = styled.div`
 const UserInfo = styled.div`
   margin-bottom: 15px;
   font-size: 14px;
-  color: ${(props) => props.theme.subText};
+  color: ${(props) => props.theme.mainText};
 
   > .text {
-    color: ${(props) => props.theme.mainText};
     font-size: 13px;
     margin-right: 50px;
   }
@@ -93,8 +95,7 @@ const UserInfo = styled.div`
 
 const AlbumInfoArea = styled.div`
   padding: 30px 10px 80px 10px;
-  border-top: 1px solid #d9d9d9;
-  border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
 
   > .playTitle {
     font-size: 19px;
@@ -105,21 +106,45 @@ const AlbumInfoArea = styled.div`
 
   > .playContent {
     color: ${(props) => props.theme.mainText};
-    background-color: ${(props) => props.theme.background};
     width: 100%;
     height: 200px;
 
     > .ql-toolbar {
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
-      border: 0.5px solid ${(props) => props.theme.editBorder};
+      border: none;
+      border: 1px solid ${(props) => props.theme.disabledTagBorder};
+      background-color: ${(props) => props.theme.disabledTagBackground};
+
+      .ql-picker-label {
+        color: ${(props) => props.theme.mainText};
+      }
     }
 
     > .ql-container {
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
-      border: 0.5px solid ${(props) => props.theme.editBorder};
+      border: none;
+      border: 1px solid ${(props) => props.theme.disabledTagBorder};
+      background-color: ${(props) => props.theme.disabledTagBackground};
+
+      > .ql-editor::before {
+        color: gray;
+        font-style: normal;
+      }
     }
+  }
+`;
+
+const PlayListArea = styled.div`
+  padding: 30px 10px 80px 10px;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
+
+  > .playTitle {
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: ${(props) => props.theme.mainText};
   }
 `;
 
@@ -132,13 +157,14 @@ const UrlInput = styled.div`
     width: 1300px;
     resize: none;
     margin-right: 10px;
-    border: 1px solid ${(props) => props.theme.detailLine};
     border-radius: 4px;
     padding: 10px 8px 10px 8px;
-    background-color: ${(props) => props.theme.commentInputBackground};
+    border: none;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
+    background-color: ${(props) => props.theme.disabledTagBackground};
 
     &:focus {
-      outline: 0.5px solid gray;
+      outline: none;
     }
   }
 
@@ -150,6 +176,7 @@ const UrlInput = styled.div`
     border-radius: 4px;
     background-color: ${(props) => props.theme.mainColor};
     cursor: pointer;
+
     &:hover {
       background-color: ${(props) => props.theme.buttonHover};
     }
@@ -273,7 +300,7 @@ function EditList({ list, test }: DiaryDataProps) {
           />
         </AlbumInfoArea>
         {/* <PlayList /> */}
-        <AlbumInfoArea>
+        <PlayListArea>
           <div className='playTitle'>다이어리 수록곡</div>
           <UrlInput>
             <input
@@ -288,7 +315,7 @@ function EditList({ list, test }: DiaryDataProps) {
           {plList?.map((value: any, index: any) => {
             return <EditPlayList list={value} key={index} plList={plList} setPlList={setPlList} />;
           })}
-        </AlbumInfoArea>
+        </PlayListArea>
       </EditMainWrapper>
     </EditMainContainer>
   );

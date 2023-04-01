@@ -32,8 +32,8 @@ const TitleArea = styled.div`
   > .DetailTitle {
     width: 580px;
     font-size: 24px;
-    color: ${(props) => props.theme.mainText};
     font-weight: 600;
+    color: ${(props) => props.theme.mainText};
   }
 `;
 
@@ -185,7 +185,6 @@ const UserInfo = styled.div`
   color: ${(props) => props.theme.mainText};
 
   > .text {
-    color: ${(props) => props.theme.mainText};
     font-size: 13px;
     margin-right: 50px;
   }
@@ -194,7 +193,6 @@ const UserInfo = styled.div`
 const AlbumInfoArea = styled.div`
   padding: 30px 10px 30px 10px;
   border-top: 1px solid ${(props) => props.theme.detailLine};
-  border-bottom: 1px solid ${(props) => props.theme.detailLine};
 
   > .playTitle {
     font-size: 19px;
@@ -211,6 +209,7 @@ const AlbumInfoArea = styled.div`
 
 const PlayListArea = styled.div`
   padding: 30px 10px 30px 10px;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
 
   > .playTitle {
     font-size: 19px;
@@ -218,16 +217,11 @@ const PlayListArea = styled.div`
     margin-bottom: 20px;
     color: ${(props) => props.theme.mainText};
   }
-
-  > .playContent {
-    font-size: 14px;
-    color: ${(props) => props.theme.subText};
-  }
 `;
 
 const CommentInputArea = styled.div`
   margin-bottom: 20px;
-  border-top: 1px solid #d9d9d9;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
   padding: 30px 10px 30px 10px;
 
   > .commentTitle {
@@ -266,13 +260,14 @@ const TextArea = styled.div`
     height: 70px;
     resize: none;
     margin: 0 10px 30px 0;
-    border: 1px solid ${(props) => props.theme.detailLine};
     border-radius: 4px;
     padding: 10px 8px 10px 8px;
-    background-color: ${(props) => props.theme.commentInputBackground};
+    border: none;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
+    background-color: ${(props) => props.theme.disabledTagBackground};
 
     &:focus {
-      outline: 0.5px solid gray;
+      outline: none;
     }
   }
 
@@ -285,6 +280,7 @@ const TextArea = styled.div`
     border-radius: 4px;
     background-color: ${(props) => props.theme.mainColor};
     cursor: pointer;
+
     &:hover {
       background-color: ${(props) => props.theme.buttonHover};
     }

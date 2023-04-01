@@ -35,8 +35,9 @@ const TitleArea = styled.div`
     padding: 10px 8px 10px 8px;
     border-radius: 4px;
     color: ${(props) => props.theme.mainText};
-    background-color: ${(props) => props.theme.commentInputBackground};
-    border: 1px solid ${(props) => props.theme.detailLine};
+    border: none;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
+    background-color: ${(props) => props.theme.disabledTagBackground};
 
     &:focus {
       outline: none;
@@ -48,7 +49,7 @@ const SubmitButton = styled.button`
   font-size: 13px;
   color: #1c1a16;
   font-weight: 700;
-  background-color: #ffefd5;
+  background-color: ${(props) => props.theme.mainColor};
   border: none;
   width: 140px;
   height: 35px;
@@ -56,7 +57,7 @@ const SubmitButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #ffdeb7;
+    background-color: ${(props) => props.theme.buttonHover};
   }
 `;
 
@@ -109,8 +110,8 @@ const AlbumInfoArea = styled.div`
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
       border: none;
-      border: 1px solid ${(props) => props.theme.detailLine};
-      background-color: ${(props) => props.theme.commentInputBackground};
+      border: 1px solid ${(props) => props.theme.disabledTagBorder};
+      background-color: ${(props) => props.theme.disabledTagBackground};
 
       .ql-picker-label {
         color: ${(props) => props.theme.mainText};
@@ -121,8 +122,8 @@ const AlbumInfoArea = styled.div`
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
       border: none;
-      border: 1px solid ${(props) => props.theme.detailLine};
-      background-color: ${(props) => props.theme.commentInputBackground};
+      border: 1px solid ${(props) => props.theme.disabledTagBorder};
+      background-color: ${(props) => props.theme.disabledTagBackground};
 
       > .ql-editor::before {
         color: gray;
@@ -153,10 +154,11 @@ const UrlInput = styled.div`
     width: 1300px;
     resize: none;
     margin-right: 10px;
-    border: 1px solid ${(props) => props.theme.detailLine};
     border-radius: 4px;
     padding: 10px 8px 10px 8px;
-    background-color: ${(props) => props.theme.commentInputBackground};
+    border: none;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
+    background-color: ${(props) => props.theme.disabledTagBackground};
 
     &:focus {
       outline: none;
