@@ -35,6 +35,7 @@ const EmailInput = styled.input`
   border: none;
   border: 1px solid ${(props) => props.theme.disabledTagBorder};
   background-color: ${(props) => props.theme.background};
+
   &:focus {
     outline: none;
   }
@@ -50,6 +51,7 @@ const PasswordInput = styled.input`
   border: none;
   border: 1px solid ${(props) => props.theme.disabledTagBorder};
   background-color: ${(props) => props.theme.background};
+
   &:focus {
     outline: none;
   }
@@ -64,6 +66,7 @@ const LoginButton = styled.button`
   font-weight: 700;
   background-color: ${(props) => props.theme.mainColor};
   cursor: pointer;
+
   &:hover {
     background-color: #ffdeb7;
   }
@@ -91,6 +94,10 @@ const SignupButton = styled.button`
     font-size: 16px;
     text-decoration: none;
     color: ${(props) => props.theme.mainText};
+
+    .bold {
+      font-weight: 500;
+    }
   }
 `;
 
@@ -174,7 +181,9 @@ const Login = () => {
         <PasswordFind>비밀번호를 잊으셨나요?</PasswordFind>
       </FormContainer>
       <SignupButton>
-        <Link to='/Signup'>나만의 작은 음악 다이어리 가입하기</Link>
+        <Link to='/Signup'>
+          계정이 없으신가요? <span className='bold'>가입하기</span>
+        </Link>
       </SignupButton>
     </LoginContainer>
   );

@@ -7,12 +7,12 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import NewPlayList from "./NewPlayList";
 
-const EditMainContainer = styled.div`
+const NewMainContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const EditMainWrapper = styled.div`
+const NewMainWrapper = styled.div`
   width: 100vw;
   max-width: 900px;
   min-width: 300px;
@@ -28,7 +28,7 @@ const TitleArea = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.detailLine};
   padding: 0 10px 0 10px;
 
-  > .EditTitle {
+  > .NewTitle {
     width: 580px;
     font-size: 24px;
     font-weight: 600;
@@ -44,7 +44,7 @@ const TitleArea = styled.div`
   }
 `;
 
-const EditButton = styled.button`
+const SubmitButton = styled.button`
   font-size: 13px;
   color: #1c1a16;
   font-weight: 700;
@@ -266,22 +266,22 @@ function NewMain() {
   // console.log(plList);
 
   return (
-    <EditMainContainer>
-      <EditMainWrapper>
+    <NewMainContainer>
+      <NewMainWrapper>
         <TitleArea>
           <input
-            className='EditTitle'
+            className='NewTitle'
             type='text'
             placeholder='제목을 입력하세요'
             onChange={changeNewTitle}
           />
-          <EditButton
-            className='EditButton'
+          <SubmitButton
+            className='SubmitButton'
             onClick={submitHandler}
             disabled={newTitle.length === 0}
           >
             등록하기
-          </EditButton>
+          </SubmitButton>
         </TitleArea>
         <AlbumCoverArea>
           <div className='coverImg'></div>
@@ -321,8 +321,8 @@ function NewMain() {
             return <NewPlayList list={value} key={index} plList={plList} setPlList={setPlList} />;
           })}
         </PlayListArea>
-      </EditMainWrapper>
-    </EditMainContainer>
+      </NewMainWrapper>
+    </NewMainContainer>
   );
 }
 
