@@ -9,6 +9,7 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
   background-color: ${(props) => props.theme.background};
+  transition: 0.2s ease-in-out;
 `;
 
 const HeaderWrapper = styled.div`

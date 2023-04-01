@@ -11,7 +11,7 @@ const DiaryListContainer = styled.li`
   list-style: none;
   border-radius: 4px;
   background-color: ${(props) => props.theme.disabledTagBackground};
-  transition: 0.4s ease-in-out;
+  transition: 0.2s ease-in-out;
   cursor: pointer;
 
   &:hover {

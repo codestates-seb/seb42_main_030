@@ -25,7 +25,7 @@ const ListTab = styled.ul`
     padding: 7px 7px;
     border: 1px solid ${(props) => props.theme.disabledTagBorder};
     background-color: ${(props) => props.theme.disabledTagBackground};
-    transition: 0.4s ease-in-out;
+    transition: 0.2s ease-in-out;
     cursor: pointer;
 
     &:hover {
