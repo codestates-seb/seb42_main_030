@@ -5,7 +5,7 @@ import { TOKEN_API } from "../../util/API";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import YouTubeList from "./YouTubeList";
+import NewPlayList from "./NewPlayList";
 
 const EditMainContainer = styled.div`
   display: flex;
@@ -25,18 +25,19 @@ const TitleArea = styled.div`
   white-space: normal;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #d9d9d9;
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
   padding: 0 10px 0 10px;
 
   > .EditTitle {
     width: 580px;
     font-size: 24px;
-    color: ${(props) => props.theme.mainText};
-    background-color: ${(props) => props.theme.background};
     font-weight: 600;
     padding: 10px 8px 10px 8px;
-    border: 0.5px solid ${(props) => props.theme.editBorder};
     border-radius: 4px;
+    color: ${(props) => props.theme.mainText};
+    background-color: ${(props) => props.theme.commentInputBackground};
+    border: 1px solid ${(props) => props.theme.detailLine};
+
     &:focus {
       outline: none;
     }
@@ -53,6 +54,7 @@ const EditButton = styled.button`
   height: 35px;
   border-radius: 4px;
   cursor: pointer;
+
   &:hover {
     background-color: #ffdeb7;
   }
@@ -79,10 +81,9 @@ const InfoArea = styled.div`
 const UserInfo = styled.div`
   margin-bottom: 15px;
   font-size: 14px;
-  color: ${(props) => props.theme.subText};
+  color: ${(props) => props.theme.mainText};
 
   > .text {
-    color: ${(props) => props.theme.mainText};
     font-size: 13px;
     margin-right: 50px;
   }
@@ -90,7 +91,7 @@ const UserInfo = styled.div`
 
 const AlbumInfoArea = styled.div`
   padding: 30px 10px 80px 10px;
-  border-top: 1px solid #d9d9d9;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
 
   > .playTitle {
     font-size: 19px;
@@ -101,21 +102,45 @@ const AlbumInfoArea = styled.div`
 
   > .playContent {
     color: ${(props) => props.theme.mainText};
-    background-color: ${(props) => props.theme.background};
     width: 100%;
     height: 200px;
 
     > .ql-toolbar {
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
-      border: 0.5px solid ${(props) => props.theme.editBorder};
+      border: none;
+      border: 1px solid ${(props) => props.theme.detailLine};
+      background-color: ${(props) => props.theme.commentInputBackground};
+
+      .ql-picker-label {
+        color: ${(props) => props.theme.mainText};
+      }
     }
 
     > .ql-container {
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
-      border: 0.5px solid ${(props) => props.theme.editBorder};
+      border: none;
+      border: 1px solid ${(props) => props.theme.detailLine};
+      background-color: ${(props) => props.theme.commentInputBackground};
+
+      > .ql-editor::before {
+        color: gray;
+        font-style: normal;
+      }
     }
+  }
+`;
+
+const PlayListArea = styled.div`
+  padding: 30px 10px 80px 10px;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
+
+  > .playTitle {
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: ${(props) => props.theme.mainText};
   }
 `;
 
@@ -134,7 +159,7 @@ const UrlInput = styled.div`
     background-color: ${(props) => props.theme.commentInputBackground};
 
     &:focus {
-      outline: 0.5px solid gray;
+      outline: none;
     }
   }
 
@@ -146,6 +171,7 @@ const UrlInput = styled.div`
     border-radius: 4px;
     background-color: ${(props) => props.theme.mainColor};
     cursor: pointer;
+
     &:hover {
       background-color: ${(props) => props.theme.buttonHover};
     }
@@ -163,25 +189,25 @@ function NewMain() {
   const today: string = new Date().toISOString().substring(0, 10);
 
   // 다이어리 post 요청
-  // const submitHandler = async () => {
-  //   const newDiary = {
-  //     title: newTitle,
-  //     body: newBody,
-  //     playlist: plList,
-  //   };
-  //   await TOKEN_API.post(`/diary`, newDiary);
-  //   navigate(`/`);
-  // };
-
-  //! json 서버 post 테스트 용
   const submitHandler = async () => {
     const newDiary = {
       title: newTitle,
       body: newBody,
       playlist: plList,
     };
-    await axios.post(`http://localhost:3001/diary`, newDiary);
+    await TOKEN_API.post(`/diary`, newDiary);
+    navigate(`/`);
   };
+
+  //! json 서버 post 테스트 용
+  // const submitHandler = async () => {
+  //   const newDiary = {
+  //     title: newTitle,
+  //     body: newBody,
+  //     playlist: plList,
+  //   };
+  //   await axios.post(`http://localhost:3001/diary`, newDiary);
+  // };
 
   // 제목 수정 체인지 이벤트
   const changeNewTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -212,7 +238,7 @@ function NewMain() {
       const res =
         await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}
       &part=snippet`);
-      console.log(res.data);
+      // console.log(res.data);
       return res.data.items[0].snippet;
     } catch (err) {
       console.error(err);
@@ -279,7 +305,7 @@ function NewMain() {
           />
         </AlbumInfoArea>
         {/* <PlayList /> */}
-        <AlbumInfoArea>
+        <PlayListArea>
           <div className='playTitle'>다이어리 수록곡</div>
           <UrlInput>
             <input
@@ -292,9 +318,9 @@ function NewMain() {
             </button>
           </UrlInput>
           {plList?.map((value: any, index: any) => {
-            return <YouTubeList list={value} key={index} plList={plList} setPlList={setPlList} />;
+            return <NewPlayList list={value} key={index} plList={plList} setPlList={setPlList} />;
           })}
-        </AlbumInfoArea>
+        </PlayListArea>
       </EditMainWrapper>
     </EditMainContainer>
   );

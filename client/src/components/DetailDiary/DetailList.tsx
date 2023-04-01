@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import CommentList from "./CommentList";
-import PlayList from "./PlayList";
+import DetailPlayList from "./DetailPlayList";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
@@ -514,7 +514,7 @@ function DetailList({ list, getDetailData, test }: DiaryDataProps) {
         <PlayListArea>
           <div className='playTitle'>다이어리 수록곡</div>
           {test?.map((value: any, index: any) => {
-            return <PlayList list={value} key={index} />;
+            return <DetailPlayList list={value} key={index} />;
           })}
         </PlayListArea>
         <CommentInputArea>

@@ -8,7 +8,7 @@ import { TOKEN_API } from "../../util/API";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import EditYouTubeList from "./EditYouTubeList";
+import EditPlayList from "./EditPlayList";
 
 const EditMainContainer = styled.div`
   display: flex;
@@ -172,24 +172,25 @@ function EditList({ list, test }: DiaryDataProps) {
   const { diaryId } = useParams();
 
   // 다이어리 patch 요청
-  const submitHandler = async () => {
-    const newDiary = {
-      title: editTitle,
-      body: editBody,
-    };
-    await TOKEN_API.patch(`/diary/${diaryId}`, newDiary);
-    navigate(`/DetailDiary/${diaryId}`);
-  };
-
-  //! json 서버 post 테스트 용
   // const submitHandler = async () => {
   //   const newDiary = {
   //     title: editTitle,
   //     body: editBody,
-  //     playlist: plList,
   //   };
-  //   await axios.patch(`http://localhost:3001/diary`, newDiary);
+  //   await TOKEN_API.patch(`/diary/${diaryId}`, newDiary);
+  //   navigate(`/DetailDiary/${diaryId}`);
   // };
+
+  //! json 서버 post 테스트 용
+  const submitHandler = async () => {
+    const newDiary = {
+      title: editTitle,
+      body: editBody,
+      playlist: plList,
+    };
+    console.log(newDiary);
+    await axios.patch(`http://localhost:3001/diary`, newDiary);
+  };
 
   // 제목 수정 체인지 이벤트
   const changeEditTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -285,9 +286,7 @@ function EditList({ list, test }: DiaryDataProps) {
             </button>
           </UrlInput>
           {plList?.map((value: any, index: any) => {
-            return (
-              <EditYouTubeList list={value} key={index} plList={plList} setPlList={setPlList} />
-            );
+            return <EditPlayList list={value} key={index} plList={plList} setPlList={setPlList} />;
           })}
         </AlbumInfoArea>
       </EditMainWrapper>

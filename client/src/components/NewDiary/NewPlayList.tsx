@@ -48,7 +48,7 @@ interface YouTubeDataProps {
   setPlList: any;
 }
 
-function YouTubeList({ list, plList, setPlList }: YouTubeDataProps) {
+function NewPlayList({ list, plList, setPlList }: YouTubeDataProps) {
   const deleteList = (deleteId: any) => {
     setPlList(plList.filter((value: any) => value.channelId !== deleteId));
   };
@@ -68,4 +68,4 @@ function YouTubeList({ list, plList, setPlList }: YouTubeDataProps) {
   );
 }
 
-export default YouTubeList;
+export default NewPlayList;

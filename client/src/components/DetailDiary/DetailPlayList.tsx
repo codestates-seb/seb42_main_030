@@ -56,12 +56,12 @@ interface YoutubeDataProps {
   list: any;
 }
 
-function PlayList({ list }: YoutubeDataProps) {
+function DetailPlayList({ list }: YoutubeDataProps) {
   // console.log(list);
   return (
     <PlayListContainer>
       <PlayListWrapper>
-        <Link to={list.url}>
+        <Link to={list.url} target='_blank'>
           <ContentArea>
             <img className='thumbnail' src={list.thumbnail} alt='썸네일' />
             <div className='listTitle'>{list.title}</div>
@@ -72,7 +72,7 @@ function PlayList({ list }: YoutubeDataProps) {
   );
 }
 
-export default PlayList;
+export default DetailPlayList;
 
 // import styled from "styled-components";
 

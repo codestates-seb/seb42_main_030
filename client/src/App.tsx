@@ -42,13 +42,11 @@ function App() {
     <ThemeProvider theme={isChange === "dark" ? darkMode : lightMode}>
       <div className='App'>
         <GlobalStyle />
-
         {isLogin ? (
           <LoginHeader isChange={isChange} changeMode={changeMode} />
         ) : (
           <LogoutHeader isChange={isChange} changeMode={changeMode} />
         )}
-
         <Routes>
           <Route path='/' element={<Main />} />
           <Route path='/NewDiary' element={<NewDiary />} />
