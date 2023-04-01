@@ -10,11 +10,12 @@ const DiaryListContainer = styled.li`
   height: 339px;
   list-style: none;
   border-radius: 4px;
-  cursor: pointer;
   background-color: ${(props) => props.theme.disabledTagBackground};
+  transition: 0.4s ease-in-out;
+  cursor: pointer;
+
   &:hover {
-    transform: scale(1.02);
-    transition: 0.2s;
+    transform: scale(1.01);
   }
 `;
 

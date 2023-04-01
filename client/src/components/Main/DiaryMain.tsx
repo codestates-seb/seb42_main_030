@@ -20,16 +20,16 @@ const ListTab = styled.ul`
     font-size: 14px;
     width: 100px;
     height: 40px;
-    border: 1px solid ${(props) => props.theme.disabledTagBorder};
     border-radius: 50px;
     text-align: center;
     padding: 7px 7px;
-    cursor: pointer;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
     background-color: ${(props) => props.theme.disabledTagBackground};
+    transition: 0.4s ease-in-out;
+    cursor: pointer;
 
     &:hover {
-      transform: scale(1.05);
-      transition: 0.2s;
+      transform: scale(1.03);
     }
 
     > .el {

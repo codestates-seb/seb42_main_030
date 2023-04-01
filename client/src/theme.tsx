@@ -40,7 +40,7 @@ export const darkMode: DefaultTheme = {
 
   TagColor: `#22262c`,
   disabledTagColor: `gray`,
-  disabledTagBorder: `none`,
+  disabledTagBorder: `#2f3135`,
   disabledTagBackground: `#2f3135`,
   disabled: `gray`,
 
