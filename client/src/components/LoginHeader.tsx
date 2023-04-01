@@ -79,6 +79,7 @@ const ModeButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
+  margin-right: 10px;
 
   > .lightIcon {
     color: ${(props) => props.theme.mainText};
@@ -90,21 +91,20 @@ const ModeButton = styled.button`
 `;
 
 const SubmitButton = styled.button`
-  width: 150px;
+  width: 120px;
+  height: 35px;
   border: none;
   background-color: transparent;
   font-weight: 700;
   font-size: 15px;
-
-  a {
-    color: ${(props) => props.theme.mainText};
-    text-decoration: none;
-  }
+  color: ${(props) => props.theme.mainText};
+  cursor: pointer;
 `;
 
 const ProfileButton = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 10px;
 
   > .triangleDown {
     color: #787f84;
@@ -161,9 +161,9 @@ function LoginHeader({ isChange, changeMode }: any) {
               <BsFillSunFill className='lightIcon' size={25} />
             )}
           </ModeButton>
-          <SubmitButton onClick={closeDropdown}>
-            <Link to='/NewDiary'>새 다이어리 등록</Link>
-          </SubmitButton>
+          <Link to='/NewDiary'>
+            <SubmitButton onClick={closeDropdown}>새 다이어리 등록</SubmitButton>
+          </Link>
           <ProfileButton onClick={openDropdown}>
             <Profile src={imageData.data && imageData.data.imageUrl} alt='헤더 프로필 이미지' />
             <GoTriangleDown className='triangleDown' size={14} />

@@ -515,7 +515,7 @@ function DetailList({ list, getDetailData, test }: DiaryDataProps) {
         </PlayListArea>
         <CommentInputArea>
           <div className='commentTitle'>
-            <span className='commentCount'>댓글 ({commentData.length})</span>
+            {/* <span className='commentCount'>댓글 ({commentData.length})</span> */}
             <div className='commentRule' onClick={openRuleModalHandler}>
               <RiErrorWarningLine className='ruleIcon' size={16} />
               댓글 운영 원칙

@@ -1,29 +1,8 @@
-import spotifylogo from "../../util/img/spotifylogo.png";
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BASE_API } from "../../util/API";
-
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 288.45px;
-  position: relative;
-`;
-
-const SpotifyButton = styled.button`
-  width: 450px;
-  height: 48px;
-  border-radius: 50px;
-  background: black;
-  color: white;
-  border: solid 1px #cbcbcbe6;
-  position: relative;
-  cursor: pointer;
-  font-size: 20px;
-`;
 
 const SignupButton = styled.button`
   width: 450px;
@@ -37,12 +16,6 @@ const SignupButton = styled.button`
   cursor: pointer;
 `;
 
-const BorderLine = styled.hr`
-  width: 450px;
-  margin: 30px;
-  border: 1px solid gray;
-`;
-
 const Form = styled.form`
   width: 450px;
   height: 350px;
@@ -50,13 +23,6 @@ const Form = styled.form`
   border-radius: 10px;
   box-shadow: 5px 5px 5px 5px #c2c2c2;
   position: relative;
-`;
-
-const ImgSrc = styled.img`
-  width: 30px;
-  height: 30px;
-  margin-right: 5px;
-  margin-bottom: -4px;
 `;
 
 const EmailText = styled.span`
@@ -150,27 +116,27 @@ const SignUpContainer = styled.div`
 `;
 
 interface FormValue {
-  email: string;
   nickname: string;
+  email: string;
   password: any;
 }
 
-const Signup = () => {
-  const navigate = useNavigate();
+function Signup() {
   const [signUpError, setSignUpError] = useState(false);
   const [errorMessage, setErrormessage] = useState("");
+
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormValue>();
 
   const onSubmit: SubmitHandler<FormValue> = (data) => {
     BASE_API.post(`/users/sign-up`, {
-      email: data.email,
       nickname: data.nickname,
+      email: data.email,
       password: data.password,
     })
       .then(() => {
@@ -178,8 +144,8 @@ const Signup = () => {
         setSignUpError(false);
         navigate("/login");
       })
-      .catch((error) => {
-        setErrormessage(error.response.data.message);
+      .catch((err) => {
+        setErrormessage(err.response.data.message);
         setSignUpError(true);
       });
   };
@@ -187,13 +153,6 @@ const Signup = () => {
   return (
     <SignUpContainer>
       <SignUpWrapper>
-        <Buttons>
-          <SpotifyButton>
-            <ImgSrc src={spotifylogo} />
-            Spotify로 가입하기
-          </SpotifyButton>
-        </Buttons>
-        <BorderLine />
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Text>이메일로 가입하기</Text>
           <EmailText>이메일 주소</EmailText>
@@ -203,17 +162,12 @@ const Signup = () => {
           <PassText>비밀번호</PassText>
           <PassInput type='password' id='password' {...register("password")} />
         </Form>
-        <BorderLine />
-        <SignupButton
-          type='button'
-          onClick={handleSubmit(onSubmit)}
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <SignupButton type='button' onClick={handleSubmit(onSubmit)}>
           가입하기
         </SignupButton>
       </SignUpWrapper>
     </SignUpContainer>
   );
-};
+}
 
 export default Signup;

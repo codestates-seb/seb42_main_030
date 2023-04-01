@@ -10,7 +10,6 @@ declare module "styled-components" {
     buttonHover: string;
 
     // main
-    diaryBackground: string;
     diaryDate: string;
     diaryInfoLine: string;
 

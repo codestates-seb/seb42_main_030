@@ -10,7 +10,6 @@ const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* border: 1px solid red; */
 `;
 
 const FormContainer = styled.form`
@@ -20,9 +19,10 @@ const FormContainer = styled.form`
   align-items: center;
   width: 450px;
   height: 300px;
-  background-color: ${(props) => props.theme.diaryBackground};
   border-radius: 4px;
+  border: none;
   border: 1px solid ${(props) => props.theme.disabledTagBorder};
+  background-color: ${(props) => props.theme.disabledTagBackground};
 `;
 
 const EmailInput = styled.input`
@@ -63,6 +63,7 @@ const LoginButton = styled.button`
   border: none;
   border-radius: 4px;
   color: #1c1a16;
+  font-size: 15px;
   font-weight: 700;
   background-color: ${(props) => props.theme.mainColor};
   cursor: pointer;
@@ -76,28 +77,24 @@ const PasswordFind = styled.div`
   position: absolute;
   margin-top: 240px;
   color: ${(props) => props.theme.mainText};
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
 `;
 
 const SignupButton = styled.button`
+  font-size: 14px;
   margin-top: 20px;
   width: 450px;
   height: 60px;
-  border: none;
   border-radius: 4px;
+  border: none;
+  color: ${(props) => props.theme.mainText};
   border: 1px solid ${(props) => props.theme.disabledTagBorder};
-  background-color: ${(props) => props.theme.diaryBackground};
+  background-color: ${(props) => props.theme.disabledTagBackground};
   cursor: pointer;
 
-  > a {
-    font-size: 16px;
-    text-decoration: none;
-    color: ${(props) => props.theme.mainText};
-
-    .bold {
-      font-weight: 500;
-    }
+  > .bold {
+    font-weight: 500;
   }
 `;
 
@@ -113,9 +110,11 @@ interface FormValue {
   password: any;
 }
 
-const Login = () => {
-  const navigate = useNavigate();
+function Login() {
   const [loginError, setLoginError] = useState(false);
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -146,7 +145,7 @@ const Login = () => {
   };
 
   return (
-    <LoginContainer onSubmit={handleSubmit(onSubmit)}>
+    <LoginContainer>
       <FormContainer>
         {errors.email && errors.email.type === "required" && (
           <Errormsg>Email cannot be empty.</Errormsg>
@@ -157,7 +156,6 @@ const Login = () => {
         {loginError ? <Errormsg>The email or password is incorrect.</Errormsg> : null}
         <EmailInput
           type='email'
-          id='email'
           placeholder='이메일'
           {...register("email", {
             required: true,
@@ -165,28 +163,23 @@ const Login = () => {
         />
         <PasswordInput
           type='password'
-          id='password'
           placeholder='비밀번호'
           {...register("password", {
             required: true,
           })}
         />
-        <LoginButton
-          type='button'
-          onClick={handleSubmit(onSubmit)}
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <LoginButton type='button' onClick={handleSubmit(onSubmit)}>
           로그인
         </LoginButton>
         <PasswordFind>비밀번호를 잊으셨나요?</PasswordFind>
       </FormContainer>
-      <SignupButton>
-        <Link to='/Signup'>
+      <Link to='/Signup'>
+        <SignupButton>
           계정이 없으신가요? <span className='bold'>가입하기</span>
-        </Link>
-      </SignupButton>
+        </SignupButton>
+      </Link>
     </LoginContainer>
   );
-};
+}
 
 export default Login;

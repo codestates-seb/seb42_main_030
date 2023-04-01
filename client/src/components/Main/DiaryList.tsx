@@ -11,7 +11,7 @@ const DiaryListContainer = styled.li`
   list-style: none;
   border-radius: 4px;
   cursor: pointer;
-  background-color: ${(props) => props.theme.diaryBackground};
+  background-color: ${(props) => props.theme.disabledTagBackground};
   &:hover {
     transform: scale(1.02);
     transition: 0.2s;
@@ -140,7 +140,7 @@ function DiaryList({ list }: DiaryDataProps) {
           <AiFillHeart className='likeIcon' size={16} />
           {list.likeCount}
           <FaRegCommentDots className='commentIcon' size={15} />
-          {list.comments.length}
+          {/* {list.comments.length} */}
         </LikeAndComment>
       </UserArea>
     </DiaryListContainer>
