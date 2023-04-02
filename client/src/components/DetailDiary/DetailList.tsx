@@ -400,8 +400,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
 
   // 선택한 다이어리 delete 요청
   const postDelete = async () => {
-    const res = await TOKEN_API.delete(`/diary/${diaryId}`);
-    getDetailData(res.data);
+    await TOKEN_API.delete(`/diary/${diaryId}`);
     const scrollY = document.body.style.top;
     document.body.style.cssText = "";
     window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);

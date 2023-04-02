@@ -111,7 +111,7 @@ const LikeAndComment = styled.div`
 function MyDiary({ list }: DiaryDataProps) {
   const { currentUser }: any = useContext(myContext);
   const myDiary: boolean = list.userNickname === currentUser.nickname;
-
+  console.log(list.userNickname);
   const navigate = useNavigate();
 
   // 디테일 페이지로 이동
@@ -143,7 +143,7 @@ function MyDiary({ list }: DiaryDataProps) {
               <AiFillHeart className='likeIcon' size={16} />
               {list.likeCount}
               <FaRegCommentDots className='commentIcon' size={15} />
-              {list.comments.length}
+              {/* {list.comments.length} */}
             </LikeAndComment>
           </UserArea>
         </DiaryListContainer>

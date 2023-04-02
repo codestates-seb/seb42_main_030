@@ -13,12 +13,10 @@ const SingupContainer = styled.div`
 `;
 
 const Logo = styled.div`
-  position: absolute;
-  top: 190px;
   font-weight: 700;
   font-size: 27px;
   color: ${(props) => props.theme.mainText};
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 
 const FormContainer = styled.form`
