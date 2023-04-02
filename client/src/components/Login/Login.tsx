@@ -5,11 +5,15 @@ import { useState } from "react";
 import { BASE_API } from "../../util/API";
 
 const LoginContainer = styled.div`
-  height: 85vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+const Logo = styled.div`
+  color: ${(props) => props.theme.mainText};
 `;
 
 const FormContainer = styled.form`
@@ -146,6 +150,7 @@ function Login() {
 
   return (
     <LoginContainer>
+      <Logo>나만의 작은 음악 다이어리</Logo>
       <FormContainer>
         {errors.email && errors.email.type === "required" && (
           <Errormsg>Email cannot be empty.</Errormsg>

@@ -8,12 +8,23 @@ export interface DiaryData {
   modifiedAt: string;
   userNickname: string;
   comments: CommentData[];
+  playlists: PlaylistData[];
   tag: string[];
-  
 }
 
 export interface DiaryDataProps {
   list: DiaryData;
+}
+
+export interface PlaylistData {
+  channelId: number;
+  title: number;
+  thumbnail: string;
+  url: string;
+}
+
+export interface PlaylistDataProps {
+  list: PlaylistData;
 }
 
 export interface CommentData {

@@ -1,4 +1,7 @@
+import { createContext } from "react";
 import { DefaultTheme } from "styled-components";
+
+export const ModeContext: any = createContext(null);
 
 export const lightMode: DefaultTheme = {
   logo: `#22262c`,

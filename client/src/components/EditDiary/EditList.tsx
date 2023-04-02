@@ -1,14 +1,14 @@
 import styled from "styled-components";
-// import PlayList from "../DetailDiary/PlayList";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import { DiaryDataProps } from "../../util/Type";
+import { DiaryDataProps } from "../../util/Type";
 import { DiaryData } from "../../util/Type";
 import { TOKEN_API } from "../../util/API";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import EditPlayList from "./EditPlayList";
+import { PlaylistData } from "../../util/Type";
 
 const EditMainContainer = styled.div`
   display: flex;
@@ -183,40 +183,25 @@ const UrlInput = styled.div`
   }
 `;
 
-interface DiaryDataProps {
-  list: DiaryData;
-  test: any;
-}
-
-function EditList({ list, test }: DiaryDataProps) {
+function EditList({ list }: DiaryDataProps) {
   const [editTitle, setEditTitle] = useState<string>(list.title);
   const [editBody, setEditBody] = useState<string>(list.body);
-
-  const [plList, setPlList] = useState<any>(test);
+  const [plList, setPlList] = useState<any>(list.playlists);
   const [url, setUrl] = useState("");
 
   const navigate = useNavigate();
   const { diaryId } = useParams();
 
   // 다이어리 patch 요청
-  // const submitHandler = async () => {
-  //   const newDiary = {
-  //     title: editTitle,
-  //     body: editBody,
-  //   };
-  //   await TOKEN_API.patch(`/diary/${diaryId}`, newDiary);
-  //   navigate(`/DetailDiary/${diaryId}`);
-  // };
-
-  //! json 서버 post 테스트 용
   const submitHandler = async () => {
-    const newDiary = {
+    const editDiary = {
       title: editTitle,
       body: editBody,
-      playlist: plList,
+      playlists: plList,
     };
-    console.log(newDiary);
-    await axios.patch(`http://localhost:3001/diary`, newDiary);
+    // console.log(editDiary);
+    await TOKEN_API.patch(`/diary/${diaryId}`, editDiary);
+    navigate(`/DetailDiary/${diaryId}`);
   };
 
   // 제목 수정 체인지 이벤트
@@ -299,7 +284,6 @@ function EditList({ list, test }: DiaryDataProps) {
             onChange={changeEditBody}
           />
         </AlbumInfoArea>
-        {/* <PlayList /> */}
         <PlayListArea>
           <div className='playTitle'>다이어리 수록곡</div>
           <UrlInput>

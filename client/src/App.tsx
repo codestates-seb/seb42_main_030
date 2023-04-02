@@ -11,6 +11,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { lightMode, darkMode } from "./theme";
+import { ModeContext } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -28,9 +29,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const LocalTheme = window.localStorage.getItem("theme");
-  const [isChange, setIsChange] = useState(LocalTheme);
   const isLogin = localStorage.getItem("login-token");
+
+  const LocalTheme = localStorage.getItem("theme");
+  const [isChange, setIsChange] = useState(LocalTheme);
 
   const changeMode = () => {
     const changeTheme = isChange === "light" ? "dark" : "light";
@@ -39,25 +41,22 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={isChange === "dark" ? darkMode : lightMode}>
-      <div className='App'>
-        <GlobalStyle />
-        {isLogin ? (
-          <LoginHeader isChange={isChange} changeMode={changeMode} />
-        ) : (
-          <LogoutHeader isChange={isChange} changeMode={changeMode} />
-        )}
-        <Routes>
-          <Route path='/' element={<Main />} />
-          <Route path='/NewDiary' element={<NewDiary />} />
-          <Route path='/Mypage' element={<Mypage />} />
-          <Route path='/Login' element={<Login />} />
-          <Route path='/Signup' element={<Signup />} />
-          <Route path='/DetailDiary/:diaryId' element={<DetailDiary />} />
-          <Route path='/EditDiary/:diaryId' element={<EditDiary />} />
-        </Routes>
-      </div>
-    </ThemeProvider>
+    <ModeContext.Provider value={{ isLogin, isChange, changeMode }}>
+      <ThemeProvider theme={isChange === "dark" ? darkMode : lightMode}>
+        <div className='App'>
+          <GlobalStyle />
+          <Routes>
+            <Route path='/' element={<Main />} />
+            <Route path='/NewDiary' element={<NewDiary />} />
+            <Route path='/Mypage' element={<Mypage />} />
+            <Route path='/Login' element={<Login />} />
+            <Route path='/Signup' element={<Signup />} />
+            <Route path='/DetailDiary/:diaryId' element={<DetailDiary />} />
+            <Route path='/EditDiary/:diaryId' element={<EditDiary />} />
+          </Routes>
+        </div>
+      </ThemeProvider>
+    </ModeContext.Provider>
   );
 }
 

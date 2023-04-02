@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { BASE_API } from "../util/API";
 import { GoTriangleDown } from "react-icons/go";
 import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
+import { useContext } from "react";
+import { ModeContext } from "../theme";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -79,8 +81,8 @@ const ModeButton = styled.button`
   width: 40px;
   border: none;
   background-color: transparent;
-  cursor: pointer;
   margin-right: 10px;
+  cursor: pointer;
 
   > .lightIcon {
     color: ${(props) => props.theme.mainText};
@@ -121,9 +123,11 @@ const Profile = styled.img`
   box-shadow: rgba(0, 0, 0, 0.086) 0px 0px 8px;
 `;
 
-function LoginHeader({ isChange, changeMode }: any) {
+function LoginHeader() {
   const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { isChange, changeMode }: any = useContext(ModeContext);
 
   // 내 유저 정보 get 요청
   const getImageData = async () => {

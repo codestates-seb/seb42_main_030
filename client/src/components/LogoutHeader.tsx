@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
+import { useContext } from "react";
+import { ModeContext } from "../theme";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -76,7 +78,9 @@ const LoginButton = styled.button`
   cursor: pointer;
 `;
 
-function LogoutHeader({ isChange, changeMode }: any) {
+function LogoutHeader() {
+  const { isChange, changeMode }: any = useContext(ModeContext);
+
   return (
     <HeaderContainer>
       <HeaderWrapper>

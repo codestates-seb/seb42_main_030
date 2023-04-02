@@ -112,10 +112,6 @@ const AlbumInfoArea = styled.div`
       border: none;
       border: 1px solid ${(props) => props.theme.disabledTagBorder};
       background-color: ${(props) => props.theme.disabledTagBackground};
-
-      .ql-picker-label {
-        color: ${(props) => props.theme.mainText};
-      }
     }
 
     > .ql-container {
@@ -183,7 +179,6 @@ const UrlInput = styled.div`
 function NewMain() {
   const [newTitle, setNewTitle] = useState<string>("");
   const [newBody, setNewBody] = useState<string>("");
-
   const [plList, setPlList] = useState<any>([]);
   const [url, setUrl] = useState("");
 
@@ -195,21 +190,11 @@ function NewMain() {
     const newDiary = {
       title: newTitle,
       body: newBody,
-      playlist: plList,
+      playlists: plList,
     };
     await TOKEN_API.post(`/diary`, newDiary);
     navigate(`/`);
   };
-
-  //! json 서버 post 테스트 용
-  // const submitHandler = async () => {
-  //   const newDiary = {
-  //     title: newTitle,
-  //     body: newBody,
-  //     playlist: plList,
-  //   };
-  //   await axios.post(`http://localhost:3001/diary`, newDiary);
-  // };
 
   // 제목 수정 체인지 이벤트
   const changeNewTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -306,7 +291,6 @@ function NewMain() {
             onChange={changeNewBody}
           />
         </AlbumInfoArea>
-        {/* <PlayList /> */}
         <PlayListArea>
           <div className='playTitle'>다이어리 수록곡</div>
           <UrlInput>

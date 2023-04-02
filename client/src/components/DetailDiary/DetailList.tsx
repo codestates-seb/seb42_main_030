@@ -342,16 +342,17 @@ const RuleModalView = styled.div`
 interface DiaryDataProps {
   list: DiaryData;
   getDetailData: React.Dispatch<React.SetStateAction<object>>;
-  test: any;
 }
 
-function DetailList({ list, getDetailData, test }: DiaryDataProps) {
+function DetailList({ list, getDetailData }: DiaryDataProps) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
   const [ruleModal, setRuleModal] = useState<boolean>(false);
 
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
+  const playlistData = list.playlists; // 선택한 플레이리스트의 정보
+
   const { diaryId } = useParams();
   const navigate = useNavigate();
 
@@ -506,10 +507,9 @@ function DetailList({ list, getDetailData, test }: DiaryDataProps) {
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(list.body) }}
           ></div>
         </AlbumInfoArea>
-        {/* PlayList json 데이터 부분 */}
         <PlayListArea>
           <div className='playTitle'>다이어리 수록곡</div>
-          {test?.map((value: any, index: any) => {
+          {playlistData?.map((value, index) => {
             return <DetailPlayList list={value} key={index} />;
           })}
         </PlayListArea>
