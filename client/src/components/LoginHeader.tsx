@@ -127,14 +127,12 @@ function LoginHeader() {
   const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { isChange, changeMode }: any = useContext(myContext);
+  const { myUserId, isChange, changeMode }: any = useContext(myContext);
 
   // 내 유저 정보 get 요청
   const getImageData = async () => {
-    // const isLogin = localStorage.getItem('usernickname')
-    // URI -> `http://localhost:3001/user/${isLogin}`으로 변경
     try {
-      const res = await BASE_API.get(`/users/1`);
+      const res = await BASE_API.get(`/users/${myUserId}`);
       setImageData(res.data);
     } catch (err) {
       console.error(err);
