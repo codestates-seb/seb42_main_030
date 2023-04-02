@@ -17,10 +17,10 @@ export interface DiaryDataProps {
 }
 
 export interface PlaylistData {
-  channelId: number;
-  title: number;
-  thumbnail: string;
-  url: string;
+  channelId?: number;
+  title?: number;
+  thumbnail?: string;
+  url?: string;
 }
 
 export interface PlaylistDataProps {

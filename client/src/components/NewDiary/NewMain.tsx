@@ -182,7 +182,7 @@ function NewMain() {
   const [newTitle, setNewTitle] = useState<string>("");
   const [newBody, setNewBody] = useState<string>("");
   const [newPlayList, setNewPlayList] = useState<PlaylistData[]>([]);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState<string>("");
 
   const navigate = useNavigate();
   const { currentUser }: any = useContext(myContext);
@@ -228,7 +228,6 @@ function NewMain() {
       const res =
         await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}
       &part=snippet`);
-      // console.log(res.data);
       return res.data.items[0].snippet;
     } catch (err) {
       console.error(err);
@@ -237,7 +236,7 @@ function NewMain() {
 
   // 추가 버튼 클릭 시 플레이리스트 담는 이벤트 핸들러
   const addPlayList = () => {
-    const musicInfo: any = {};
+    const musicInfo: PlaylistData = {};
     const urlId = getVideoId(url);
 
     getYoutubeData(urlId)
@@ -252,8 +251,6 @@ function NewMain() {
         setUrl("");
       });
   };
-
-  // console.log(newPlayList);
 
   return (
     <NewMainContainer>

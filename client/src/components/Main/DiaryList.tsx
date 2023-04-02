@@ -68,6 +68,8 @@ const UserArea = styled.div`
   justify-content: space-between;
   padding: 8px 15px 8px 15px;
   border-top: 0.5px solid ${(props) => props.theme.diaryInfoLine};
+  /* 태그 미구현으로 인한 임시로 위치 내림 */
+  margin-top: 24px;
 `;
 
 const Profile = styled.div`

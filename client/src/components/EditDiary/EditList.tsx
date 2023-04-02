@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DiaryDataProps } from "../../util/Type";
-import { DiaryData } from "../../util/Type";
 import { TOKEN_API } from "../../util/API";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -187,7 +186,7 @@ function EditList({ list }: DiaryDataProps) {
   const [editTitle, setEditTitle] = useState<string>(list.title);
   const [editBody, setEditBody] = useState<string>(list.body);
   const [editPlayList, setEditPlayList] = useState<PlaylistData[]>(list.playlists);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState<string>("");
 
   const navigate = useNavigate();
   const { diaryId } = useParams();
@@ -199,7 +198,6 @@ function EditList({ list }: DiaryDataProps) {
       body: editBody,
       playlists: editPlayList,
     };
-    // console.log(editDiary);
     await TOKEN_API.patch(`/diary/${diaryId}`, editDiary);
     navigate(`/DetailDiary/${diaryId}`);
   };
@@ -214,34 +212,48 @@ function EditList({ list }: DiaryDataProps) {
     setEditBody(e);
   };
 
+  // 전체 url을 입력받은 후 id만 필터링
+  const getVideoId = (url: string) => {
+    if (url.indexOf("/watch") > -1) {
+      const arr = url.replaceAll(/=|&/g, "?").split("?");
+      return arr[arr.indexOf("v") + 1];
+    } else if (url.indexOf("/youtu.be") > -1) {
+      const arr = url.replaceAll(/=|&|\//g, "?").split("?");
+      return arr[arr.indexOf("youtu.be") + 1];
+    } else {
+      return "none";
+    }
+  };
+
+  // input에 등록한 Url 정보 불러옴
   const getYoutubeData = async (id: any) => {
     try {
       const res =
         await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}
       &part=snippet`);
-      console.log(res.data);
       return res.data.items[0].snippet;
     } catch (err) {
       console.error(err);
     }
   };
 
+  // 추가 버튼 클릭 시 플레이리스트 담는 이벤트 핸들러
   const addPlayList = () => {
-    const musicInfo: any = {};
+    const musicInfo: PlaylistData = {};
+    const urlId = getVideoId(url);
 
-    getYoutubeData(url)
+    getYoutubeData(urlId)
       .then((res) => {
         musicInfo.channelId = res.channelId;
         musicInfo.thumbnail = res.thumbnails.default.url;
         musicInfo.title = res.title;
+        musicInfo.url = url;
       })
       .then(() => {
         setEditPlayList((value) => [...value, musicInfo]);
         setUrl("");
       });
   };
-
-  // console.log(plList);
 
   return (
     <EditMainContainer>

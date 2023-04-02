@@ -4,7 +4,7 @@ import { PlaylistData } from "../../util/Type";
 const PlayListContainer = styled.li`
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-top: 10px;
 `;
 
 const PlayListWrapper = styled.div`
@@ -32,7 +32,7 @@ const ContentArea = styled.div`
 
   > .delete {
     width: 50px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     border: none;
     text-decoration: underline;
     font-weight: 600;

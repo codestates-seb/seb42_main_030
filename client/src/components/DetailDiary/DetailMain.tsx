@@ -22,8 +22,6 @@ function DetailMain() {
     getDetailData();
   }, []);
 
-  // console.log(detailData);
-
   return <>{detailData && <DetailList list={detailData} getDetailData={getDetailData} />};</>;
 }
 

@@ -446,8 +446,6 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
     navigate(`/EditDiary/${list.diaryId}`);
   };
 
-  // console.log(test);
-
   return (
     <DetailMainContainer>
       <DetailMainWrapper>

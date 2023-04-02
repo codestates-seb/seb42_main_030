@@ -116,6 +116,7 @@ const DeleteModalView = styled.div`
     color: white;
     border: none;
     text-decoration: none;
+
     &:hover {
       text-decoration: none;
     }
@@ -128,6 +129,7 @@ const DeleteModalView = styled.div`
     border-top: 1px solid #eeeeee;
     border-right: 0.5px solid #eeeeee;
     border-bottom-left-radius: 5px;
+
     &:hover {
       background-color: #eeeeee;
     }
@@ -140,6 +142,7 @@ const DeleteModalView = styled.div`
     border-top: 1px solid #eeeeee;
     border-left: 0.5px solid #eeeeee;
     border-bottom-right-radius: 5px;
+
     &:hover {
       background-color: #eeeeee;
     }

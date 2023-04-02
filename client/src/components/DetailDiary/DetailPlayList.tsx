@@ -5,7 +5,7 @@ import { PlaylistDataProps } from "../../util/Type";
 const PlayListContainer = styled.li`
   display: flex;
   justify-content: center;
-  line-height: 4;
+  margin-top: 10px;
 `;
 
 const PlayListWrapper = styled.div`
@@ -37,16 +37,6 @@ const ContentArea = styled.div`
     color: ${(props) => props.theme.mainText};
   }
 
-  > .delete {
-    width: 50px;
-    color: #21252b;
-    border: none;
-    text-decoration: underline;
-    font-weight: 600;
-    font-size: 12px;
-    margin: 5px;
-    background-color: transparent;
-  }
   &:hover {
     border-radius: 4px;
     background-color: ${(props) => props.theme.playListHover};
@@ -54,11 +44,10 @@ const ContentArea = styled.div`
 `;
 
 function DetailPlayList({ list }: PlaylistDataProps) {
-  // console.log(list);
   return (
     <PlayListContainer>
       <PlayListWrapper>
-        <Link to={list.url} target='_blank'>
+        <Link to={list.url!} target='_blank'>
           <ContentArea>
             <img className='thumbnail' src={list.thumbnail} alt='썸네일' />
             <div className='listTitle'>{list.title}</div>
