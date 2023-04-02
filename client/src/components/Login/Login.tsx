@@ -137,10 +137,8 @@ function Login() {
       .then((res) => {
         // console.log(res);
         if (res.headers.authorization) {
-          localStorage.setItem("login-token", res.headers.authorization);
-          localStorage.setItem("userId", res.data.userId);
-          localStorage.setItem("nickname", res.data.nickname);
-          // localStorage.setItem("login-refresh", res.headers.refresh);
+          localStorage.setItem("accessToken", res.headers.authorization);
+          localStorage.setItem("CURRENT_USER", JSON.stringify(res.data));
         }
         setLoginError(false);
       })

@@ -6,6 +6,8 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import NewPlayList from "./NewPlayList";
+import { useContext } from "react";
+import { myContext } from "../../theme";
 
 const NewMainContainer = styled.div`
   display: flex;
@@ -183,6 +185,7 @@ function NewMain() {
   const [url, setUrl] = useState("");
 
   const navigate = useNavigate();
+  const { currentUser }: any = useContext(myContext);
   const today: string = new Date().toISOString().substring(0, 10);
 
   // 다이어리 post 요청
@@ -275,7 +278,7 @@ function NewMain() {
           <InfoArea>
             <UserInfo>
               <span className='text'>등록자</span>
-              {/* {list.userNickname} */}
+              {currentUser.nickname}
             </UserInfo>
             <UserInfo>
               <span className='text'>등록일</span>

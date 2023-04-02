@@ -127,13 +127,13 @@ function LoginHeader() {
   const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { myUserId, isChange, changeMode }: any = useContext(myContext);
+  const { currentUser, isChange, changeMode }: any = useContext(myContext);
   const navigate = useNavigate();
 
   // 내 유저 정보 get 요청
   const getImageData = async () => {
     try {
-      const res = await BASE_API.get(`/users/${myUserId}`);
+      const res = await BASE_API.get(`/users/${currentUser.userId}`);
       setImageData(res.data);
     } catch (err) {
       console.error(err);
@@ -155,7 +155,9 @@ function LoginHeader() {
 
   // 로그아웃
   const logOut = () => {
-    localStorage.clear();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("nickname");
     navigate("/");
     window.location.reload();
   };

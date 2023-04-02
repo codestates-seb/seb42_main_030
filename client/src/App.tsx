@@ -27,9 +27,8 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const isLogin = localStorage.getItem("login-token");
-  const myUserId = localStorage.getItem("userId");
-  const myNickname = localStorage.getItem("nickname");
+  const isLogin = localStorage.getItem("accessToken");
+  const currentUser = JSON.parse(localStorage.getItem("CURRENT_USER")!);
 
   const LocalTheme = localStorage.getItem("theme");
   const [isChange, setIsChange] = useState(LocalTheme);
@@ -41,7 +40,7 @@ function App() {
   };
 
   return (
-    <myContext.Provider value={{ isLogin, myUserId, myNickname, isChange, changeMode }}>
+    <myContext.Provider value={{ isLogin, currentUser, isChange, changeMode }}>
       <ThemeProvider theme={isChange === "dark" ? darkMode : lightMode}>
         <div className='App'>
           <GlobalStyle />

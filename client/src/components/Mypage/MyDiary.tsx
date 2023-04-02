@@ -109,8 +109,8 @@ const LikeAndComment = styled.div`
 `;
 
 function MyDiary({ list }: DiaryDataProps) {
-  const { myNickname }: any = useContext(myContext);
-  const myDiary: boolean = list.userNickname === myNickname;
+  const { currentUser }: any = useContext(myContext);
+  const myDiary: boolean = list.userNickname === currentUser.nickname;
 
   const navigate = useNavigate();
 

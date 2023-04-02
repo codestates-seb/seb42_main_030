@@ -34,8 +34,8 @@ const CommentListWrapper = styled.div`
 `;
 
 function MyComment({ list }: CommentDataProps) {
-  const { myNickname }: any = useContext(myContext);
-  const myComment: boolean = list.userNickname === myNickname;
+  const { currentUser }: any = useContext(myContext);
+  const myComment: boolean = list.userNickname === currentUser.nickname;
 
   return (
     <>

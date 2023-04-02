@@ -82,12 +82,12 @@ function MypageMain() {
 
   const LIMIT_COUNT: number = 20;
   const offset: number = (page - 1) * LIMIT_COUNT;
-  const { myUserId }: any = useContext(myContext);
+  const { currentUser }: any = useContext(myContext);
 
   // Tab 1(MyInfo) : 나의 유저 정보만 불러오는 get 요청
   const getUserData = async () => {
     try {
-      const res = await BASE_API.get(`/users/${myUserId}`);
+      const res = await BASE_API.get(`/users/${currentUser.userId}`);
       setUserData(res.data);
     } catch (err) {
       console.error(err);
