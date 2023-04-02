@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { useContext } from "react";
 import { myContext } from "../theme";
+import mainIcon from "../util/img/mainIcon.png";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -32,8 +33,17 @@ const Logo = styled.div`
   font-size: 20px;
 
   a {
+    display: flex;
+    align-items: center;
     color: ${(props) => props.theme.logo};
     text-decoration: none;
+
+    > img {
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 4px;
+    }
   }
 `;
 
@@ -85,7 +95,11 @@ function LogoutHeader() {
     <HeaderContainer>
       <HeaderWrapper>
         <Logo>
-          <Link to='/'>나만의 작은 음악 다이어리</Link>
+          <Link to='/'>
+            {" "}
+            <img src={mainIcon} alt='mainIcon' />
+            나만의 작은 음악 다이어리
+          </Link>
         </Logo>
         <div className='buttonArea'>
           <ModeButton onClick={changeMode}>

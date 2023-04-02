@@ -15,8 +15,12 @@ const SingupContainer = styled.div`
 const Logo = styled.div`
   font-weight: 700;
   font-size: 27px;
-  color: ${(props) => props.theme.mainText};
   margin-bottom: 30px;
+
+  a {
+    color: ${(props) => props.theme.logo};
+    text-decoration: none;
+  }
 `;
 
 const FormContainer = styled.form`
@@ -25,7 +29,7 @@ const FormContainer = styled.form`
   justify-content: center;
   align-items: center;
   width: 410px;
-  height: 300px;
+  height: 305px;
   border-radius: 4px;
   border: none;
   border: 1px solid ${(props) => props.theme.disabledTagBorder};
@@ -150,7 +154,10 @@ function Signup() {
 
   return (
     <SingupContainer>
-      <Logo>나만의 작은 음악 다이어리</Logo>
+      <Logo>
+        {" "}
+        <Link to='/'>나만의 작은 음악 다이어리</Link>
+      </Logo>
       <FormContainer>
         <NicknameInput placeholder='닉네임' {...register("nickname")} />
         <EmailInput type='email' placeholder='이메일' {...register("email")} />

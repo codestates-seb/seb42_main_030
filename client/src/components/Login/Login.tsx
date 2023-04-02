@@ -15,8 +15,12 @@ const LoginContainer = styled.div`
 const Logo = styled.div`
   font-weight: 700;
   font-size: 27px;
-  color: ${(props) => props.theme.mainText};
   margin-bottom: 30px;
+
+  a {
+    color: ${(props) => props.theme.logo};
+    text-decoration: none;
+  }
 `;
 
 const FormContainer = styled.form`
@@ -150,7 +154,9 @@ function Login() {
 
   return (
     <LoginContainer>
-      <Logo>나만의 작은 음악 다이어리</Logo>
+      <Logo>
+        <Link to='/'>나만의 작은 음악 다이어리</Link>
+      </Logo>
       <FormContainer>
         {errors.email && errors.email.type === "required" && (
           <Errormsg>Email cannot be empty.</Errormsg>
