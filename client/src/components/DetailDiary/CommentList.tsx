@@ -10,10 +10,10 @@ const CommentListContainer = styled.li`
 
 const CommentListWrapper = styled.div`
   width: 100vw;
-  max-width: 1440px;
+  max-width: 900px;
   min-width: 300px;
   border: none;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
   color: ${(props) => props.theme.mainText};
 
   > .content {
@@ -23,15 +23,9 @@ const CommentListWrapper = styled.div`
   }
 
   > .date {
-    color: ${(props) => props.theme.subText};
     font-size: 12px;
     color: #848180;
     margin: 10px 0 15px 0;
-  }
-
-  > .editCommentArea {
-    width: 100%;
-    padding: 5px;
   }
 `;
 
@@ -44,6 +38,20 @@ const NameArea = styled.div`
     font-size: 14px;
     font-weight: 500;
     margin: 15px 0 15px 0;
+  }
+`;
+
+const EditCommentArea = styled.input`
+  color: ${(props) => props.theme.mainText};
+  width: 100%;
+  padding: 10px 8px 10px 8px;
+  border: none;
+  border-radius: 4px;
+  border: 1px solid ${(props) => props.theme.disabledTagBorder};
+  background-color: ${(props) => props.theme.disabledTagBackground};
+
+  &:focus {
+    outline: none;
   }
 `;
 
@@ -61,7 +69,7 @@ const ButtonArea = styled.div`
 
   > .edit {
     width: 40px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     border: none;
     text-decoration: underline;
     font-weight: 600;
@@ -69,7 +77,7 @@ const ButtonArea = styled.div`
 
   > .delete {
     width: 40px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     border: none;
     text-decoration: underline;
     font-weight: 600;
@@ -246,12 +254,7 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
           </ButtonArea>
         </NameArea>
         {click ? (
-          <input
-            className='editCommentArea'
-            type='text'
-            value={commentContent}
-            onChange={onChangeEditInput}
-          ></input>
+          <EditCommentArea type='text' value={commentContent} onChange={onChangeEditInput} />
         ) : (
           <div className='content'>{list.body}</div>
         )}

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { PlaylistData } from "../../util/Type";
 
-const PlayListContainer = styled.li`
+export const PlayListContainer = styled.li`
   display: flex;
   justify-content: center;
   margin-top: 10px;
 `;
 
-const PlayListWrapper = styled.div`
+export const PlayListWrapper = styled.div`
   width: 100vw;
   max-width: 1440px;
   min-width: 300px;
@@ -15,7 +15,7 @@ const PlayListWrapper = styled.div`
   color: ${(props) => props.theme.mainText};
 `;
 
-const ContentArea = styled.div`
+export const ContentArea = styled.div`
   display: flex;
   align-items: center;
 

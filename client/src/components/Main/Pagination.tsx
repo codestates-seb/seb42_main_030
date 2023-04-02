@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { BiArrowToLeft, BiArrowToRight, BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 
-const PageNum = styled.div`
+export const PageNum = styled.div`
   margin: 50px 0 40px 0;
   display: flex;
   justify-content: center;
@@ -19,8 +19,9 @@ const PageNum = styled.div`
     border: none;
     font-size: 15px;
     margin: 0 5px 0 5px;
-    cursor: pointer;
     color: ${(props) => props.theme.mainText};
+    cursor: pointer;
+
     &:disabled {
       color: ${(props) => props.theme.disabled};
     }
@@ -30,10 +31,10 @@ const PageNum = styled.div`
     width: 30px;
     height: 30px;
     border-radius: 3px;
-    background-color: #ffefd5;
+    background-color: ${(props) => props.theme.mainColor};
     border: none;
     border-radius: 50px;
-    color: #1c1a16;
+    color: ${(props) => props.theme.TagColor};
     font-weight: 600;
   }
 `;

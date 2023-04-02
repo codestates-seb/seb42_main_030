@@ -1,22 +1,3 @@
 {
-  "diary": [
-    {
-      "title": "ㄴㅇㄹ",
-      "body": "<p>ㄴㅇㄹ</p>",
-      "playlist": [
-        {
-          "channelId": "UC0Y0T9JpgIBbyGDjvy9PbOg",
-          "thumbnail": "https://i.ytimg.com/vi/qMwzWk81tVM/default.jpg",
-          "title": "[inflaylist] 공부/작업 할 때 집중해서 듣기 좋은 음악✍ | 4 hour playlist | lofi, piano | 직장인 | 대학생 | 프리랜서 | 취준생",
-          "url": "https://www.youtube.com/watch?v=qMwzWk81tVM"
-        },
-        {
-          "channelId": "UCSGC87iX0QhnIfUOI_B_Rdg",
-          "thumbnail": "https://i.ytimg.com/vi/RvvIquQTyLg/default.jpg",
-          "title": "[Playlist] 여유롭게 햇살을 즐겨볼까? 🌷 | 산뜻한 봄에 듣기 좋은 BGM | spring pop songs 🌷",
-          "url": "https://www.youtube.com/watch?v=RvvIquQTyLg"
-        }
-      ]
-    }
-  ]
+  "likediary": []
 }

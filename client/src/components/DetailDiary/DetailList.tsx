@@ -257,7 +257,7 @@ const CommentInputArea = styled.div`
 const TextArea = styled.div`
   display: flex;
 
-  > .textArea {
+  > textArea {
     color: ${(props) => props.theme.mainText};
     width: 1300px;
     height: 70px;
@@ -517,7 +517,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         </PlayListArea>
         <CommentInputArea>
           <div className='commentTitle'>
-            {/* <span className='commentCount'>댓글 ({commentData.length})</span> */}
+            <span className='commentCount'>댓글 ({commentData.length})</span>
             <div className='commentRule' onClick={openRuleModalHandler}>
               <RiErrorWarningLine className='ruleIcon' size={16} />
               댓글 운영 원칙
@@ -547,7 +547,6 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           </div>
           <TextArea>
             <textarea
-              className='textArea'
               value={commentBody}
               placeholder='댓글을 작성하세요'
               onChange={changeHandler}

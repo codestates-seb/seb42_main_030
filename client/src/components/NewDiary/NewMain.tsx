@@ -9,19 +9,19 @@ import NewPlayList from "./NewPlayList";
 import { myContext } from "../../theme";
 import { PlaylistData } from "../../util/Type";
 
-const NewMainContainer = styled.div`
+export const MainContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const NewMainWrapper = styled.div`
+export const MainWrapper = styled.div`
   width: 100vw;
   max-width: 900px;
   min-width: 300px;
   padding: 10px 20px 10px 20px;
 `;
 
-const TitleArea = styled.div`
+export const TitleArea = styled.div`
   height: 90px;
   display: flex;
   white-space: normal;
@@ -30,7 +30,7 @@ const TitleArea = styled.div`
   border-bottom: 1px solid ${(props) => props.theme.detailLine};
   padding: 0 10px 0 10px;
 
-  > .NewTitle {
+  > .inputTitle {
     width: 580px;
     font-size: 24px;
     font-weight: 600;
@@ -47,7 +47,7 @@ const TitleArea = styled.div`
   }
 `;
 
-const SubmitButton = styled.button`
+export const SubmitButton = styled.button`
   font-size: 13px;
   color: #1c1a16;
   font-weight: 700;
@@ -63,7 +63,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-const AlbumCoverArea = styled.div`
+export const AlbumCoverArea = styled.div`
   display: flex;
   margin: 30px 0 30px 0;
 
@@ -76,12 +76,12 @@ const AlbumCoverArea = styled.div`
   }
 `;
 
-const InfoArea = styled.div`
+export const InfoArea = styled.div`
   width: 400px;
   margin-top: 5px;
 `;
 
-const UserInfo = styled.div`
+export const UserInfo = styled.div`
   margin-bottom: 15px;
   font-size: 14px;
   color: ${(props) => props.theme.mainText};
@@ -92,7 +92,7 @@ const UserInfo = styled.div`
   }
 `;
 
-const AlbumInfoArea = styled.div`
+export const AlbumInfoArea = styled.div`
   padding: 30px 10px 80px 10px;
   border-top: 1px solid ${(props) => props.theme.detailLine};
 
@@ -131,7 +131,7 @@ const AlbumInfoArea = styled.div`
   }
 `;
 
-const PlayListArea = styled.div`
+export const PlayListArea = styled.div`
   padding: 30px 10px 80px 10px;
   border-top: 1px solid ${(props) => props.theme.detailLine};
 
@@ -143,7 +143,7 @@ const PlayListArea = styled.div`
   }
 `;
 
-const UrlInput = styled.div`
+export const UrlInput = styled.div`
   display: flex;
   margin-bottom: 20px;
 
@@ -182,7 +182,7 @@ function NewMain() {
   const [newTitle, setNewTitle] = useState<string>("");
   const [newBody, setNewBody] = useState<string>("");
   const [newPlayList, setNewPlayList] = useState<PlaylistData[]>([]);
-  const [url, setUrl] = useState<string>("");
+  const [newUrl, setNewUrl] = useState<string>("");
 
   const navigate = useNavigate();
   const { currentUser }: any = useContext(myContext);
@@ -204,9 +204,9 @@ function NewMain() {
     setNewTitle(e.target.value);
   };
 
-  // 본문 수정 체인지 이벤트
-  const changeNewBody = (e: any) => {
-    setNewBody(e);
+  // 플레이리스트 수정 체인지 이벤트
+  const changeNewUrl = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewUrl(e.target.value);
   };
 
   // 전체 url을 입력받은 후 id만 필터링
@@ -237,36 +237,32 @@ function NewMain() {
   // 추가 버튼 클릭 시 플레이리스트 담는 이벤트 핸들러
   const addPlayList = () => {
     const musicInfo: PlaylistData = {};
-    const urlId = getVideoId(url);
+    const urlId = getVideoId(newUrl);
 
     getYoutubeData(urlId)
       .then((res) => {
         musicInfo.channelId = res.channelId;
         musicInfo.thumbnail = res.thumbnails.default.url;
         musicInfo.title = res.title;
-        musicInfo.url = url;
+        musicInfo.url = newUrl;
       })
       .then(() => {
         setNewPlayList((value) => [...value, musicInfo]);
-        setUrl("");
+        setNewUrl("");
       });
   };
 
   return (
-    <NewMainContainer>
-      <NewMainWrapper>
+    <MainContainer>
+      <MainWrapper>
         <TitleArea>
           <input
-            className='NewTitle'
+            className='inputTitle'
             type='text'
             placeholder='제목을 입력하세요'
             onChange={changeNewTitle}
           />
-          <SubmitButton
-            className='SubmitButton'
-            onClick={submitHandler}
-            disabled={newTitle.length === 0}
-          >
+          <SubmitButton onClick={submitHandler} disabled={newTitle.length === 0}>
             등록하기
           </SubmitButton>
         </TitleArea>
@@ -288,18 +284,18 @@ function NewMain() {
           <ReactQuill
             className='playContent'
             placeholder='나만의 다이어리를 작성해 보세요'
-            onChange={changeNewBody}
+            onChange={(e) => setNewBody(e)}
           />
         </AlbumInfoArea>
         <PlayListArea>
           <div className='playTitle'>다이어리 수록곡</div>
           <UrlInput>
             <input
-              value={url}
+              value={newUrl}
               placeholder='유튜브 URL을 입력해 주세요'
-              onChange={(e) => setUrl(e.target.value)}
+              onChange={changeNewUrl}
             />
-            <button className='sumbit' onClick={addPlayList} disabled={url.length === 0}>
+            <button className='sumbit' onClick={addPlayList} disabled={newUrl.length === 0}>
               추가
             </button>
           </UrlInput>
@@ -314,8 +310,8 @@ function NewMain() {
             );
           })}
         </PlayListArea>
-      </NewMainWrapper>
-    </NewMainContainer>
+      </MainWrapper>
+    </MainContainer>
   );
 }
 

@@ -4,7 +4,6 @@ import MyLikeDiary from "./MyLikeDiary";
 import MyComment from "./MyComment";
 import MyInfo from "./MyInfo";
 import styled from "styled-components";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { DiaryData } from "../../util/Type";
 import { CommentData } from "../../util/Type";
@@ -100,9 +99,6 @@ function MypageMain() {
   // Tab 2(MyDiary) : 나의 다이어리 데이터 get 요청
   const getMyDiaryData = async () => {
     try {
-      // const isLogin = localStorage.getItem('nickname')
-      // nickname=${이 부분을 로그인한 사용자의 닉네임으로 변경}
-      // 현재 엔드포인트에 diaryId만 붙을 수 있는데 ?userNickname=light 이런 식으로 붙을 순 없는지?
       const res = await BASE_API.get(`/diary`);
       setMyDiaryData(res.data);
     } catch (err) {
@@ -114,19 +110,17 @@ function MypageMain() {
   }, []);
 
   // Tab 3(MyLikeDiary) : 내가 좋아요 한 다이어리 데이터 get 요청
-  const getLikeData = async () => {
-    try {
-      // const isLogin = localStorage.getItem('nickname')
-      // nickname=${이 부분을 로그인한 사용자의 닉네임으로 변경}
-      const res = await axios.get(`http://localhost:3001/likediary`);
-      setLikeDiaryData(res.data);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  useEffect(() => {
-    getLikeData();
-  }, []);
+  // const getLikeData = async () => {
+  //   try {
+  //     const res = await axios.get(`http://localhost:3001/likediary`);
+  //     setLikeDiaryData(res.data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getLikeData();
+  // }, []);
 
   // Tab 4(MyComment) : 내가 작성한 댓글 데이터 get 요청
   const getMyCommentData = async () => {

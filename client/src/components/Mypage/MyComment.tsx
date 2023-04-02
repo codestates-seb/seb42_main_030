@@ -13,16 +13,18 @@ const CommentListWrapper = styled.div`
   max-width: 900px;
   min-width: 300px;
   border: none;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
+  color: ${(props) => props.theme.mainText};
 
   > .name {
     font-size: 14px;
     font-weight: 500;
     margin: 15px 0 15px 0;
   }
+
   > .content {
     font-size: 13px;
-    color: #323232;
+    color: ${(props) => props.theme.mainText};
     font-weight: 500;
   }
 

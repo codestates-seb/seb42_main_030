@@ -23,7 +23,6 @@ const PlayListWrapper = styled.div`
 const ContentArea = styled.div`
   display: flex;
   align-items: center;
-  text-decoration: none;
 
   > .thumbnail {
     width: 80px;

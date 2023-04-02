@@ -4,7 +4,7 @@ import { DiaryDataProps } from "../../util/Type";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
-const DiaryListContainer = styled.li`
+export const DiaryListContainer = styled.li`
   box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
   width: 310px;
   height: 339px;
@@ -19,7 +19,7 @@ const DiaryListContainer = styled.li`
   }
 `;
 
-const Thumbnail = styled.div`
+export const Thumbnail = styled.div`
   width: 310px;
   height: 184px;
   background-color: lightgray;
@@ -27,7 +27,7 @@ const Thumbnail = styled.div`
   border-top-right-radius: 4px;
 `;
 
-const InfoArea = styled.div`
+export const InfoArea = styled.div`
   padding: 15px;
 
   > .infoTitle {
@@ -47,7 +47,7 @@ const InfoArea = styled.div`
   }
 `;
 
-// const Tag = styled.ul`
+// export const Tag = styled.ul`
 //   display: flex;
 //   font-size: 12px;
 //   font-weight: 500;
@@ -62,7 +62,7 @@ const InfoArea = styled.div`
 //   }
 // `;
 
-const UserArea = styled.div`
+export const UserArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,15 +72,7 @@ const UserArea = styled.div`
   margin-top: 24px;
 `;
 
-const Profile = styled.div`
-  width: 25px;
-  height: 25px;
-  margin-right: 8px;
-  border-radius: 50%;
-  background-color: lightgray;
-`;
-
-const ByUsername = styled.div`
+export const ByUsername = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -92,11 +84,19 @@ const ByUsername = styled.div`
     font-size: 12px;
     font-weight: 400;
     color: ${(props) => props.theme.diaryDate};
-    margin-right: 5px;
+    margin: 0 5px 2px 0;
   }
 `;
 
-const LikeAndComment = styled.div`
+export const Profile = styled.div`
+  width: 25px;
+  height: 25px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background-color: lightgray;
+`;
+
+export const LikeAndComment = styled.div`
   display: flex;
   align-items: center;
   font-size: 13px;
@@ -143,7 +143,7 @@ function DiaryList({ list }: DiaryDataProps) {
           <AiFillHeart className='likeIcon' size={16} />
           {list.likeCount}
           <FaRegCommentDots className='commentIcon' size={15} />
-          {/* {list.comments.length} */}
+          {list.comments.length}
         </LikeAndComment>
       </UserArea>
     </DiaryListContainer>
