@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { DiaryDataProps } from "../../util/Type";
 import { AiFillHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
+import { useContext } from "react";
+import { myContext } from "../../theme";
 
 const DiaryListContainer = styled.li`
   box-shadow: rgba(0, 0, 0, 0.04) 0px 4px 16px 0px;
@@ -10,6 +12,7 @@ const DiaryListContainer = styled.li`
   height: 339px;
   list-style: none;
   border-radius: 4px;
+
   &:hover {
     transform: scale(1.02);
     transition: 0.2s;
@@ -106,11 +109,10 @@ const LikeAndComment = styled.div`
 `;
 
 function MyDiary({ list }: DiaryDataProps) {
-  const navigate = useNavigate();
+  const { myNickname }: any = useContext(myContext);
+  const myDiary: boolean = list.userNickname === myNickname;
 
-  // const isLogin = localStorage.getItem('nickname')
-  // list.nickname === isLogin
-  const myDiary: boolean = list.userNickname === "킵코딩";
+  const navigate = useNavigate();
 
   // 디테일 페이지로 이동
   const clickHandler = () => {

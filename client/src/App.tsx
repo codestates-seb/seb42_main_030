@@ -1,5 +1,3 @@
-import LogoutHeader from "./components/LogoutHeader";
-import LoginHeader from "./components/LoginHeader";
 import Main from "./pages/Main";
 import NewDiary from "./pages/NewDiary";
 import Mypage from "./pages/Mypage";
@@ -11,7 +9,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
 import { lightMode, darkMode } from "./theme";
-import { ModeContext } from "./theme";
+import { myContext } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -30,6 +28,8 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   const isLogin = localStorage.getItem("login-token");
+  const myUserId = localStorage.getItem("userId");
+  const myNickname = localStorage.getItem("nickname");
 
   const LocalTheme = localStorage.getItem("theme");
   const [isChange, setIsChange] = useState(LocalTheme);
@@ -41,7 +41,7 @@ function App() {
   };
 
   return (
-    <ModeContext.Provider value={{ isLogin, isChange, changeMode }}>
+    <myContext.Provider value={{ isLogin, myUserId, myNickname, isChange, changeMode }}>
       <ThemeProvider theme={isChange === "dark" ? darkMode : lightMode}>
         <div className='App'>
           <GlobalStyle />
@@ -56,7 +56,7 @@ function App() {
           </Routes>
         </div>
       </ThemeProvider>
-    </ModeContext.Provider>
+    </myContext.Provider>
   );
 }
 

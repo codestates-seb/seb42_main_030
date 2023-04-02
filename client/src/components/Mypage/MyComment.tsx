@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { CommentDataProps } from "../../util/Type";
+import { useContext } from "react";
+import { myContext } from "../../theme";
 
 const CommentListContainer = styled.li`
   display: flex;
@@ -32,9 +34,8 @@ const CommentListWrapper = styled.div`
 `;
 
 function MyComment({ list }: CommentDataProps) {
-  // const isLogin = localStorage.getItem('nickname')
-  // list.userNickname === {이 부분을 로그인한 사용자의 닉네임으로 변경}
-  const myComment: boolean = list.userNickname === "킵코딩";
+  const { myNickname }: any = useContext(myContext);
+  const myComment: boolean = list.userNickname === myNickname;
 
   return (
     <>

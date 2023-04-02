@@ -10,6 +10,8 @@ import { DiaryData } from "../../util/Type";
 import { CommentData } from "../../util/Type";
 import { UserData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
+import { useContext } from "react";
+import { myContext } from "../../theme";
 
 const ListTab = styled.ul`
   display: flex;
@@ -80,11 +82,12 @@ function MypageMain() {
 
   const LIMIT_COUNT: number = 20;
   const offset: number = (page - 1) * LIMIT_COUNT;
+  const { myUserId }: any = useContext(myContext);
 
   // Tab 1(MyInfo) : 나의 유저 정보만 불러오는 get 요청
   const getUserData = async () => {
     try {
-      const res = await BASE_API.get(`/users/1`);
+      const res = await BASE_API.get(`/users/${myUserId}`);
       setUserData(res.data);
     } catch (err) {
       console.error(err);

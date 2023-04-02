@@ -5,7 +5,7 @@ import { BASE_API } from "../util/API";
 import { GoTriangleDown } from "react-icons/go";
 import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
 import { useContext } from "react";
-import { ModeContext } from "../theme";
+import { myContext } from "../theme";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -127,7 +127,7 @@ function LoginHeader() {
   const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { isChange, changeMode }: any = useContext(ModeContext);
+  const { isChange, changeMode }: any = useContext(myContext);
 
   // 내 유저 정보 get 요청
   const getImageData = async () => {

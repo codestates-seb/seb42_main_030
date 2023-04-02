@@ -5,11 +5,20 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { BASE_API } from "../../util/API";
 
 const SingupContainer = styled.div`
-  height: 85vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+const Logo = styled.div`
+  position: absolute;
+  top: 190px;
+  font-weight: 700;
+  font-size: 27px;
+  color: ${(props) => props.theme.mainText};
+  margin-bottom: 40px;
 `;
 
 const FormContainer = styled.form`
@@ -17,7 +26,7 @@ const FormContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 450px;
+  width: 410px;
   height: 300px;
   border-radius: 4px;
   border: none;
@@ -62,7 +71,7 @@ const PasswordInput = styled.input`
   height: 50px;
   border-radius: 4px;
   padding: 10px 8px 10px 8px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: ${(props) => props.theme.mainText};
   border: none;
   border: 1px solid ${(props) => props.theme.disabledTagBorder};
@@ -73,7 +82,7 @@ const PasswordInput = styled.input`
   }
 `;
 
-const LoginButton = styled.button`
+const SignupButton = styled.button`
   width: 350px;
   height: 45px;
   border: none;
@@ -89,10 +98,10 @@ const LoginButton = styled.button`
   }
 `;
 
-const SignupButton = styled.button`
+const MoveLogin = styled.button`
   font-size: 14px;
   margin-top: 20px;
-  width: 450px;
+  width: 410px;
   height: 60px;
   border-radius: 4px;
   border: none;
@@ -143,18 +152,19 @@ function Signup() {
 
   return (
     <SingupContainer>
+      <Logo>나만의 작은 음악 다이어리</Logo>
       <FormContainer>
         <NicknameInput placeholder='닉네임' {...register("nickname")} />
         <EmailInput type='email' placeholder='이메일' {...register("email")} />
         <PasswordInput type='password' placeholder='비밀번호' {...register("password")} />
-        <LoginButton type='button' onClick={handleSubmit(onSubmit)}>
+        <SignupButton type='button' onClick={handleSubmit(onSubmit)}>
           가입
-        </LoginButton>
+        </SignupButton>
       </FormContainer>
       <Link to='/login'>
-        <SignupButton>
+        <MoveLogin>
           계정이 있으신가요? <span className='bold'>로그인</span>
-        </SignupButton>
+        </MoveLogin>
       </Link>
     </SingupContainer>
   );

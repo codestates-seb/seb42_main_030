@@ -13,7 +13,12 @@ const LoginContainer = styled.div`
 `;
 
 const Logo = styled.div`
+  position: absolute;
+  top: 190px;
+  font-weight: 700;
+  font-size: 27px;
   color: ${(props) => props.theme.mainText};
+  margin-bottom: 40px;
 `;
 
 const FormContainer = styled.form`
@@ -21,8 +26,8 @@ const FormContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 450px;
-  height: 300px;
+  width: 410px;
+  height: 250px;
   border-radius: 4px;
   border: none;
   border: 1px solid ${(props) => props.theme.disabledTagBorder};
@@ -50,7 +55,7 @@ const PasswordInput = styled.input`
   height: 50px;
   border-radius: 4px;
   padding: 10px 8px 10px 8px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   color: ${(props) => props.theme.mainText};
   border: none;
   border: 1px solid ${(props) => props.theme.disabledTagBorder};
@@ -78,17 +83,16 @@ const LoginButton = styled.button`
 `;
 
 const PasswordFind = styled.div`
-  position: absolute;
-  margin-top: 240px;
+  margin-top: 23px;
   color: ${(props) => props.theme.mainText};
   font-size: 13px;
   cursor: pointer;
 `;
 
-const SignupButton = styled.button`
+const MoveSignup = styled.button`
   font-size: 14px;
   margin-top: 20px;
-  width: 450px;
+  width: 410px;
   height: 60px;
   border-radius: 4px;
   border: none;
@@ -134,7 +138,8 @@ function Login() {
         // console.log(res);
         if (res.headers.authorization) {
           localStorage.setItem("login-token", res.headers.authorization);
-          // localStorage.setItem("userId", res.data.userId);
+          localStorage.setItem("userId", res.data.userId);
+          localStorage.setItem("nickname", res.data.nickname);
           // localStorage.setItem("login-refresh", res.headers.refresh);
         }
         setLoginError(false);
@@ -176,12 +181,12 @@ function Login() {
         <LoginButton type='button' onClick={handleSubmit(onSubmit)}>
           로그인
         </LoginButton>
-        <PasswordFind>비밀번호를 잊으셨나요?</PasswordFind>
       </FormContainer>
+      <PasswordFind>비밀번호를 잊으셨나요?</PasswordFind>
       <Link to='/Signup'>
-        <SignupButton>
+        <MoveSignup>
           계정이 없으신가요? <span className='bold'>가입하기</span>
-        </SignupButton>
+        </MoveSignup>
       </Link>
     </LoginContainer>
   );
