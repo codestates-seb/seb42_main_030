@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { BASE_API } from "../util/API";
 import { GoTriangleDown } from "react-icons/go";
@@ -128,6 +128,7 @@ function LoginHeader() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { myUserId, isChange, changeMode }: any = useContext(myContext);
+  const navigate = useNavigate();
 
   // 내 유저 정보 get 요청
   const getImageData = async () => {
@@ -142,12 +143,21 @@ function LoginHeader() {
     getImageData();
   }, []);
 
+  // 드롬다운 오픈 이벤트
   const openDropdown = () => {
     setIsOpen(!isOpen);
   };
 
+  // 드롭다운 클로즈 이벤트
   const closeDropdown = () => {
     setIsOpen(false);
+  };
+
+  // 로그아웃
+  const logOut = () => {
+    localStorage.clear();
+    navigate("/");
+    window.location.reload();
   };
 
   return (
@@ -176,7 +186,7 @@ function LoginHeader() {
               <Link to='/Mypage'>
                 <li>마이페이지</li>
               </Link>
-              <li>로그아웃</li>
+              <li onClick={logOut}>로그아웃</li>
             </ul>
           ) : null}
         </div>
