@@ -131,6 +131,7 @@ const DeleteModalView = styled.div`
     border: none;
     text-decoration: none;
     cursor: pointer;
+
     &:hover {
       text-decoration: none;
     }
@@ -143,6 +144,7 @@ const DeleteModalView = styled.div`
     border-top: 1px solid ${(props) => props.theme.detailLine};
     border-right: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-left-radius: 5px;
+
     &:hover {
       background-color: ${(props) => props.theme.likeHover};
     }
@@ -155,6 +157,7 @@ const DeleteModalView = styled.div`
     border-top: 1px solid ${(props) => props.theme.detailLine};
     border-left: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-right-radius: 5px;
+
     &:hover {
       background-color: ${(props) => props.theme.likeHover};
     }
@@ -321,6 +324,7 @@ const RuleModalView = styled.div`
     border: none;
     text-decoration: none;
     cursor: pointer;
+
     &:hover {
       text-decoration: none;
     }
@@ -333,6 +337,7 @@ const RuleModalView = styled.div`
     border-top: 1px solid ${(props) => props.theme.detailLine};
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+
     &:hover {
       background-color: ${(props) => props.theme.likeHover};
     }
@@ -346,7 +351,7 @@ interface DiaryDataProps {
 
 function DetailList({ list, getDetailData }: DiaryDataProps) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
-  const [text, setText] = useState<string>("");
+  const [commentBody, setCommentBody] = useState<string>("");
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
   const [ruleModal, setRuleModal] = useState<boolean>(false);
 
@@ -407,16 +412,16 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const submitHandler = async () => {
     const newComment = {
       diaryId: diaryId,
-      body: text,
+      body: commentBody,
     };
     const res = await TOKEN_API.post(`/comment`, newComment);
     getDetailData(res.data);
-    setText("");
+    setCommentBody("");
   };
 
   // 댓글 작성 체인지 이벤트
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
+    setCommentBody(e.target.value);
   };
 
   // 댓글 운영 원칙 오픈 모달 오픈 이벤트 핸들러
@@ -546,11 +551,11 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           <TextArea>
             <textarea
               className='textArea'
-              value={text}
+              value={commentBody}
               placeholder='댓글을 작성하세요'
               onChange={changeHandler}
             />
-            <button className='sumbit' onClick={submitHandler} disabled={text.length === 0}>
+            <button className='sumbit' onClick={submitHandler} disabled={commentBody.length === 0}>
               등록
             </button>
           </TextArea>

@@ -1,13 +1,13 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { TOKEN_API } from "../../util/API";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import NewPlayList from "./NewPlayList";
-import { useContext } from "react";
 import { myContext } from "../../theme";
+import { PlaylistData } from "../../util/Type";
 
 const NewMainContainer = styled.div`
   display: flex;
@@ -181,7 +181,7 @@ const UrlInput = styled.div`
 function NewMain() {
   const [newTitle, setNewTitle] = useState<string>("");
   const [newBody, setNewBody] = useState<string>("");
-  const [plList, setPlList] = useState<any>([]);
+  const [newPlayList, setNewPlayList] = useState<PlaylistData[]>([]);
   const [url, setUrl] = useState("");
 
   const navigate = useNavigate();
@@ -193,7 +193,7 @@ function NewMain() {
     const newDiary = {
       title: newTitle,
       body: newBody,
-      playlists: plList,
+      playlists: newPlayList,
     };
     await TOKEN_API.post(`/diary`, newDiary);
     navigate(`/`);
@@ -248,12 +248,12 @@ function NewMain() {
         musicInfo.url = url;
       })
       .then(() => {
-        setPlList((value: any) => [...value, musicInfo]);
+        setNewPlayList((value) => [...value, musicInfo]);
         setUrl("");
       });
   };
 
-  // console.log(plList);
+  // console.log(newPlayList);
 
   return (
     <NewMainContainer>
@@ -306,8 +306,15 @@ function NewMain() {
               추가
             </button>
           </UrlInput>
-          {plList?.map((value: any, index: any) => {
-            return <NewPlayList list={value} key={index} plList={plList} setPlList={setPlList} />;
+          {newPlayList?.map((value, index) => {
+            return (
+              <NewPlayList
+                list={value}
+                key={index}
+                newPlayList={newPlayList}
+                setNewPlayList={setNewPlayList}
+              />
+            );
           })}
         </PlayListArea>
       </NewMainWrapper>

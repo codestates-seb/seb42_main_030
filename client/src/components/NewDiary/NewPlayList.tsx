@@ -1,5 +1,5 @@
 import styled from "styled-components";
-// import { Link } from "react-router-dom";
+import { PlaylistData } from "../../util/Type";
 
 const PlayListContainer = styled.li`
   display: flex;
@@ -42,15 +42,15 @@ const ContentArea = styled.div`
   }
 `;
 
-interface YouTubeDataProps {
-  list: any;
-  plList: any;
-  setPlList: any;
+interface PlaylistDataProps {
+  list: PlaylistData;
+  newPlayList: object[];
+  setNewPlayList: Function;
 }
 
-function NewPlayList({ list, plList, setPlList }: YouTubeDataProps) {
+function NewPlayList({ list, newPlayList, setNewPlayList }: PlaylistDataProps) {
   const deleteList = (deleteId: any) => {
-    setPlList(plList.filter((value: any) => value.channelId !== deleteId));
+    setNewPlayList(newPlayList.filter((value: any) => value.channelId !== deleteId));
   };
 
   return (

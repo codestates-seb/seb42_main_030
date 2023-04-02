@@ -135,7 +135,6 @@ function Login() {
       password: data.password,
     })
       .then((res) => {
-        // console.log(res);
         if (res.headers.authorization) {
           localStorage.setItem("accessToken", res.headers.authorization);
           localStorage.setItem("CURRENT_USER", JSON.stringify(res.data));

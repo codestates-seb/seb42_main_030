@@ -186,7 +186,7 @@ const UrlInput = styled.div`
 function EditList({ list }: DiaryDataProps) {
   const [editTitle, setEditTitle] = useState<string>(list.title);
   const [editBody, setEditBody] = useState<string>(list.body);
-  const [plList, setPlList] = useState<any>(list.playlists);
+  const [editPlayList, setEditPlayList] = useState<PlaylistData[]>(list.playlists);
   const [url, setUrl] = useState("");
 
   const navigate = useNavigate();
@@ -197,7 +197,7 @@ function EditList({ list }: DiaryDataProps) {
     const editDiary = {
       title: editTitle,
       body: editBody,
-      playlists: plList,
+      playlists: editPlayList,
     };
     // console.log(editDiary);
     await TOKEN_API.patch(`/diary/${diaryId}`, editDiary);
@@ -236,7 +236,7 @@ function EditList({ list }: DiaryDataProps) {
         musicInfo.title = res.title;
       })
       .then(() => {
-        setPlList((value: any) => [...value, musicInfo]);
+        setEditPlayList((value) => [...value, musicInfo]);
         setUrl("");
       });
   };
@@ -296,8 +296,15 @@ function EditList({ list }: DiaryDataProps) {
               추가
             </button>
           </UrlInput>
-          {plList?.map((value: any, index: any) => {
-            return <EditPlayList list={value} key={index} plList={plList} setPlList={setPlList} />;
+          {editPlayList?.map((value, index) => {
+            return (
+              <EditPlayList
+                list={value}
+                key={index}
+                editPlayList={editPlayList}
+                setEditPlayList={setEditPlayList}
+              />
+            );
           })}
         </PlayListArea>
       </EditMainWrapper>

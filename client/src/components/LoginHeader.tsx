@@ -156,8 +156,7 @@ function LoginHeader() {
   // 로그아웃
   const logOut = () => {
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("nickname");
+    localStorage.removeItem("CURRENT_USER");
     navigate("/");
     window.location.reload();
   };

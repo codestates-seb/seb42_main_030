@@ -8,8 +8,7 @@ import EditDiary from "./pages/EditDiary";
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { createGlobalStyle, ThemeProvider } from "styled-components";
-import { lightMode, darkMode } from "./theme";
-import { myContext } from "./theme";
+import { myContext, lightMode, darkMode } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   * {
