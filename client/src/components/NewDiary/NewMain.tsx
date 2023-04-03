@@ -241,8 +241,13 @@ function NewMain() {
 
     getYoutubeData(urlId)
       .then((res) => {
+        console.log(res);
         musicInfo.channelId = res.channelId;
-        musicInfo.thumbnail = res.thumbnails.default.url;
+        if (res.thumbnails.maxres.url) {
+          musicInfo.thumbnail = res.thumbnails.maxres.url;
+        } else {
+          musicInfo.thumbnail = res.thumbnails.medium.url;
+        }
         musicInfo.title = res.title;
         musicInfo.url = newUrl;
       })

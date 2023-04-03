@@ -19,7 +19,7 @@ export const DiaryListContainer = styled.li`
   }
 `;
 
-export const Thumbnail = styled.div`
+export const Thumbnail = styled.img`
   width: 310px;
   height: 184px;
   background-color: lightgray;
@@ -123,7 +123,7 @@ function DiaryList({ list }: DiaryDataProps) {
 
   return (
     <DiaryListContainer onClick={moveDetailDiary}>
-      <Thumbnail></Thumbnail>
+      <Thumbnail src={list.playlists[0].thumbnail} alt='첫번째 앨범 커버' />
       <InfoArea>
         <div className='infoTitle'>{list.title}</div>
         <div className='infoDate'>{list.createdAt.substring(0, 10)}</div>

@@ -365,7 +365,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const { diaryId } = useParams();
   const navigate = useNavigate();
   const { currentUser }: any = useContext(myContext);
-  const myDiary: boolean = list.userNickname === currentUser.nickname;
+  // const myDiary: boolean = list.userNickname === currentUser.nickname;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -458,16 +458,15 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         <TitleArea>
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
-            {myDiary === true ? (
-              <>
-                <button className='edit' onClick={moveEditDiary}>
-                  수정
-                </button>
-                <button className='delete' onClick={openModalHandler}>
-                  삭제
-                </button>
-              </>
-            ) : null}
+            <>
+              <button className='edit' onClick={moveEditDiary}>
+                수정
+              </button>
+              <button className='delete' onClick={openModalHandler}>
+                삭제
+              </button>
+            </>
+
             {withDrawalModalOpen ? (
               <DeleteModalBack>
                 <DeleteModalView>
@@ -500,7 +499,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           </ButtonArea>
         </TitleArea>
         <AlbumCoverArea>
-          <div className='coverImg'></div>
+          <img className='coverImg' src={list.playlists[0].thumbnail} alt='첫번째 앨범 커버' />
           <InfoArea>
             <UserInfo>
               <span className='text'>등록자</span>
