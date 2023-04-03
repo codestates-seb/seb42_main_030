@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState } from "react";
 import { CommentData } from "../../util/Type";
 import { TOKEN_API } from "../../util/API";
+import { useContext } from "react";
+import { myContext } from "../../theme";
 
 const CommentListContainer = styled.li`
   display: flex;
@@ -167,6 +169,9 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
   const [click, setClick] = useState<boolean>(false);
   const [deleteCommentModal, setDeleteCommentModal] = useState<boolean>(false);
 
+  const { currentUser }: any = useContext(myContext);
+  const myComment: boolean = list.userNickname === currentUser.nickname;
+
   // 댓글 patch 요청
   const changeComment = async () => {
     const newComment = {
@@ -219,18 +224,22 @@ function CommentList({ list, getDetailData }: CommentDataProps) {
         <NameArea>
           <div className='name'>{list.userNickname}</div>
           <ButtonArea>
-            {click ? (
-              <button className='edit' onClick={changeComment}>
-                저장
-              </button>
-            ) : (
-              <button className='edit' onClick={clickHandler}>
-                수정
-              </button>
-            )}
-            <button className='delete' onClick={openDeleteCommentModalHandler}>
-              삭제
-            </button>
+            {myComment === true ? (
+              <>
+                {click ? (
+                  <button className='edit' onClick={changeComment}>
+                    저장
+                  </button>
+                ) : (
+                  <button className='edit' onClick={clickHandler}>
+                    수정
+                  </button>
+                )}
+                <button className='delete' onClick={openDeleteCommentModalHandler}>
+                  삭제
+                </button>
+              </>
+            ) : null}
             {deleteCommentModal ? (
               <DeleteModalBack>
                 <DeleteModalView>

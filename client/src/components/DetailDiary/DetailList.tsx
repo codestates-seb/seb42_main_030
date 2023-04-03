@@ -8,6 +8,8 @@ import { TOKEN_API } from "../../util/API";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { RiErrorWarningLine } from "react-icons/ri";
 import DOMPurify from "dompurify";
+import { useContext } from "react";
+import { myContext } from "../../theme";
 
 const DetailMainContainer = styled.div`
   display: flex;
@@ -51,6 +53,8 @@ const ButtonArea = styled.div`
   }
 
   > .edit {
+    /* 다이어리 수정 오류 때문에 임시로 수정 버튼 숨김처리  */
+    display: none;
     width: 40px;
     color: ${(props) => props.theme.mainText};
     border: none;
@@ -360,6 +364,8 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
 
   const { diaryId } = useParams();
   const navigate = useNavigate();
+  const { currentUser }: any = useContext(myContext);
+  const myDiary: boolean = list.userNickname === currentUser.nickname;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -452,12 +458,16 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         <TitleArea>
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
-            <button className='edit' onClick={moveEditDiary}>
-              수정
-            </button>
-            <button className='delete' onClick={openModalHandler}>
-              삭제
-            </button>
+            {myDiary === true ? (
+              <>
+                <button className='edit' onClick={moveEditDiary}>
+                  수정
+                </button>
+                <button className='delete' onClick={openModalHandler}>
+                  삭제
+                </button>
+              </>
+            ) : null}
             {withDrawalModalOpen ? (
               <DeleteModalBack>
                 <DeleteModalView>
