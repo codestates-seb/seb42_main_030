@@ -501,7 +501,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           </ButtonArea>
         </TitleArea>
         <AlbumCoverArea>
-          <img className='coverImg' src={list.playlists[0].thumbnail} alt='첫번째 앨범 커버' />
+          <img className='coverImg' src={list.playlists[0]?.thumbnail} alt='첫번째 앨범 커버' />
           <InfoArea>
             <UserInfo>
               <span className='text'>등록자</span>

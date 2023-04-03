@@ -21,7 +21,7 @@ function MyDiary({ list }: DiaryDataProps) {
     <>
       {myDiary === true ? (
         <DiaryList.DiaryListContainer onClick={clickHandler}>
-          <DiaryList.Thumbnail></DiaryList.Thumbnail>
+          <DiaryList.Thumbnail src={list.playlists[0]?.thumbnail} alt='첫번째 앨범 커버' />
           <DiaryList.InfoArea>
             <div className='infoTitle'>{list.title}</div>
             <div className='infoDate'>{list.createdAt.substring(0, 10)}</div>

@@ -228,7 +228,7 @@ function NewMain() {
       const res =
         await axios.get(`https://www.googleapis.com/youtube/v3/videos?id=${id}&key=${process.env.REACT_APP_YOUTUBE_API_KEY}
       &part=snippet`);
-      return res.data.items[0].snippet;
+      return res.data.items[0]?.snippet;
     } catch (err) {
       console.error(err);
     }
