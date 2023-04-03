@@ -366,7 +366,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const { diaryId } = useParams();
   const navigate = useNavigate();
   const { currentUser }: any = useContext(myContext);
-  // const myDiary: boolean = list.userNickname === currentUser.nickname;
+  const myDiary: boolean = list.userNickname === currentUser?.nickname;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -459,15 +459,16 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         <TitleArea>
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
-            <>
-              <button className='edit' onClick={moveEditDiary}>
-                수정
-              </button>
-              <button className='delete' onClick={openModalHandler}>
-                삭제
-              </button>
-            </>
-
+            {myDiary === true ? (
+              <>
+                <button className='edit' onClick={moveEditDiary}>
+                  수정
+                </button>
+                <button className='delete' onClick={openModalHandler}>
+                  삭제
+                </button>
+              </>
+            ) : null}
             {withDrawalModalOpen ? (
               <DeleteModalBack>
                 <DeleteModalView>
