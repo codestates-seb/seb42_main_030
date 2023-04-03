@@ -178,6 +178,7 @@ const AlbumCoverArea = styled.div`
     margin-right: 30px;
     border-radius: 4px;
     background-color: lightgray;
+    object-fit: cover;
   }
 `;
 
