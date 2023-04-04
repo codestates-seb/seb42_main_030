@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { CommentDataProps } from "../../util/Type";
+import { useContext } from "react";
+import { myContext } from "../../theme";
 
 const CommentListContainer = styled.li`
   display: flex;
@@ -11,16 +13,18 @@ const CommentListWrapper = styled.div`
   max-width: 900px;
   min-width: 300px;
   border: none;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid ${(props) => props.theme.detailLine};
+  color: ${(props) => props.theme.mainText};
 
   > .name {
     font-size: 14px;
     font-weight: 500;
     margin: 15px 0 15px 0;
   }
+
   > .content {
     font-size: 13px;
-    color: #323232;
+    color: ${(props) => props.theme.mainText};
     font-weight: 500;
   }
 
@@ -32,9 +36,8 @@ const CommentListWrapper = styled.div`
 `;
 
 function MyComment({ list }: CommentDataProps) {
-  // const isLogin = localStorage.getItem('nickname')
-  // list.userNickname === {이 부분을 로그인한 사용자의 닉네임으로 변경}
-  const myComment: boolean = list.userNickname === "킵코딩";
+  const { currentUser }: any = useContext(myContext);
+  const myComment: boolean = list.userNickname === currentUser.nickname;
 
   return (
     <>

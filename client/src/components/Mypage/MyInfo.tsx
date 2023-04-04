@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import { UserData } from "../../util/Type";
 import { TOKEN_API } from "../../util/API";
@@ -269,6 +270,7 @@ function MyInfo({ list, getUserData }: UserDataProps) {
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
 
   const fileInput = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   // 프로필 이미지 클릭 시 input으로 연결되는 이벤트
   const clickProfile = () => {
@@ -341,6 +343,15 @@ function MyInfo({ list, getUserData }: UserDataProps) {
     setWithdrawalModalOpen(!withDrawalModalOpen);
   };
 
+  // 회원 탈퇴 delete 요청
+  const withDrawal = async () => {
+    await TOKEN_API.delete(`/users/${list.userId}`);
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("CURRENT_USER");
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
     <>
       <MyInfoContainer>
@@ -408,7 +419,9 @@ function MyInfo({ list, getUserData }: UserDataProps) {
                 <button className='deleteCancelButton' onClick={openModalHandler}>
                   취소
                 </button>
-                <button className='deleteButton'>탈퇴</button>
+                <button className='deleteButton' onClick={withDrawal}>
+                  탈퇴
+                </button>
               </WithdrawalModalView>
             </WithdrawalModalBack>
           ) : null}

@@ -1,42 +1,6 @@
-import styled from "styled-components";
+import * as Pagination from "../Main/Pagination";
 import { useState } from "react";
 import { BiArrowToLeft, BiArrowToRight, BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
-
-const PageNum = styled.div`
-  margin: 50px 0 40px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  user-select: none;
-
-  > .pageTab,
-  .leftHandle,
-  .rightHandle {
-    width: 20px;
-    height: 20px;
-    background-color: transparent;
-    border: none;
-    font-size: 15px;
-    margin: 0 5px 0 5px;
-    cursor: pointer;
-    color: ${(props) => props.theme.mainText};
-    &:disabled {
-      color: ${(props) => props.theme.disabled};
-    }
-  }
-
-  > .pageFocused {
-    width: 30px;
-    height: 30px;
-    border-radius: 3px;
-    background-color: #ffefd5;
-    border: none;
-    border-radius: 50px;
-    color: #1c1a16;
-    font-weight: 600;
-  }
-`;
 
 interface PaginationProps {
   myPageLength: number;
@@ -117,7 +81,7 @@ function MypagePagination({
   return (
     <>
       {currentTab === 1 ? (
-        <PageNum>
+        <Pagination.PageNum>
           <button className='leftHandle' onClick={firstPageHandler} disabled={page === 1}>
             <BiArrowToLeft size={20} />
           </button>
@@ -142,9 +106,9 @@ function MypagePagination({
           <button className='rightHandle' onClick={lastPageHandler} disabled={page === numMyPages}>
             <BiArrowToRight size={20} />
           </button>
-        </PageNum>
+        </Pagination.PageNum>
       ) : currentTab === 2 ? (
-        <PageNum>
+        <Pagination.PageNum>
           <button className='leftHandle' onClick={firstPageHandler} disabled={page === 1}>
             <BiArrowToLeft size={20} />
           </button>
@@ -169,9 +133,9 @@ function MypagePagination({
           <button className='rightHandle' onClick={lastPageHandler} disabled={page === numMyPages}>
             <BiArrowToRight size={20} />
           </button>
-        </PageNum>
+        </Pagination.PageNum>
       ) : currentTab === 3 ? (
-        <PageNum>
+        <Pagination.PageNum>
           <button className='leftHandle' onClick={firstPageHandler} disabled={page === 1}>
             <BiArrowToLeft size={20} />
           </button>
@@ -196,7 +160,7 @@ function MypagePagination({
           <button className='rightHandle' onClick={lastPageHandler} disabled={page === numMyPages}>
             <BiArrowToRight size={20} />
           </button>
-        </PageNum>
+        </Pagination.PageNum>
       ) : null}
     </>
   );

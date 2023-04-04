@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import CommentList from "./CommentList";
-import PlayList from "./PlayList";
+import DetailPlayList from "./DetailPlayList";
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DiaryData } from "../../util/Type";
@@ -8,6 +8,8 @@ import { TOKEN_API } from "../../util/API";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { RiErrorWarningLine } from "react-icons/ri";
 import DOMPurify from "dompurify";
+import { useContext } from "react";
+import { myContext } from "../../theme";
 
 const DetailMainContainer = styled.div`
   display: flex;
@@ -32,8 +34,8 @@ const TitleArea = styled.div`
   > .DetailTitle {
     width: 580px;
     font-size: 24px;
-    color: ${(props) => props.theme.mainText};
     font-weight: 600;
+    color: ${(props) => props.theme.mainText};
   }
 `;
 
@@ -51,6 +53,8 @@ const ButtonArea = styled.div`
   }
 
   > .edit {
+    /* 다이어리 수정 오류 때문에 임시로 수정 버튼 숨김처리  */
+    display: none;
     width: 40px;
     color: ${(props) => props.theme.mainText};
     border: none;
@@ -131,6 +135,7 @@ const DeleteModalView = styled.div`
     border: none;
     text-decoration: none;
     cursor: pointer;
+
     &:hover {
       text-decoration: none;
     }
@@ -143,6 +148,7 @@ const DeleteModalView = styled.div`
     border-top: 1px solid ${(props) => props.theme.detailLine};
     border-right: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-left-radius: 5px;
+
     &:hover {
       background-color: ${(props) => props.theme.likeHover};
     }
@@ -155,6 +161,7 @@ const DeleteModalView = styled.div`
     border-top: 1px solid ${(props) => props.theme.detailLine};
     border-left: 0.5px solid ${(props) => props.theme.detailLine};
     border-bottom-right-radius: 5px;
+
     &:hover {
       background-color: ${(props) => props.theme.likeHover};
     }
@@ -171,6 +178,7 @@ const AlbumCoverArea = styled.div`
     margin-right: 30px;
     border-radius: 4px;
     background-color: lightgray;
+    object-fit: cover;
   }
 `;
 
@@ -182,10 +190,9 @@ const InfoArea = styled.div`
 const UserInfo = styled.div`
   margin-bottom: 15px;
   font-size: 14px;
-  color: ${(props) => props.theme.subText};
+  color: ${(props) => props.theme.mainText};
 
   > .text {
-    color: ${(props) => props.theme.mainText};
     font-size: 13px;
     margin-right: 50px;
   }
@@ -194,7 +201,6 @@ const UserInfo = styled.div`
 const AlbumInfoArea = styled.div`
   padding: 30px 10px 30px 10px;
   border-top: 1px solid ${(props) => props.theme.detailLine};
-  border-bottom: 1px solid ${(props) => props.theme.detailLine};
 
   > .playTitle {
     font-size: 19px;
@@ -205,13 +211,25 @@ const AlbumInfoArea = styled.div`
 
   > .playContent {
     font-size: 14px;
-    color: ${(props) => props.theme.subText};
+    color: ${(props) => props.theme.mainText};
+  }
+`;
+
+const PlayListArea = styled.div`
+  padding: 30px 10px 30px 10px;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
+
+  > .playTitle {
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: ${(props) => props.theme.mainText};
   }
 `;
 
 const CommentInputArea = styled.div`
   margin-bottom: 20px;
-  border-top: 1px solid #d9d9d9;
+  border-top: 1px solid ${(props) => props.theme.detailLine};
   padding: 30px 10px 30px 10px;
 
   > .commentTitle {
@@ -244,19 +262,20 @@ const CommentInputArea = styled.div`
 const TextArea = styled.div`
   display: flex;
 
-  > .textArea {
+  > textArea {
     color: ${(props) => props.theme.mainText};
     width: 1300px;
     height: 70px;
     resize: none;
     margin: 0 10px 30px 0;
-    border: 1px solid ${(props) => props.theme.detailLine};
     border-radius: 4px;
     padding: 10px 8px 10px 8px;
-    background-color: ${(props) => props.theme.commentInputBackground};
+    border: none;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
+    background-color: ${(props) => props.theme.disabledTagBackground};
 
     &:focus {
-      outline: 0.5px solid gray;
+      outline: none;
     }
   }
 
@@ -269,6 +288,7 @@ const TextArea = styled.div`
     border-radius: 4px;
     background-color: ${(props) => props.theme.mainColor};
     cursor: pointer;
+
     &:hover {
       background-color: ${(props) => props.theme.buttonHover};
     }
@@ -309,6 +329,7 @@ const RuleModalView = styled.div`
     border: none;
     text-decoration: none;
     cursor: pointer;
+
     &:hover {
       text-decoration: none;
     }
@@ -321,6 +342,7 @@ const RuleModalView = styled.div`
     border-top: 1px solid ${(props) => props.theme.detailLine};
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
+
     &:hover {
       background-color: ${(props) => props.theme.likeHover};
     }
@@ -334,13 +356,17 @@ interface DiaryDataProps {
 
 function DetailList({ list, getDetailData }: DiaryDataProps) {
   const [checkLike, setCheckLike] = useState<boolean>(false);
-  const [text, setText] = useState<string>("");
+  const [commentBody, setCommentBody] = useState<string>("");
   const [withDrawalModalOpen, setWithdrawalModalOpen] = useState<boolean>(false);
   const [ruleModal, setRuleModal] = useState<boolean>(false);
 
   const commentData = list.comments; // 선택한 다이어리의 코멘트 정보
+  const playlistData = list.playlists; // 선택한 플레이리스트의 정보
+
   const { diaryId } = useParams();
   const navigate = useNavigate();
+  const { currentUser }: any = useContext(myContext);
+  const myDiary: boolean = list.userNickname === currentUser?.nickname;
 
   // 좋아요 버튼
   const plusLikeCount = async () => {
@@ -381,8 +407,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
 
   // 선택한 다이어리 delete 요청
   const postDelete = async () => {
-    const res = await TOKEN_API.delete(`/diary/${diaryId}`);
-    getDetailData(res.data);
+    await TOKEN_API.delete(`/diary/${diaryId}`);
     const scrollY = document.body.style.top;
     document.body.style.cssText = "";
     window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
@@ -393,16 +418,16 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
   const submitHandler = async () => {
     const newComment = {
       diaryId: diaryId,
-      body: text,
+      body: commentBody,
     };
     const res = await TOKEN_API.post(`/comment`, newComment);
     getDetailData(res.data);
-    setText("");
+    setCommentBody("");
   };
 
   // 댓글 작성 체인지 이벤트
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
+    setCommentBody(e.target.value);
   };
 
   // 댓글 운영 원칙 오픈 모달 오픈 이벤트 핸들러
@@ -434,12 +459,16 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
         <TitleArea>
           <div className='DetailTitle'>{list.title}</div>
           <ButtonArea>
-            <button className='edit' onClick={moveEditDiary}>
-              수정
-            </button>
-            <button className='delete' onClick={openModalHandler}>
-              삭제
-            </button>
+            {myDiary === true ? (
+              <>
+                <button className='edit' onClick={moveEditDiary}>
+                  수정
+                </button>
+                <button className='delete' onClick={openModalHandler}>
+                  삭제
+                </button>
+              </>
+            ) : null}
             {withDrawalModalOpen ? (
               <DeleteModalBack>
                 <DeleteModalView>
@@ -472,7 +501,7 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           </ButtonArea>
         </TitleArea>
         <AlbumCoverArea>
-          <div className='coverImg'></div>
+          <img className='coverImg' src={list.playlists[0]?.thumbnail} alt='첫번째 앨범 커버' />
           <InfoArea>
             <UserInfo>
               <span className='text'>등록자</span>
@@ -491,7 +520,12 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(list.body) }}
           ></div>
         </AlbumInfoArea>
-        <PlayList />
+        <PlayListArea>
+          <div className='playTitle'>다이어리 수록곡</div>
+          {playlistData?.map((value, index) => {
+            return <DetailPlayList list={value} key={index} />;
+          })}
+        </PlayListArea>
         <CommentInputArea>
           <div className='commentTitle'>
             <span className='commentCount'>댓글 ({commentData.length})</span>
@@ -524,12 +558,11 @@ function DetailList({ list, getDetailData }: DiaryDataProps) {
           </div>
           <TextArea>
             <textarea
-              className='textArea'
-              value={text}
+              value={commentBody}
               placeholder='댓글을 작성하세요'
               onChange={changeHandler}
             />
-            <button className='sumbit' onClick={submitHandler} disabled={text.length === 0}>
+            <button className='sumbit' onClick={submitHandler} disabled={commentBody.length === 0}>
               등록
             </button>
           </TextArea>

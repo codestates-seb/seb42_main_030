@@ -1,22 +1,21 @@
 import styled from "styled-components";
-// import { Link } from "react-router-dom";
+import { PlaylistData } from "../../util/Type";
 
-const PlayListContainer = styled.li`
+export const PlayListContainer = styled.li`
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-top: 10px;
 `;
 
-const PlayListWrapper = styled.div`
+export const PlayListWrapper = styled.div`
   width: 100vw;
   max-width: 1440px;
   min-width: 300px;
   border: none;
-  border-bottom: 1px solid lightgray;
   color: ${(props) => props.theme.mainText};
 `;
 
-const ContentArea = styled.div`
+export const ContentArea = styled.div`
   display: flex;
   align-items: center;
 
@@ -33,7 +32,7 @@ const ContentArea = styled.div`
 
   > .delete {
     width: 50px;
-    color: #21252b;
+    color: ${(props) => props.theme.mainText};
     border: none;
     text-decoration: underline;
     font-weight: 600;
@@ -43,15 +42,15 @@ const ContentArea = styled.div`
   }
 `;
 
-interface YouTubeDataProps {
-  list: any;
-  plList: any;
-  setPlList: any;
+interface PlaylistDataProps {
+  list: PlaylistData;
+  newPlayList: object[];
+  setNewPlayList: Function;
 }
 
-function YouTubeList({ list, plList, setPlList }: YouTubeDataProps) {
+function NewPlayList({ list, newPlayList, setNewPlayList }: PlaylistDataProps) {
   const deleteList = (deleteId: any) => {
-    setPlList(plList.filter((value: any) => value.channelId !== deleteId));
+    setNewPlayList(newPlayList.filter((value: any) => value.channelId !== deleteId));
   };
 
   return (
@@ -69,4 +68,4 @@ function YouTubeList({ list, plList, setPlList }: YouTubeDataProps) {
   );
 }
 
-export default YouTubeList;
+export default NewPlayList;

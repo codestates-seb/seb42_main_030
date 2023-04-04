@@ -1,4 +1,7 @@
+import { createContext } from "react";
 import { DefaultTheme } from "styled-components";
+
+export const myContext: any = createContext(null);
 
 export const lightMode: DefaultTheme = {
   logo: `#22262c`,
@@ -9,7 +12,6 @@ export const lightMode: DefaultTheme = {
   buttonHover: `#ffdeb7`,
 
   // main
-  diaryBackground: `white`,
   diaryDate: `#9aa1a8`,
   diaryInfoLine: `#f1f3f5`,
 
@@ -36,13 +38,12 @@ export const darkMode: DefaultTheme = {
   buttonHover: `#ffdeb7`,
 
   // main
-  diaryBackground: `#2f3135`,
   diaryDate: `#9aa1a8`,
   diaryInfoLine: `#3C4048`,
 
   TagColor: `#22262c`,
   disabledTagColor: `gray`,
-  disabledTagBorder: `none`,
+  disabledTagBorder: `#2f3135`,
   disabledTagBackground: `#2f3135`,
   disabled: `gray`,
 

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { DiaryData } from "../../util/Type";
 import { BASE_API } from "../../util/API";
-import axios from "axios";
 
 const ListTab = styled.ul`
   display: flex;
@@ -21,15 +20,16 @@ const ListTab = styled.ul`
     font-size: 14px;
     width: 100px;
     height: 40px;
-    border: 1px solid ${(props) => props.theme.disabledTagBorder};
     border-radius: 50px;
     text-align: center;
     padding: 7px 7px;
-    cursor: pointer;
+    border: 1px solid ${(props) => props.theme.disabledTagBorder};
     background-color: ${(props) => props.theme.disabledTagBackground};
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+
     &:hover {
-      transform: scale(1.05);
-      transition: 0.2s;
+      transform: scale(1.03);
     }
 
     > .el {
@@ -102,10 +102,10 @@ function DiaryMain() {
     setCurrentTab(index);
   };
 
+  console.log(diaryData);
+
   return (
     <main>
-      {/* <img src={test.items[0].snippet.thumbnails.default.url} alt='test' /> */}
-      {/* {test.items[0].snippet.thumbnails.default} */}
       <ListTab>
         {tagArr.map((tab, index) => {
           return (

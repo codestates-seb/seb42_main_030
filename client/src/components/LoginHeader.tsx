@@ -1,14 +1,18 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { BASE_API } from "../util/API";
 import { GoTriangleDown } from "react-icons/go";
 import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
+import { useContext } from "react";
+import { myContext } from "../theme";
+import mainIcon from "../util/img/mainIcon.png";
 
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
   background-color: ${(props) => props.theme.background};
+  transition: 0.2s ease-in-out;
 `;
 
 const HeaderWrapper = styled.div`
@@ -68,8 +72,17 @@ const Logo = styled.div`
   font-size: 20px;
 
   a {
+    display: flex;
+    align-items: center;
     color: ${(props) => props.theme.logo};
     text-decoration: none;
+
+    > img {
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 4px;
+    }
   }
 `;
 
@@ -78,6 +91,7 @@ const ModeButton = styled.button`
   width: 40px;
   border: none;
   background-color: transparent;
+  margin-right: 10px;
   cursor: pointer;
 
   > .lightIcon {
@@ -90,21 +104,20 @@ const ModeButton = styled.button`
 `;
 
 const SubmitButton = styled.button`
-  width: 150px;
+  width: 120px;
+  height: 35px;
   border: none;
   background-color: transparent;
   font-weight: 700;
   font-size: 15px;
-
-  a {
-    color: ${(props) => props.theme.mainText};
-    text-decoration: none;
-  }
+  color: ${(props) => props.theme.mainText};
+  cursor: pointer;
 `;
 
 const ProfileButton = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 10px;
 
   > .triangleDown {
     color: #787f84;
@@ -120,16 +133,17 @@ const Profile = styled.img`
   box-shadow: rgba(0, 0, 0, 0.086) 0px 0px 8px;
 `;
 
-function LoginHeader({ isChange, changeMode }: any) {
+function LoginHeader() {
   const [imageData, setImageData] = useState<any>([]);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const { currentUser, isChange, changeMode }: any = useContext(myContext);
+  const navigate = useNavigate();
+
   // 내 유저 정보 get 요청
   const getImageData = async () => {
-    // const isLogin = localStorage.getItem('usernickname')
-    // URI -> `http://localhost:3001/user/${isLogin}`으로 변경
     try {
-      const res = await BASE_API.get(`/users/1`);
+      const res = await BASE_API.get(`/users/${currentUser.userId}`);
       setImageData(res.data);
     } catch (err) {
       console.error(err);
@@ -139,19 +153,32 @@ function LoginHeader({ isChange, changeMode }: any) {
     getImageData();
   }, []);
 
+  // 드롬다운 오픈 이벤트
   const openDropdown = () => {
     setIsOpen(!isOpen);
   };
 
+  // 드롭다운 클로즈 이벤트
   const closeDropdown = () => {
     setIsOpen(false);
+  };
+
+  // 로그아웃
+  const logOut = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("CURRENT_USER");
+    navigate("/");
+    window.location.reload();
   };
 
   return (
     <HeaderContainer>
       <HeaderWrapper>
         <Logo onClick={closeDropdown}>
-          <Link to='/'>나만의 작은 음악 다이어리</Link>
+          <Link to='/'>
+            <img src={mainIcon} alt='mainIcon' />
+            나만의 작은 음악 다이어리
+          </Link>
         </Logo>
         <div className='buttonArea'>
           <ModeButton onClick={changeMode}>
@@ -161,9 +188,9 @@ function LoginHeader({ isChange, changeMode }: any) {
               <BsFillSunFill className='lightIcon' size={25} />
             )}
           </ModeButton>
-          <SubmitButton onClick={closeDropdown}>
-            <Link to='/NewDiary'>새 다이어리 등록</Link>
-          </SubmitButton>
+          <Link to='/NewDiary'>
+            <SubmitButton onClick={closeDropdown}>새 다이어리 등록</SubmitButton>
+          </Link>
           <ProfileButton onClick={openDropdown}>
             <Profile src={imageData.data && imageData.data.imageUrl} alt='헤더 프로필 이미지' />
             <GoTriangleDown className='triangleDown' size={14} />
@@ -173,7 +200,7 @@ function LoginHeader({ isChange, changeMode }: any) {
               <Link to='/Mypage'>
                 <li>마이페이지</li>
               </Link>
-              <li>로그아웃</li>
+              <li onClick={logOut}>로그아웃</li>
             </ul>
           ) : null}
         </div>

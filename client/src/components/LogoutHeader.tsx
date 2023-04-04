@@ -1,11 +1,15 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { BsFillSunFill, BsFillMoonStarsFill } from "react-icons/bs";
+import { useContext } from "react";
+import { myContext } from "../theme";
+import mainIcon from "../util/img/mainIcon.png";
 
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: center;
-  background-color: ${(props) => props.theme.background}; ;
+  background-color: ${(props) => props.theme.background};
+  transition: 0.2s ease-in-out;
 `;
 
 const HeaderWrapper = styled.div`
@@ -29,8 +33,17 @@ const Logo = styled.div`
   font-size: 20px;
 
   a {
+    display: flex;
+    align-items: center;
     color: ${(props) => props.theme.logo};
     text-decoration: none;
+
+    > img {
+      margin-right: 10px;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 4px;
+    }
   }
 `;
 
@@ -39,6 +52,7 @@ const ModeButton = styled.button`
   width: 40px;
   border: none;
   background-color: transparent;
+  margin-right: 10px;
   cursor: pointer;
 
   > .lightIcon {
@@ -51,16 +65,14 @@ const ModeButton = styled.button`
 `;
 
 const SubmitButton = styled.button`
-  width: 150px;
+  width: 120px;
+  height: 35px;
   border: none;
   background-color: transparent;
   font-weight: 700;
   font-size: 15px;
-
-  a {
-    color: ${(props) => props.theme.mainText};
-    text-decoration: none;
-  }
+  color: ${(props) => props.theme.mainText};
+  cursor: pointer;
 `;
 
 const LoginButton = styled.button`
@@ -70,21 +82,24 @@ const LoginButton = styled.button`
   font-size: 15px;
   background-color: transparent;
   border-radius: 50px;
-  border: 2px solid ${(props) => props.theme.mainText};
-  margin: 0 10px 0 10px;
-
-  a {
-    color: ${(props) => props.theme.mainText};
-    text-decoration: none;
-  }
+  color: ${(props) => props.theme.mainText};
+  border: 1.5px solid ${(props) => props.theme.mainText};
+  margin: 0 10px 0 20px;
+  cursor: pointer;
 `;
 
-function LogoutHeader({ isChange, changeMode }: any) {
+function LogoutHeader() {
+  const { isChange, changeMode }: any = useContext(myContext);
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
         <Logo>
-          <Link to='/'>나만의 작은 음악 다이어리</Link>
+          <Link to='/'>
+            {" "}
+            <img src={mainIcon} alt='mainIcon' />
+            나만의 작은 음악 다이어리
+          </Link>
         </Logo>
         <div className='buttonArea'>
           <ModeButton onClick={changeMode}>
@@ -95,12 +110,12 @@ function LogoutHeader({ isChange, changeMode }: any) {
             )}
           </ModeButton>
           <div className='buttonArea'>
-            <SubmitButton>
-              <Link to='/Login'>새 다이어리 등록</Link>
-            </SubmitButton>
-            <LoginButton>
-              <Link to='/Login'>로그인</Link>
-            </LoginButton>
+            <Link to='/Login'>
+              <SubmitButton>새 다이어리 등록</SubmitButton>
+            </Link>
+            <Link to='/Login'>
+              <LoginButton>로그인</LoginButton>
+            </Link>
           </div>
         </div>
       </HeaderWrapper>
