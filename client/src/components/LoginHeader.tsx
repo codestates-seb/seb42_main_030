@@ -136,7 +136,7 @@ function LoginHeader() {
     <HeaderContainer>
       <HeaderWrapper>
         <Logo onClick={closeDropdown}>
-          <Link to='/'>나만의 작은 음악 다이어리</Link>
+          <Link to='/'>나만의 작은 음악 다이어리d</Link>
         </Logo>
         <div className='buttonArea'>
           <SubmitButton onClick={closeDropdown}>
