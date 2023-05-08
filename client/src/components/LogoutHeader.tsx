@@ -66,7 +66,7 @@ function LogoutHeader() {
     <HeaderContainer>
       <HeaderWrapper>
         <Logo>
-          <Link to='/'>나만의 작은 음악 다이어리</Link>
+          <Link to='/'>나만의 작은 음악 다이어리f</Link>
         </Logo>
         <div className='buttonArea'>
           <SubmitButton>
