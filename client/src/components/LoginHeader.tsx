@@ -198,7 +198,7 @@ function LoginHeader() {
           {isOpen ? (
             <ul className='dropdown' onClick={closeDropdown}>
               <Link to='/Mypage'>
-                <li>마이페이지</li>
+                <li>마이페이지지</li>
               </Link>
               <li onClick={logOut}>로그아웃</li>
             </ul>

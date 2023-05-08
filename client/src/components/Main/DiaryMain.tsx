@@ -72,9 +72,10 @@ function DiaryMain() {
   const offset: number = (page - 1) * LIMIT_COUNT; // 각 페이지에서 첫 데이터의 위치(index) 계산
 
   // 전체 diary 데이터 get 요청
+  // /diary
   const getDiaryData = async () => {
     try {
-      const res = await BASE_API.get(`/diary`);
+      const res = await BASE_API.get(`http://ec2-15-164-230-157.ap-northeast-2.compute.amazonaws.com:8080`);
       setDiaryData(res.data);
     } catch (err) {
       console.error(err);
